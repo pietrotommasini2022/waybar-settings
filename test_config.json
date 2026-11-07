@@ -1,5 +1,0 @@
-{
-    "modules-left":["hyprland/workspaces", "hyprland/window"],
-    "modules-center":["clock"],
-    "modules-right":["pulseaudio", "network", "battery", "tray"]
-}
