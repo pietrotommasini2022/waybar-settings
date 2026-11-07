@@ -12,6 +12,14 @@ class MainWindow(Gtk.ApplicationWindow):
         super().__init__(application=app)
         self.set_title("Waybar Settings")
         self.set_default_size(600, 600)
+
+        stack = Gtk.Stack()
+        stack.add_titled(Gtk.Label(LayoutPage(config), "layout", "Layout"))
+        stack.add_titled(Gtk.Label(StylePage, "style", "Style"))
+        stack.set_hexpand(True)
+
+        sidebar = Gtk.StackSidebar()
+        sidebar.set_stack(stack)
         
         main_box = Gtk.Box(
             orientation=Gtk.Orientation.HORIZONTAL,
@@ -23,8 +31,8 @@ class MainWindow(Gtk.ApplicationWindow):
         except FileNotFoundError as error:
             main_box.append(Gtk.Label(label=f"No configuration found: {error}"))
         else:
-            main_box.append(LayoutPage(config))
-            main_box.append(StylePage())
+            main_box.append(stack)
+            main_box.append(sidebar)
         self.set_child(
             main_box
         )
