@@ -1,7 +1,8 @@
 import gi
-import json
+import json5
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
+from pathlib import Path
 
 def new_column(title, spacing, modules):
     box = Gtk.Box(
@@ -16,10 +17,15 @@ def new_column(title, spacing, modules):
 
     return box
 
-def on_activate(app):
-    with open("test_config.json") as file:
-        config = json.load(file)
+def load_config():
+    config_path = Path.home() / ".config" / "waybar" / "config.jsonc"
+    with open(config_path) as file:
+        config = json5.load(file)
+    return config
 
+def on_activate(app):
+
+    config = load_config()
     main = Gtk.Box(
         orientation=Gtk.Orientation.HORIZONTAL,
         spacing=10,
