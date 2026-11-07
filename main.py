@@ -1,0 +1,49 @@
+import gi
+import json
+gi.require_version("Gtk", "4.0")
+from gi.repository import Gtk
+
+def new_column(title, spacing, modules):
+    box = Gtk.Box(
+        orientation=Gtk.Orientation.VERTICAL,
+        spacing=spacing
+    )
+    box.append(Gtk.Label(label=title))
+
+    for m in modules:
+        subtitle = Gtk.Label(label=m)
+        box.append(subtitle)
+
+    return box
+
+def on_activate(app):
+    with open("test_config.json") as file:
+        config = json.load(file)
+
+    main = Gtk.Box(
+        orientation=Gtk.Orientation.HORIZONTAL,
+        spacing=10,
+    )
+    main.set_homogeneous(True)
+    main.append(new_column("Left", 10, config["modules-left"]))
+    main.append(new_column("Center", 10, config["modules-center"]))
+    main.append(new_column("Right", 10, config["modules-right"]))
+
+
+    window = Gtk.ApplicationWindow(application=app)
+    window.set_title("Waybar Settings")
+    window.set_default_size(600, 600)
+
+    window.set_child(
+        main
+    )
+
+    window.present()
+
+app = Gtk.Application(
+    application_id="com.pietrotommasini.WaybarSettings"
+)
+
+app.connect("activate", on_activate)
+
+app.run()
