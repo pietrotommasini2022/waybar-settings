@@ -20,7 +20,6 @@ class ModulePage(Gtk.Box):
     
     def on_text_changed(self, entry, name):
         self.settings[name] = entry.get_text()
-        print(self.settings)
     
     def on_switch_changed(self, switch, pspec, name):
         self.settings[name] = switch.get_active()
