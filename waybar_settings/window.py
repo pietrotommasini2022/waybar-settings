@@ -28,7 +28,7 @@ class MainWindow(Gtk.ApplicationWindow):
             stack.add_titled(LayoutPage(config), "layout", "Layout")
 
             for module in used_modules(config):
-                stack.add_titled(ModulePage(module_name=module, settings=config.get(module, {})), module, module)
+                stack.add_titled(ModulePage(module_name=module, settings=config.setdefault(module, {})), module, module)
 
             stack.add_titled(StylePage(), "style", "Style")
 
