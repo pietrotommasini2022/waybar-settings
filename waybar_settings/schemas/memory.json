@@ -60,7 +60,25 @@
             "default": "{percentage}%",
             "doc": "The format, how information should be displayed.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{percentage}%",
+                    "label": "42%"
+                },
+                {
+                    "value": "RAM {percentage}%",
+                    "label": "RAM 42%"
+                },
+                {
+                    "value": "{used:0.1f}G / {total:0.1f}G",
+                    "label": "6.7G / 16.0G"
+                },
+                {
+                    "value": "{used:0.1f}G",
+                    "label": "6.7G"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

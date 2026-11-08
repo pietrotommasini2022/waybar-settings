@@ -175,21 +175,59 @@
             "default": "{ifname}",
             "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
             "group": "Display",
-            "description": "The default text, used when no more specific text below is set."
+            "description": "The default text, used when no more specific text below is set.",
+            "presets": [
+                {
+                    "value": "{ifname}",
+                    "label": "wlp5s0"
+                },
+                {
+                    "value": "{ipaddr}",
+                    "label": "192.168.1.10"
+                }
+            ]
         },
         "format-ethernet": {
             "label": "What to show on cable",
             "type": "string",
             "doc": "This format is used when an ethernet interface is displayed.",
             "group": "Display",
-            "description": "This format is used when an ethernet interface is displayed."
+            "description": "This format is used when an ethernet interface is displayed.",
+            "presets": [
+                {
+                    "value": "{ipaddr}/{cidr}",
+                    "label": "192.168.1.10/24"
+                },
+                {
+                    "value": "{ifname}",
+                    "label": "enp6s0"
+                },
+                {
+                    "value": "Wired",
+                    "label": "Wired"
+                }
+            ]
         },
         "format-wifi": {
             "label": "What to show on Wi-Fi",
             "type": "string",
             "doc": "This format is used when a wireless interface is displayed.",
             "group": "Display",
-            "description": "For example \"{icon} {essid}\" shows an icon and the network name."
+            "description": "For example \"{icon} {essid}\" shows an icon and the network name.",
+            "presets": [
+                {
+                    "value": "{essid} ({signalStrength}%)",
+                    "label": "MyWiFi (70%)"
+                },
+                {
+                    "value": "{essid}",
+                    "label": "MyWiFi"
+                },
+                {
+                    "value": "{icon} {signalStrength}%",
+                    "label": "icon + 70%"
+                }
+            ]
         },
         "format-linked": {
             "label": "What to show when connected without an address",
@@ -204,7 +242,21 @@
             "type": "string",
             "doc": "This format is used when the displayed interface is disconnected.",
             "group": "Display",
-            "description": "This format is used when the displayed interface is disconnected."
+            "description": "This format is used when the displayed interface is disconnected.",
+            "presets": [
+                {
+                    "value": "Disconnected",
+                    "label": "Disconnected"
+                },
+                {
+                    "value": "⚠ Offline",
+                    "label": "⚠ Offline"
+                },
+                {
+                    "value": "",
+                    "label": "Hide the module"
+                }
+            ]
         },
         "format-disabled": {
             "label": "What to show when Wi-Fi is off",

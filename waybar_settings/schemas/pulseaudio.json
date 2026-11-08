@@ -37,7 +37,21 @@
             "default": "{volume}%",
             "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
             "group": "Display",
-            "description": "How the volume looks in the bar, for example \"{icon} {volume}%\"."
+            "description": "How the volume looks in the bar, for example \"{icon} {volume}%\".",
+            "presets": [
+                {
+                    "value": "{volume}%",
+                    "label": "65%"
+                },
+                {
+                    "value": "{icon} {volume}%",
+                    "label": "icon + 65%"
+                },
+                {
+                    "value": "{volume}% {format_source}",
+                    "label": "65% + microphone"
+                }
+            ]
         },
         "format-bluetooth": {
             "label": "What to show with Bluetooth audio",
@@ -51,7 +65,21 @@
             "type": "string",
             "doc": "This format is used when the sound is muted.",
             "group": "Display",
-            "description": "Shown instead of the normal text while the sound is muted."
+            "description": "Shown instead of the normal text while the sound is muted.",
+            "presets": [
+                {
+                    "value": "Muted",
+                    "label": "Muted"
+                },
+                {
+                    "value": "🔇",
+                    "label": "🔇"
+                },
+                {
+                    "value": "🔇 {volume}%",
+                    "label": "🔇 65%"
+                }
+            ]
         },
         "format-source": {
             "label": "Microphone text",

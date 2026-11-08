@@ -51,6 +51,30 @@ def used_modules(config):
         add(config.get(column, []))
     return unique_modules
 
+USER_STYLE_PATH = DIR_PATH / "style.css"
+DEFAULT_STYLE_PATH = Path("/etc/xdg/waybar/style.css")
+
+
+def ensure_user_file(user_path, default_path):
+    """Make sure the user has their own copy of a file to edit by hand:
+    copy Waybar's default if there is none. Returns the user path."""
+    if not user_path.exists():
+        DIR_PATH.mkdir(parents=True, exist_ok=True)
+        if default_path.exists():
+            shutil.copy2(default_path, user_path)
+        else:
+            user_path.touch()
+    return user_path
+
+
+def user_config_file():
+    return ensure_user_file(USER_CONFIG_PATH, DEFAULT_PATH)
+
+
+def user_style_file():
+    return ensure_user_file(USER_STYLE_PATH, DEFAULT_STYLE_PATH)
+
+
 def save_config(config):
     DIR_PATH.mkdir(parents=True, exist_ok=True)
 

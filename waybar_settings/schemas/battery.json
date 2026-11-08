@@ -140,7 +140,25 @@
             "default": "{capacity}%",
             "doc": "The format, how information should be displayed.",
             "group": "Display",
-            "description": "For example \"{icon} {capacity}%\"."
+            "description": "For example \"{icon} {capacity}%\".",
+            "presets": [
+                {
+                    "value": "{capacity}%",
+                    "label": "85%"
+                },
+                {
+                    "value": "{icon} {capacity}%",
+                    "label": "icon + 85%"
+                },
+                {
+                    "value": "{icon}",
+                    "label": "Icon only"
+                },
+                {
+                    "value": "{capacity}% ({time})",
+                    "label": "85% (2 h 10 min)"
+                }
+            ]
         },
         "format-time": {
             "label": "Time format",

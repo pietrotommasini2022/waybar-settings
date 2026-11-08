@@ -118,7 +118,21 @@
             "default": "{temperatureC}°C",
             "doc": "The format (Celsius/Fahrenheit/Kelvin) in which the temperature should be displayed.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{temperatureC}°C",
+                    "label": "45°C"
+                },
+                {
+                    "value": "{temperatureF}°F",
+                    "label": "113°F"
+                },
+                {
+                    "value": "{icon} {temperatureC}°C",
+                    "label": "icon + 45°C"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

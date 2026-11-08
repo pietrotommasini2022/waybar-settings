@@ -5,13 +5,16 @@ go into a collapsed "Advanced" section at the bottom. An option that is not in
 the config shows Waybar's default and is written only when the user changes it.
 """
 
+from dataclasses import dataclass, replace
 import json
 import re
 
 import json5
-from gi.repository import Gtk
+from gi.repository import GLib, Gtk
 
 from ..config import COLUMNS
+from ..schemas import base_name
+from ..suggestions import is_path, kind, suggestions
 
 MISSING = object()
 
@@ -23,6 +26,17 @@ SECTION_ORDER = [
 ]
 DEFAULT_SECTION = "General"
 ADVANCED_SECTION = "Advanced"
+
+
+@dataclass(frozen=True)
+class Context:
+    """What an editor may need to know besides its own option."""
+    module: str  # base module name, e.g. "battery"; "bar" for the bar
+    schema: dict | None
+    key: str = ""
+
+    def with_key(self, key):
+        return replace(self, key=key)
 
 
 class Store:
@@ -118,7 +132,112 @@ def json_editor(spec, value, on_change):
     return entry, show
 
 
-def string_editor(spec, value, on_change):
+class SuggestionPopover(Gtk.Popover):
+    """Menu with the suggested values of a text option (see suggestions.py).
+    Recomputed every time it opens, so system lists stay current."""
+
+    def __init__(self, entry, option_kind, spec, context):
+        super().__init__()
+        self.entry = entry
+        self.option_kind = option_kind
+        self.spec = spec
+        self.context = context
+
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        self.search = Gtk.SearchEntry(placeholder_text="Search")
+        self.search.connect("search-changed", lambda _e: self.list_box.invalidate_filter())
+        box.append(self.search)
+
+        self.list_box = Gtk.ListBox(selection_mode=Gtk.SelectionMode.NONE)
+        self.list_box.set_filter_func(self.filter_row)
+        self.list_box.connect("row-activated", self.on_activated)
+        self.list_box.set_placeholder(Gtk.Label(label="Nothing found on this system",
+                                                margin_top=12, margin_bottom=12,
+                                                css_classes=["dim-label"]))
+        self.scroll = Gtk.ScrolledWindow(hscrollbar_policy=Gtk.PolicyType.NEVER,
+                                         propagate_natural_height=True,
+                                         max_content_height=420, min_content_width=320)
+        self.scroll.set_child(self.list_box)
+        box.append(self.scroll)
+        self.set_child(box)
+        self.connect("show", self.on_show)
+
+    def on_show(self, _popover):
+        self.list_box.remove_all()
+        sections = suggestions(self.option_kind, self.context.module, self.spec,
+                               self.context.schema)
+        count = 0
+        for section_ in sections:
+            header = Gtk.ListBoxRow(activatable=False, selectable=False)
+            header.suggestion = None
+            header.set_child(Gtk.Label(label=section_.title, xalign=0, margin_top=6,
+                                       margin_start=6, css_classes=["heading"]))
+            self.list_box.append(header)
+            for item in section_.items:
+                self.list_box.append(self.item_row(item))
+                count += 1
+        self.search.set_text("")
+        self.search.set_visible(count > 10)
+        if count > 10:
+            self.search.grab_focus()
+
+    @staticmethod
+    def item_row(item):
+        row = Gtk.ListBoxRow()
+        row.suggestion = item
+        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=2,
+                      margin_top=4, margin_bottom=4, margin_start=6, margin_end=6)
+        box.append(Gtk.Label(label=item.label or item.value or "(empty)", xalign=0,
+                             wrap=True, max_width_chars=45))
+        if item.description and item.description != (item.label or item.value):
+            box.append(Gtk.Label(label=item.description, xalign=0, wrap=True,
+                                 max_width_chars=45, css_classes=["dim-label", "caption"]))
+        row.set_child(box)
+        row.search_text = f"{item.value} {item.label} {item.description}".lower()
+        return row
+
+    def filter_row(self, row):
+        text = self.search.get_text().strip().lower()
+        if not text:
+            return True
+        if row.suggestion is None:  # hide the headers while searching
+            return False
+        return all(word in row.search_text for word in text.split())
+
+    def on_activated(self, _list_box, row):
+        item = row.suggestion
+        if item is None:
+            return
+        self.popdown()
+        if item.insert:
+            position = self.entry.get_position()
+            self.entry.get_buffer().insert_text(position, item.value, -1)
+            self.entry.set_position(position + len(item.value))
+        else:
+            self.entry.set_text(item.value)
+        self.entry.grab_focus()
+
+
+def browse_button(entry):
+    button = Gtk.Button(icon_name="document-open-symbolic", tooltip_text="Choose a file")
+
+    def chosen(dialog, result):
+        try:
+            file = dialog.open_finish(result)
+        except GLib.Error:  # cancelled
+            return
+        if file and file.get_path():
+            entry.set_text(file.get_path())
+
+    def clicked(_button):
+        dialog = Gtk.FileDialog(title="Choose a file")
+        dialog.open(button.get_root(), None, chosen)
+
+    button.connect("clicked", clicked)
+    return button
+
+
+def string_editor(spec, value, on_change, context=None):
     entry = Gtk.Entry(width_chars=24, valign=Gtk.Align.CENTER)
     default = spec.get("default")
     if isinstance(default, str) and default:
@@ -132,30 +251,26 @@ def string_editor(spec, value, on_change):
     show(value)
     entry.connect("changed", lambda e: on_change(e.get_text()))
 
-    presets = spec.get("presets")
-    if not presets:
+    if context is None:
         return entry, show
 
-    box = Gtk.Box(spacing=4, valign=Gtk.Align.CENTER)
+    option_kind = kind(context.key)
+    has_menu = bool(spec.get("presets")) or (
+        option_kind is not None
+        and not (option_kind == "format" and not (context.schema or {}).get("placeholders"))
+    )
+    if not has_menu and not is_path(context.key):
+        return entry, show
+
+    # Entry and buttons drawn as one control, like a combo box.
+    box = Gtk.Box(valign=Gtk.Align.CENTER, css_classes=["linked"])
     box.append(entry)
-
-    popover = Gtk.Popover()
-    preset_list = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-    for preset in presets:
-        button = Gtk.Button(label=preset["label"], has_frame=False)
-        button.set_tooltip_text(preset["value"])
-
-        def pick(_button, preset_value=preset["value"]):
-            entry.set_text(preset_value)  # emits "changed"
-            popover.popdown()
-
-        button.connect("clicked", pick)
-        preset_list.append(button)
-    popover.set_child(preset_list)
-
-    menu = Gtk.MenuButton(icon_name="view-more-symbolic", popover=popover)
-    menu.set_tooltip_text("Ready-made values")
-    box.append(menu)
+    if has_menu:
+        box.append(Gtk.MenuButton(
+            icon_name="pan-down-symbolic", tooltip_text="Suggestions",
+            popover=SuggestionPopover(entry, option_kind, spec, context)))
+    if is_path(context.key):
+        box.append(browse_button(entry))
     return box, show
 
 
@@ -260,12 +375,14 @@ TYPE_CHECKS = {
 }
 
 
-def create_editor(spec, value, on_change):
+def create_editor(spec, value, on_change, context=None):
     kind = spec.get("type")
     editor = EDITORS.get(kind)
     # A value of another type (see "also_accepts") is edited as JSON.
     if editor is None or (value is not MISSING and not TYPE_CHECKS[kind](value)):
         editor = json_editor
+    if editor is string_editor:
+        return string_editor(spec, value, on_change, context)
     return editor(spec, value, on_change)
 
 
@@ -286,7 +403,7 @@ def title_box(label, description=None, doc=None):
 
 
 class SettingRow(Gtk.ListBoxRow):
-    def __init__(self, store, key, spec):
+    def __init__(self, store, key, spec, context=None):
         super().__init__(activatable=False, selectable=False)
         self.store = store
         self.key = key
@@ -298,7 +415,9 @@ class SettingRow(Gtk.ListBoxRow):
                              spec.get("doc")))
 
         value = store.get(key)
-        editor, self.show = create_editor(spec, value, self.on_change)
+        editor, self.show = create_editor(
+            spec, value, self.on_change,
+            context.with_key(key) if context else None)
         box.append(editor)
 
         self.reset = Gtk.Button(icon_name="edit-undo-symbolic", valign=Gtk.Align.CENTER,
@@ -335,33 +454,33 @@ class SettingRow(Gtk.ListBoxRow):
 class ObjectRow(Gtk.ListBoxRow):
     """An option with its own options (e.g. clock -> calendar)."""
 
-    def __init__(self, store, key, spec):
+    def __init__(self, store, key, spec, context=None):
         super().__init__(activatable=False, selectable=False)
         expander = Gtk.Expander(margin_top=8, margin_bottom=8, margin_start=12, margin_end=12)
         expander.set_label_widget(title_box(spec.get("label", key), spec.get("description")))
 
         child_store = store.child(key)
-        list_box = settings_list(child_store, spec["settings"].items())
+        list_box = settings_list(child_store, spec["settings"].items(), context)
         list_box.set_margin_top(8)
         expander.set_child(list_box)
         self.set_child(expander)
 
 
-def settings_list(store, items):
+def settings_list(store, items, context=None):
     list_box = Gtk.ListBox(selection_mode=Gtk.SelectionMode.NONE, css_classes=["rich-list"])
     for key, spec in items:
         if spec.get("type") == "object" and "settings" in spec:
-            list_box.append(ObjectRow(store, key, spec))
+            list_box.append(ObjectRow(store, key, spec, context))
         else:
-            list_box.append(SettingRow(store, key, spec))
+            list_box.append(SettingRow(store, key, spec, context))
     return list_box
 
 
-def section(title, store, items):
+def section(title, store, items, context=None):
     box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
     box.append(Gtk.Label(label=title, xalign=0, css_classes=["heading"]))
     frame = Gtk.Frame()
-    frame.set_child(settings_list(store, items))
+    frame.set_child(settings_list(store, items, context))
     box.append(frame)
     return box
 
@@ -389,11 +508,12 @@ class SettingsPage(Gtk.Box):
     the config that the schema does not describe.
     """
 
-    def __init__(self, title, schema, store, show_unknown=True):
+    def __init__(self, title, schema, store, module, show_unknown=True):
         super().__init__(orientation=Gtk.Orientation.VERTICAL, spacing=18,
                          margin_top=18, margin_bottom=18, margin_start=18, margin_end=18)
 
         self.append(self.header(title, schema))
+        context = Context(module, schema)
 
         settings = schema["settings"] if schema else {}
         sections = {}
@@ -406,18 +526,18 @@ class SettingsPage(Gtk.Box):
                 sections.setdefault(group, []).append((key, spec))
 
         for name in sorted(sections, key=section_key):
-            self.append(section(name, store, sections[name]))
+            self.append(section(name, store, sections[name], context))
 
         if show_unknown:
             unknown = self.unknown_settings(store, settings, schema)
             if unknown:
-                self.append(section("Other settings", store, unknown))
+                self.append(section("Other settings", store, unknown, context))
 
         if advanced:
             expander = Gtk.Expander(label="Advanced")
             expander.get_label_widget().add_css_class("heading")
             inner = Gtk.Frame(margin_top=6)
-            inner.set_child(settings_list(store, advanced))
+            inner.set_child(settings_list(store, advanced, context))
             expander.set_child(inner)
             self.append(expander)
 
@@ -472,7 +592,7 @@ class SettingsPage(Gtk.Box):
 
 
 def module_page(config, module, title, schema):
-    return SettingsPage(title, schema, Store(config, [module]))
+    return SettingsPage(title, schema, Store(config, [module]), base_name(module))
 
 
 def bar_page(config, schema):
@@ -480,4 +600,4 @@ def bar_page(config, schema):
     # columns and the modules: show only the ones the schema describes.
     settings = {k: v for k, v in schema["settings"].items() if k not in COLUMNS}
     return SettingsPage(schema["title"], {**schema, "settings": settings},
-                        Store(config), show_unknown=False)
+                        Store(config), "bar", show_unknown=False)

@@ -45,7 +45,21 @@
             "default": "{value}",
             "doc": "The format, how information should be displayed.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{name}",
+                    "label": "Workspace name"
+                },
+                {
+                    "value": "{index}",
+                    "label": "1"
+                },
+                {
+                    "value": "{icon}",
+                    "label": "Icon"
+                }
+            ]
         },
         "format-for-negative-index": {
             "label": "What to show when for negative index",

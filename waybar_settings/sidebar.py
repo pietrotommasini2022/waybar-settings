@@ -35,6 +35,10 @@ class Sidebar(Gtk.Box):
         row.set_child(Gtk.Label(label=title, xalign=0))
         return row
 
+    def clear(self):
+        self.general.remove_all()
+        self.modules.remove_all()
+
     def add_general(self, page_name, title):
         self.general.append(self.row(page_name, title))
 

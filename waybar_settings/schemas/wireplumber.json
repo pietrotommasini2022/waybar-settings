@@ -61,14 +61,38 @@
             "default": "{volume}%",
             "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{volume}%",
+                    "label": "65%"
+                },
+                {
+                    "value": "{icon} {volume}%",
+                    "label": "icon + 65%"
+                },
+                {
+                    "value": "{node_name} {volume}%",
+                    "label": "Speakers 65%"
+                }
+            ]
         },
         "format-muted": {
             "label": "What to show when muted",
             "type": "string",
             "doc": "This format is used when the sound is muted.",
             "group": "Display",
-            "description": "This format is used when the sound is muted."
+            "description": "This format is used when the sound is muted.",
+            "presets": [
+                {
+                    "value": "Muted",
+                    "label": "Muted"
+                },
+                {
+                    "value": "🔇",
+                    "label": "🔇"
+                }
+            ]
         },
         "format-bluetooth": {
             "label": "What to show using Bluetooth",

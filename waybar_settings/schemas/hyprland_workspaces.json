@@ -29,7 +29,25 @@
             "default": "{name}",
             "doc": "The format, how information should be displayed.",
             "group": "Display",
-            "description": "For example {name} for the number, or {icon} for the icons below."
+            "description": "For example {name} for the number, or {icon} for the icons below.",
+            "presets": [
+                {
+                    "value": "{id}",
+                    "label": "1"
+                },
+                {
+                    "value": "{name}",
+                    "label": "Workspace name"
+                },
+                {
+                    "value": "{icon}",
+                    "label": "Icon"
+                },
+                {
+                    "value": "{id} {windows}",
+                    "label": "1 + window icons"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

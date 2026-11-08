@@ -60,7 +60,21 @@
             "default": "{}%",
             "doc": "The format, how information for each disk should be displayed. Note: in the default the positional field \"{}\" resolves to {percentage_free}.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{percentage_used}%",
+                    "label": "57%"
+                },
+                {
+                    "value": "{free} free",
+                    "label": "120 GiB free"
+                },
+                {
+                    "value": "{used} / {total}",
+                    "label": "180 GiB / 300 GiB"
+                }
+            ]
         },
         "rotate": {
             "label": "Rotation",

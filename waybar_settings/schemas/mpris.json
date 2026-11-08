@@ -79,7 +79,21 @@
             "default": "{player} ({status}): {dynamic}",
             "doc": "The text format.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{player_icon} {dynamic}",
+                    "label": "icon + artist - title"
+                },
+                {
+                    "value": "{artist} - {title}",
+                    "label": "Artist - Title"
+                },
+                {
+                    "value": "{title}",
+                    "label": "Title only"
+                }
+            ]
         },
         "tooltip": {
             "label": "Show tooltip",

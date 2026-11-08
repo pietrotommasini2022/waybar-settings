@@ -33,7 +33,17 @@
             "default": "{icon}",
             "doc": "Message displayed on the bar. {icon} and {profile} are respectively substituted with the icon representing the active profile and its full name.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{icon}",
+                    "label": "Icon only"
+                },
+                {
+                    "value": "{profile}",
+                    "label": "balanced"
+                }
+            ]
         },
         "tooltip-format": {
             "label": "Tooltip text",

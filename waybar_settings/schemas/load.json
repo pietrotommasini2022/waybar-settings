@@ -36,7 +36,17 @@
             "default": "{load1}",
             "doc": "The format, how information should be displayed.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{load1}",
+                    "label": "Last minute"
+                },
+                {
+                    "value": "{load1} {load5} {load15}",
+                    "label": "1, 5 and 15 minutes"
+                }
+            ]
         },
         "rotate": {
             "label": "Rotation",

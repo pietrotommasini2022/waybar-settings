@@ -29,7 +29,21 @@
             "default": "{title}",
             "doc": "The format, how information should be displayed. On {} the current window title is displayed.",
             "group": "Display",
-            "description": "{title} is the window title, {class} the app name."
+            "description": "{title} is the window title, {class} the app name.",
+            "presets": [
+                {
+                    "value": "{title}",
+                    "label": "Window title"
+                },
+                {
+                    "value": "{class}",
+                    "label": "App name"
+                },
+                {
+                    "value": "{class}: {title}",
+                    "label": "App name: title"
+                }
+            ]
         },
         "max-length": {
             "label": "Maximum length",

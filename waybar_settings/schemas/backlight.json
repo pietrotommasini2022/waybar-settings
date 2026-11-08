@@ -47,7 +47,21 @@
             "default": "{percent}%",
             "doc": "The format, how information should be displayed. On {} data gets inserted.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{percent}%",
+                    "label": "60%"
+                },
+                {
+                    "value": "{icon} {percent}%",
+                    "label": "icon + 60%"
+                },
+                {
+                    "value": "{icon}",
+                    "label": "Icon only"
+                }
+            ]
         },
         "max-length": {
             "label": "Maximum length",

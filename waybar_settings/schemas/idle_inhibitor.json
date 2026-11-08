@@ -28,7 +28,17 @@
             "type": "string",
             "doc": "The format, how the state should be displayed.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{icon}",
+                    "label": "Icon only"
+                },
+                {
+                    "value": "{status}",
+                    "label": "activated / deactivated"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

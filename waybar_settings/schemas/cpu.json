@@ -64,7 +64,29 @@
             "default": "{usage}%",
             "doc": "The format, how information should be displayed. On {} data gets inserted.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{usage}%",
+                    "label": "23%"
+                },
+                {
+                    "value": "CPU {usage}%",
+                    "label": "CPU 23%"
+                },
+                {
+                    "value": "{icon} {usage}%",
+                    "label": "icon + 23%"
+                },
+                {
+                    "value": "{avg_frequency} GHz",
+                    "label": "2.4 GHz"
+                },
+                {
+                    "value": "{load}",
+                    "label": "Load 1.05"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

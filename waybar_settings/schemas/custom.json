@@ -104,7 +104,17 @@
             "default": "{text}",
             "doc": "The format, how information should be displayed. On {text} data gets inserted.",
             "group": "Display",
-            "description": "The text in the bar. Write anything (an icon, a word) or use {text} to show what your script prints."
+            "description": "The text in the bar. Write anything (an icon, a word) or use {text} to show what your script prints.",
+            "presets": [
+                {
+                    "value": "{}",
+                    "label": "The script output"
+                },
+                {
+                    "value": "{icon} {}",
+                    "label": "icon + output"
+                }
+            ]
         },
         "format-icons": {
             "label": "Icons",

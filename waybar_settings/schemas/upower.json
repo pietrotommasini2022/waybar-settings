@@ -51,7 +51,17 @@
             "default": "{percentage}",
             "doc": "The text format.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{percentage}",
+                    "label": "85%"
+                },
+                {
+                    "value": "{percentage} ({time})",
+                    "label": "85% (2:10)"
+                }
+            ]
         },
         "format-alt": {
             "label": "What to show after a click",

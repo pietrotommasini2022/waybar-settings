@@ -74,7 +74,17 @@
             "default": " {status}",
             "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
             "group": "Display",
-            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders.",
+            "presets": [
+                {
+                    "value": "{status}",
+                    "label": "on"
+                },
+                {
+                    "value": "{icon}",
+                    "label": "Icon only"
+                }
+            ]
         },
         "format-disabled": {
             "label": "What to show when turned off",
@@ -102,7 +112,17 @@
             "type": "string",
             "doc": "This format is used when the displayed controller is connected to at least 1 device.",
             "group": "Display",
-            "description": "This format is used when the displayed controller is connected to at least 1 device."
+            "description": "This format is used when the displayed controller is connected to at least 1 device.",
+            "presets": [
+                {
+                    "value": "{device_alias}",
+                    "label": "Headphones"
+                },
+                {
+                    "value": "{num_connections} connected",
+                    "label": "2 connected"
+                }
+            ]
         },
         "format-no-controller": {
             "label": "What to show when no controller",
