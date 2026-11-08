@@ -25,12 +25,30 @@ def load_config():
         config = json5.load(file)
     return config
 
+COLUMNS = ("modules-left", "modules-center", "modules-right")
+
+
+def first_bar(config):
+    """Waybar accepts a list of bars: for now we edit the first one."""
+    if isinstance(config, list):
+        return config[0] if config else {}
+    return config
+
+
 def used_modules(config):
-    all_modules = config.get("modules-left", []) + config.get("modules-center", []) + config.get("modules-right", [])
+    """Modules in the three columns, plus the modules inside groups."""
     unique_modules = []
-    for module in all_modules:
-        if module not in unique_modules:
+
+    def add(modules):
+        for module in modules:
+            if module in unique_modules:
+                continue
             unique_modules.append(module)
+            if module.startswith("group/"):
+                add(config.get(module, {}).get("modules", []))
+
+    for column in COLUMNS:
+        add(config.get(column, []))
     return unique_modules
 
 def save_config(config):
