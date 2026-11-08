@@ -16,3 +16,12 @@ def load_config():
     with open(config_path) as file:
         config = json5.load(file)
     return config
+
+def used_modules(config):
+    all_modules = config.get("modules-left", []) + config.get("modules-center", []) + config.get("modules-right", [])
+    unique_modules = []
+    for module in all_modules:
+        if module not in unique_modules:
+            unique_modules.append(module)
+    return unique_modules
+    

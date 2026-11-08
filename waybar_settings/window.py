@@ -2,9 +2,10 @@ import gi
 gi.require_version("Gtk", "4.0")
 from gi.repository import Gtk
 
-from .config import load_config
+from .config import load_config, used_modules
 from .pages.layout import LayoutPage
 from .pages.style import StylePage
+from .pages.module import ModulePage
 
 class MainWindow(Gtk.ApplicationWindow):
 
@@ -26,6 +27,10 @@ class MainWindow(Gtk.ApplicationWindow):
             stack = Gtk.Stack()
             stack.add_titled(LayoutPage(config), "layout", "Layout")
             stack.add_titled(StylePage(), "style", "Style")
+
+            for module in used_modules(config):
+                stack.add_titled(ModulePage(name=module), module, module)
+
             stack.set_hexpand(True)
 
             sidebar = Gtk.StackSidebar()
