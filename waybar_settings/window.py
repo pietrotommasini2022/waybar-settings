@@ -34,10 +34,13 @@ class MainWindow(Gtk.ApplicationWindow):
 
             stack.set_hexpand(True)
 
+            scroll_view = Gtk.ScrolledWindow()
+            scroll_view.set_child(stack)
+
             sidebar = Gtk.StackSidebar()
             sidebar.set_stack(stack)
             main_box.append(sidebar)
-            main_box.append(stack)
+            main_box.append(scroll_view)
 
         self.set_child(
             main_box
