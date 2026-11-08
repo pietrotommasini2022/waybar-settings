@@ -6,6 +6,7 @@ from .config import load_config, used_modules, save_config
 from .pages.layout import LayoutPage
 from .pages.style import StylePage
 from .pages.module import ModulePage
+from .waybar import reload_waybar
 
 class MainWindow(Gtk.ApplicationWindow):
 
@@ -61,6 +62,7 @@ class MainWindow(Gtk.ApplicationWindow):
     
     def on_apply_clicked(self, button):
         save_config(self.config)
+        reload_waybar()
         
 
 

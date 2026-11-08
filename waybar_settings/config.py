@@ -1,6 +1,8 @@
-import json5
 from pathlib import Path
 import json
+import shutil
+
+import json5
 
 USER_CONFIG_PATH = Path.home() / ".config" / "waybar" / "config.jsonc"
 DEFAULT_PATH = Path("/etc/xdg/waybar/config.jsonc")
