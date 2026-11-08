@@ -4,6 +4,8 @@ import shutil
 
 import json5
 
+from . import jsonc
+
 USER_CONFIG_PATH = Path.home() / ".config" / "waybar" / "config.jsonc"
 DEFAULT_PATH = Path("/etc/xdg/waybar/config.jsonc")
 BACKUP_PATH = Path.home() / ".config" / "waybar" / "config.jsonc.bak"
@@ -81,5 +83,26 @@ def save_config(config):
     if USER_CONFIG_PATH.exists() and not BACKUP_PATH.exists():
         shutil.copy2(USER_CONFIG_PATH, BACKUP_PATH)
     
-    with open(USER_CONFIG_PATH, "w", encoding="utf-8") as file:
-        json.dump(config, file, indent=4, ensure_ascii=False)
+    text = config_text(config)  # before writing: it reads the current file
+    temporary = USER_CONFIG_PATH.with_name(USER_CONFIG_PATH.name + ".tmp")
+    temporary.write_text(text, encoding="utf-8")
+    temporary.replace(USER_CONFIG_PATH)  # atomic: never a half-written file
+
+
+def config_text(config):
+    """The new text of the config file. Only the parts that changed are
+    rewritten, so the user's comments and formatting are kept.
+    Starts from Waybar's default file when the user has none yet."""
+    try:
+        text = find_config_path().read_text(encoding="utf-8")
+    except OSError:
+        text = ""
+    try:
+        new_text = jsonc.update(text, config)
+        if json5.loads(new_text) == config:
+            return new_text
+    except (ValueError, KeyError, IndexError, AttributeError, TypeError):
+        pass
+    # Safety net: a file we could not edit in place is rewritten from
+    # scratch (the first version of the file is in config.jsonc.bak).
+    return json.dumps(config, indent=4, ensure_ascii=False) + "\n"
