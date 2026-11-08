@@ -1,0 +1,208 @@
+{
+    "module": "wwan",
+    "title": "Wwan",
+    "description": "wwan module for ModemManager.",
+    "manual": "waybar-wwan(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{state}",
+            "description": "Modem state."
+        },
+        {
+            "token": "{current_modes}",
+            "description": "List of all the currently active connection modes."
+        },
+        {
+            "token": "{preferred_mode}",
+            "description": "The preferred connection mode in use."
+        },
+        {
+            "token": "{signal_quality}",
+            "description": "Signal quality (0-100)."
+        },
+        {
+            "token": "{operator_name}",
+            "description": "Name of the network operator."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon selected from format-icons according to the signal quality."
+        },
+        {
+            "token": "{power_state}",
+            "description": "Modem power state (On/Off/Low/Unknown)."
+        },
+        {
+            "token": "{imei}",
+            "description": "Modem equipment identifier (IMEI)."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{state}",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-failed": {
+            "label": "What to show when failed",
+            "type": "string",
+            "doc": "This format is used when the modem cannot start.",
+            "group": "Display",
+            "description": "This format is used when the modem cannot start."
+        },
+        "format-locked": {
+            "label": "What to show when locked",
+            "type": "string",
+            "doc": "This format is used when the SIM on the modem is locked.",
+            "group": "Display",
+            "description": "This format is used when the SIM on the modem is locked."
+        },
+        "format-disabled": {
+            "label": "What to show when turned off",
+            "type": "string",
+            "doc": "This format is used when the modem is disabled.",
+            "group": "Display",
+            "description": "This format is used when the modem is disabled."
+        },
+        "format-enabled": {
+            "label": "What to show when enabled",
+            "type": "string",
+            "doc": "This format is used when the modem is enabled, but isn't registered to any carrier network.",
+            "group": "Display",
+            "description": "This format is used when the modem is enabled, but isn't registered to any carrier network."
+        },
+        "format-searching": {
+            "label": "What to show when searching",
+            "type": "string",
+            "doc": "This format is used when the modem is looking for a carrier network to register to.",
+            "group": "Display",
+            "description": "This format is used when the modem is looking for a carrier network to register to."
+        },
+        "format-registered": {
+            "label": "What to show when registered",
+            "type": "string",
+            "doc": "This format is used when the modem is registered to a network, but no data connection is active.",
+            "group": "Display",
+            "description": "This format is used when the modem is registered to a network, but no data connection is active."
+        },
+        "format-connected": {
+            "label": "What to show when connected",
+            "type": "string",
+            "doc": "This format is used when the modem is registered to a network, and there is an active data connection.",
+            "group": "Display",
+            "description": "This format is used when the modem is registered to a network, and there is an active data connection."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "also_accepts": [
+                "object"
+            ],
+            "doc": "Based on the current signal strength, the corresponding icon gets selected. The order is low to high. Or by the state if it is an object.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{state}",
+            "doc": "The format, how information should be displayed in the tooltip. This format is used when other formats aren't specified.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip-format-failed": {
+            "label": "Tooltip when failed",
+            "type": "string",
+            "doc": "This format is used when the modem cannot start.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem cannot start."
+        },
+        "tooltip-format-locked": {
+            "label": "Tooltip when locked",
+            "type": "string",
+            "doc": "This format is used when the SIM on the modem is locked.",
+            "group": "Tooltip",
+            "description": "This format is used when the SIM on the modem is locked."
+        },
+        "tooltip-format-disabled": {
+            "label": "Tooltip when turned off",
+            "type": "string",
+            "doc": "This format is used when the modem is disabled.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem is disabled."
+        },
+        "tooltip-format-enabled": {
+            "label": "Tooltip when enabled",
+            "type": "string",
+            "doc": "This format is used when the modem is enabled, but isn't registered to any carrier network.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem is enabled, but isn't registered to any carrier network."
+        },
+        "tooltip-format-searching": {
+            "label": "Tooltip when searching",
+            "type": "string",
+            "doc": "This format is used when the modem is looking for a carrier network to register to.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem is looking for a carrier network to register to."
+        },
+        "tooltip-format-registered": {
+            "label": "Tooltip when registered",
+            "type": "string",
+            "doc": "This format is used when the modem is registered to a network, but no data connection is active.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem is registered to a network, but no data connection is active."
+        },
+        "tooltip-format-connected": {
+            "label": "Tooltip when connected",
+            "type": "string",
+            "doc": "This format is used when the modem is registered to a network, and there is an active data connection.",
+            "group": "Tooltip",
+            "description": "This format is used when the modem is registered to a network, and there is an active data connection."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 5,
+            "doc": "The interval in which the WWAN information gets polled (e.g. carrier name).",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "imei": {
+            "label": "Imei",
+            "type": "string",
+            "doc": "Select only the modem with the corresponding imei.",
+            "group": "Behavior",
+            "description": "Select only the modem with the corresponding imei."
+        },
+        "path": {
+            "label": "Path",
+            "type": "string",
+            "doc": "Select only the modem with the corresponding hardware path.",
+            "group": "Behavior",
+            "description": "Select only the modem with the corresponding hardware path."
+        },
+        "hide-disconnected": {
+            "label": "Hide disconnected",
+            "type": "boolean",
+            "default": true,
+            "doc": "Defines if the module should be hidden while the modem does not have an active data connection.",
+            "group": "Behavior",
+            "description": "Defines if the module should be hidden while the modem does not have an active data connection."
+        }
+    }
+}

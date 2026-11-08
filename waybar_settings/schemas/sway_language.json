@@ -1,0 +1,140 @@
+{
+    "module": "sway/language",
+    "title": "Language",
+    "description": "The language module displays the current keyboard layout in Sway",
+    "manual": "waybar-sway-language(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{short}",
+            "description": "Short name of layout (e.g. \"us\"). Equals to {}."
+        },
+        {
+            "token": "{shortDescription}",
+            "description": "Short description of layout (e.g. \"en\")."
+        },
+        {
+            "token": "{long}",
+            "description": "Long name of layout (e.g. \"English (Dvorak)\")."
+        },
+        {
+            "token": "{variant}",
+            "description": "Variant of layout (e.g. \"dvorak\")."
+        },
+        {
+            "token": "{flag}",
+            "description": "Country flag of layout."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The format, how layout should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "hide-single-layout": {
+            "label": "Hide single layout",
+            "type": "boolean",
+            "default": false,
+            "doc": "Defines visibility of the module if a single layout is configured",
+            "group": "Behavior",
+            "description": "Defines visibility of the module if a single layout is configured"
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{}",
+            "doc": "The format, how layout should be displayed in tooltip.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when you middle clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

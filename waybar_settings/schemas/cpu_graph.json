@@ -1,0 +1,114 @@
+{
+    "module": "cpu_graph",
+    "title": "CPU graph",
+    "description": "The cpu graph module displays a line graph with the CPU utilization.",
+    "manual": "waybar-cpu-graph(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "interval": {
+            "label": "Refresh every",
+            "type": "number",
+            "default": 5.0,
+            "doc": "The interval in which the information gets polled.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "graph_type": {
+            "label": "Graph type",
+            "type": "string",
+            "default": "line",
+            "doc": "The rendering style of the graph. One of 'line', 'bar', or 'gauge'.",
+            "group": "Behavior",
+            "description": "The rendering style of the graph. One of 'line', 'bar', or 'gauge'."
+        },
+        "width": {
+            "label": "Width",
+            "type": "integer",
+            "doc": "The length in pixels the module should display.",
+            "group": "Behavior",
+            "description": "The length in pixels the module should display."
+        },
+        "datapoints": {
+            "label": "Datapoints",
+            "type": "integer",
+            "doc": "How many data points to show.",
+            "group": "Behavior",
+            "description": "How many data points to show."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

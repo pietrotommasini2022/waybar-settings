@@ -1,0 +1,39 @@
+{
+    "module": "umbriel/layout",
+    "title": "Layout",
+    "description": "The layout module displays the layout of the active workspace on the bar's output.",
+    "manual": "waybar-umbriel-layout(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{layout}",
+            "description": "The active workspace's layout: scrolling, dwindle, master, or stacking."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The default format, how the layout should be displayed. The positional {} (the default) and {layout} are both replaced by the current layout name.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the module to consume all leftover space.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    },
+    "patterns": [
+        {
+            "pattern": "format-<layout>",
+            "label": "Format <layout>",
+            "description": "The custom format to use when a specific layout is active (for example, format-scrolling, format-dwindle, format-master, or format-stacking). Keys use Umbriel's lowercase layout names and are case-sensitive. If no match is found, it falls back to format."
+        }
+    ]
+}

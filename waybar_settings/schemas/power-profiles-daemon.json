@@ -1,0 +1,72 @@
+{
+    "module": "power-profiles-daemon",
+    "title": "Power profiles daemon",
+    "description": "The power-profiles-daemon module displays the active power-profiles-daemon profile and cycle through the available profiles on click.",
+    "manual": "waybar-power-profiles-daemon(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{profile}",
+            "description": "Active profile full name."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon (from format-icons) representing the active profile."
+        },
+        {
+            "token": "{cpu_driver}",
+            "description": "The CPU driver reported by recent power-profiles-daemon versions. (tooltip)"
+        },
+        {
+            "token": "{platform_driver}",
+            "description": "The platform driver reported by recent power-profiles-daemon versions. (tooltip)"
+        },
+        {
+            "token": "{driver}",
+            "description": "Kept for backward compatibility: resolves to the legacy single driver on older daemons and falls back to the CPU driver on recent ones. (tooltip)"
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{icon}",
+            "doc": "Message displayed on the bar. {icon} and {profile} are respectively substituted with the icon representing the active profile and its full name.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "Power profile: {profile}\nCPU driver: {cpu_driver}\nPlatform driver: {platform_driver}",
+            "doc": "Messaged displayed in the module tooltip. {icon} and {profile} are respectively substituted with the icon representing the active profile and its full name. {cpu_driver} and {platform_driver} are substituted with the CPU and platform drivers reported by recent power-profiles-daemon versions. {driver} is kept for backward compatibility: it resolves to the legacy single driver on older daemons and falls back to the CPU driver on recent ones.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Display the tooltip.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "object",
+            "default_note": "See default value in the example below.",
+            "doc": "Icons used to represent the various power-profile. Note: the default configuration uses the font-awesome icons. You may want to override it if you don't have this font installed on your system.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

@@ -1,0 +1,98 @@
+{
+    "module": "keyboard-state",
+    "title": "Keyboard state",
+    "description": "The keyboard-state module displays the state of number lock, caps lock, and scroll lock.",
+    "manual": "waybar-keyboard-state(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{name}",
+            "description": "Caps, Num, or Scroll."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        }
+    ],
+    "settings": {
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 1,
+            "doc": "Deprecated, this module uses event loop now, the interval has no effect. The interval, in seconds, to poll the keyboard state.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "also_accepts": [
+                "object"
+            ],
+            "default": "{name} {icon}",
+            "doc": "The format, how information should be displayed. If a string, the same format is used for all keyboard states. If an object, the fields \"numlock\", \"capslock\", and \"scrolllock\" each specify the format for the corresponding state. Any unspecified states use the default format.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "object",
+            "default_note": "{\"locked\": \"locked\", \"unlocked\": \"unlocked\"}",
+            "doc": "Based on the keyboard state, the corresponding icon gets selected. Supports two syntaxes: - Common format-icons: \"locked\" and \"unlocked\" keys apply to all lock types. - Per-lock-type format-icons: per-lock-type objects with \"numlock\", \"capslock\", \"scrolllock\" keys, each containing \"locked\" and \"unlocked\" icons. See icons.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "numlock": {
+            "label": "Numlock",
+            "type": "boolean",
+            "default": false,
+            "doc": "Display the number lock state.",
+            "group": "Behavior",
+            "description": "Display the number lock state."
+        },
+        "capslock": {
+            "label": "Capslock",
+            "type": "boolean",
+            "default": false,
+            "doc": "Display the caps lock state.",
+            "group": "Behavior",
+            "description": "Display the caps lock state."
+        },
+        "scrolllock": {
+            "label": "Scrolllock",
+            "type": "boolean",
+            "default": false,
+            "doc": "Display the scroll lock state.",
+            "group": "Behavior",
+            "description": "Display the scroll lock state."
+        },
+        "device-path": {
+            "label": "Device path",
+            "type": "string",
+            "default": "chooses first valid input device",
+            "doc": "Which libevdev input device to show the state of. Libevdev devices can be found in /dev/input. The device should support number lock, caps lock, and scroll lock events.",
+            "group": "Behavior",
+            "description": "Which libevdev input device to show the state of. Libevdev devices can be found in /dev/input. The device should support number lock, caps lock, and scroll lock events."
+        },
+        "binding-keys": {
+            "label": "Binding keys",
+            "type": "array",
+            "default_note": "[58, 69, 70]",
+            "doc": "Customize the key to trigger this module, the key number can be found in /usr/include/linux/input-event-codes.h or running sudo libinput debug-events --show-keycodes.",
+            "group": "Behavior",
+            "description": "Customize the key to trigger this module, the key number can be found in /usr/include/linux/input-event-codes.h or running sudo libinput debug-events --show-keycodes."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

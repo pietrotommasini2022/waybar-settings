@@ -1,0 +1,116 @@
+{
+    "module": "mango/workspaces",
+    "title": "Workspaces",
+    "description": "The workspaces module displays the tags (workspaces) of the Mango compositor. It shows an overview button when the overview mode is active (active tag is 0), and individual tag buttons otherwise.",
+    "manual": "waybar-mango-workspaces(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{value}",
+            "description": "Workspace index (same as {index} for unnamed workspaces)."
+        },
+        {
+            "token": "{name}",
+            "description": "Workspace name (equal to the index for unnamed workspaces in Mango)."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon selected from format-icons based on workspace index and state."
+        },
+        {
+            "token": "{index}",
+            "description": "Numeric index of the workspace."
+        },
+        {
+            "token": "{output}",
+            "description": "Name of the output where the workspace is located."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{value}",
+            "doc": "The format for each tag button. See FORMAT REPLACEMENTS.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "object",
+            "doc": "Icons to be used instead of the workspace index or name. Keys can be a workspace index (as a string), or one of the following special state keys: default, active, urgent, empty.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "disable-markup": {
+            "label": "Disable markup",
+            "type": "boolean",
+            "default": false,
+            "doc": "If true, the button label will not be interpreted as Pango markup.",
+            "group": "Behavior",
+            "description": "If true, the button label will not be interpreted as Pango markup."
+        },
+        "current-only": {
+            "label": "Current only",
+            "type": "boolean",
+            "default": false,
+            "doc": "If true, only the currently active workspace button is shown.",
+            "group": "Behavior",
+            "description": "If true, only the currently active workspace button is shown."
+        },
+        "hide-empty": {
+            "label": "Hide empty",
+            "type": "boolean",
+            "default": false,
+            "doc": "If true, buttons for empty (client_count == 0) workspaces are hidden, unless the workspace is active.",
+            "group": "Behavior",
+            "description": "If true, buttons for empty (client_count == 0) workspaces are hidden, unless the workspace is active."
+        },
+        "tag-filter": {
+            "label": "Tag filter",
+            "type": "string",
+            "default": "all tags",
+            "doc": "Only tags whose indices are included in this list are displayed. If omitted or empty, all tags are displayed. If a plain array is given, the same filter applies regardless of output. If an object is given, each key is an output name (as reported by the compositor) and its value is the list of visible tag indices for that output; outputs not present as a key are unfiltered.",
+            "group": "Behavior",
+            "description": "Only tags whose indices are included in this list are displayed. If omitted or empty, all tags are displayed. If a plain array is given, the same filter applies regardless of output. If an object is given, each key is an output name (as reported by the compositor) and its value is the list of visible tag indices for that output; outputs not present as a key are unfiltered."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute on left click. Typically set to activate or toggle.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command for middle click. Same actions as on-click.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command for right click. Same actions as on-click.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "overview-label": {
+            "label": "Overview label",
+            "type": "string",
+            "default": "OVERVIEW",
+            "doc": "Label shown on the overview button when the overview is active.",
+            "group": "Behavior",
+            "description": "Label shown on the overview button when the overview is active."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the module to consume leftover space.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

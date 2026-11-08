@@ -1,0 +1,103 @@
+{
+    "module": "hyprland/window",
+    "title": "Window title",
+    "description": "Shows the title of the window you are using.",
+    "manual": "waybar-hyprland-window(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{title}",
+            "description": "The window title."
+        },
+        {
+            "token": "{initialTitle}",
+            "description": "The title the window had when it opened."
+        },
+        {
+            "token": "{class}",
+            "description": "The app name (window class)."
+        },
+        {
+            "token": "{initialClass}",
+            "description": "The app name the window had when it opened."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{title}",
+            "doc": "The format, how information should be displayed. On {} the current window title is displayed.",
+            "group": "Display",
+            "description": "{title} is the window title, {class} the app name."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "rewrite": {
+            "label": "Title replacements",
+            "type": "object",
+            "doc": "Rules to rewrite window title. See rewrite rules.",
+            "group": "Behavior",
+            "description": "Rules that change titles before showing them, for example \"(.*) - Mozilla Firefox\" → \" $1\".",
+            "advanced": true
+        },
+        "separate-outputs": {
+            "label": "Per monitor",
+            "type": "boolean",
+            "doc": "Show the active window of the monitor the bar belongs to, instead of the focused window.",
+            "group": "Behavior",
+            "description": "Show the window of this bar's monitor, not the one you are using."
+        },
+        "fallback": {
+            "label": "Text when no window",
+            "type": "string",
+            "doc": "Text to display when the focused window title is empty (for example when no window is focused).",
+            "group": "Behavior",
+            "description": "Shown when no window is focused, for example on an empty desktop."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default_note": "(the formatted label text)",
+            "doc": "The format of the tooltip shown on hover. Supports the same replacements as format. Requires tooltip to be enabled. When unset, the tooltip falls back to the formatted label text.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "icon": {
+            "label": "Show app icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to hide the application icon.",
+            "group": "Behavior",
+            "description": "Option to hide the application icon."
+        },
+        "icon-size": {
+            "label": "App icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "Option to change the size of the application icon.",
+            "group": "Behavior",
+            "unit": "pixels",
+            "min": 8,
+            "max": 64,
+            "description": "Option to change the size of the application icon."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

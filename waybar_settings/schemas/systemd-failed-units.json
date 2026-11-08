@@ -1,0 +1,182 @@
+{
+    "module": "systemd-failed-units",
+    "title": "Systemd failed units",
+    "description": "The systemd-failed-units module displays the number of failed systemd units.",
+    "manual": "waybar-systemd-failed-units(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{nr_failed_system}",
+            "description": "Number of failed units from systemwide (PID=1) systemd."
+        },
+        {
+            "token": "{nr_failed_user}",
+            "description": "Number of failed units from user systemd."
+        },
+        {
+            "token": "{nr_failed}",
+            "description": "Number of total failed units."
+        },
+        {
+            "token": "{system_state}",
+            "description": "* State of the systemd system session."
+        },
+        {
+            "token": "{user_state}",
+            "description": "* State of the systemd user session."
+        },
+        {
+            "token": "{overall_state}",
+            "description": "* Overall state of the systemd and user session. (\"ok\" or \"degraded\")"
+        },
+        {
+            "token": "{failed_units_list}",
+            "description": "Bulleted list of failed units using tooltip-unit-format. Empty when there are no failed units. This replacement is only available in tooltip-format and tooltip-format-ok; it is not supplied to format/format-ok* and using it there breaks label rendering."
+        },
+        {
+            "token": "{name}",
+            "description": "Unit name"
+        },
+        {
+            "token": "{description}",
+            "description": "Unit description"
+        },
+        {
+            "token": "{load_state}",
+            "description": "Unit load state"
+        },
+        {
+            "token": "{active_state}",
+            "description": "Unit active state"
+        },
+        {
+            "token": "{sub_state}",
+            "description": "Unit sub state"
+        },
+        {
+            "token": "{scope}",
+            "description": "Either system or user depending on where the unit originated"
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{nr_failed} failed",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-ok": {
+            "label": "What to show when ok",
+            "type": "string",
+            "doc": "This format is used when there are no failing units.",
+            "group": "Display",
+            "description": "This format is used when there are no failing units."
+        },
+        "user": {
+            "label": "User",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to count user systemd units.",
+            "group": "Behavior",
+            "description": "Option to count user systemd units."
+        },
+        "system": {
+            "label": "System",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to count systemwide (PID=1) systemd units.",
+            "group": "Behavior",
+            "description": "Option to count systemwide (PID=1) systemd units."
+        },
+        "hide-on-ok": {
+            "label": "Hide on ok",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to hide this module when there are no failed units.",
+            "group": "Behavior",
+            "description": "Option to hide this module when there are no failed units."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "System: {system_state}\nUser: {user_state}\nFailed units ({nr_failed}):\n{failed_units_list}",
+            "doc": "Tooltip format shown when there are failed units.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip-format-ok": {
+            "label": "Tooltip when ok",
+            "type": "string",
+            "default": "System: {system_state}\nUser: {user_state}",
+            "doc": "Tooltip format used when there are no failed units.",
+            "group": "Tooltip",
+            "description": "Tooltip format used when there are no failed units."
+        },
+        "tooltip-unit-format": {
+            "label": "Tooltip unit format",
+            "type": "string",
+            "default": "{name}: {description}",
+            "doc": "Format used to render each failed unit inside the tooltip. Each item is prefixed with a bullet.",
+            "group": "Tooltip",
+            "description": "Format used to render each failed unit inside the tooltip. Each item is prefixed with a bullet."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that pops up the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There needs to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all leftover space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

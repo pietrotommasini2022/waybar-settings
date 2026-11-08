@@ -1,0 +1,184 @@
+{
+    "module": "river/window",
+    "title": "Window",
+    "description": "The window module displays the title of the currently focused window in river",
+    "manual": "waybar-river-window(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The format, how information should be displayed. On {} data gets inserted.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to enable tooltip on hover. The tooltip shows the same text as the module label.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

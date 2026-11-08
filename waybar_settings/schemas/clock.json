@@ -1,0 +1,499 @@
+{
+    "module": "clock",
+    "title": "Clock",
+    "description": "Shows the current time and date. Hover it to see a calendar.",
+    "manual": "waybar-clock(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{calendar}",
+            "description": "A calendar of the current month (use it in the popup)."
+        },
+        {
+            "token": "{tz_list}",
+            "description": "The time in your other time zones."
+        },
+        {
+            "token": "{ordinal_date}",
+            "description": "Today's day as an English ordinal, like 21st."
+        }
+    ],
+    "settings": {
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 60,
+            "doc": "The interval in which the information gets polled",
+            "group": "Behavior",
+            "description": "How often the clock updates. Use 1 if you show seconds, otherwise 60 is enough.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 3600
+        },
+        "format": {
+            "label": "Time format",
+            "type": "string",
+            "default": "{:%H:%M}",
+            "doc": "The format, how the date and time should be displayed. See format options below. Split the braces to insert literal text, e.g. {0:%H}text{0:%M}",
+            "group": "Display",
+            "description": "How the time looks in the bar. {:%H:%M} means hours and minutes, like 14:30. Pick a preset or write your own.",
+            "presets": [
+                {
+                    "value": "{:%H:%M}",
+                    "label": "14:30"
+                },
+                {
+                    "value": "{:%H:%M:%S}",
+                    "label": "14:30:05"
+                },
+                {
+                    "value": "{:%I:%M %p}",
+                    "label": "02:30 PM"
+                },
+                {
+                    "value": "{:%a %d %b  %H:%M}",
+                    "label": "Sun 08 Nov  14:30"
+                },
+                {
+                    "value": "{:%d/%m/%Y}",
+                    "label": "08/11/2026"
+                },
+                {
+                    "value": "{:%A, %d %B %Y}",
+                    "label": "Sunday, 08 November 2026"
+                }
+            ]
+        },
+        "timezone": {
+            "label": "Time zone",
+            "type": "string",
+            "doc": "The timezone to display the time in, e.g. America/New_York. \"\" represents the system's local timezone. See Wikipedia's unofficial list of timezones <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>",
+            "group": "Time zone",
+            "description": "Show the time of another place, like Europe/Rome or America/New_York. Empty means your computer's time zone."
+        },
+        "timezones": {
+            "label": "Time zones to switch between",
+            "type": "array",
+            "doc": "A list of timezones (as in timezone) to use for time display, changed using the scroll wheel. Do not specify timezone option when timezones is specified. \"\" represents the system's local timezone",
+            "group": "Time zone",
+            "description": "A list of time zones you can cycle through by scrolling on the clock. Don't use it together with \"Time zone\".",
+            "advanced": true
+        },
+        "timezone-tooltip-format": {
+            "label": "Time zone tooltip format",
+            "type": "string",
+            "doc": "Format to use for displaying timezones in the tooltip. When set, this allows showing timezone information (like timezone abbreviations) in the tooltip while keeping the main display clean. Uses the same format options as format",
+            "group": "Time zone",
+            "description": "How each time zone is written in the popup.",
+            "advanced": true
+        },
+        "locale": {
+            "label": "Language for dates",
+            "type": "string",
+            "doc": "A locale to be used to display the time. Intended to render times in custom timezones with the proper language and format",
+            "group": "Time zone",
+            "description": "The language used for day and month names, for example it_IT.UTF-8 for Italian or en_US.UTF-8 for English."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments)",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when you middle clicked on the module using mousewheel",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to enable tooltip on hover",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Popup text",
+            "type": "string",
+            "default_note": "same as format",
+            "doc": "Tooltip on hover",
+            "group": "Tooltip",
+            "description": "What you see when you hover the clock. Use {calendar} to show a calendar.",
+            "presets": [
+                {
+                    "value": "<tt>{calendar}</tt>",
+                    "label": "Calendar"
+                },
+                {
+                    "value": "{:%A, %d %B %Y}",
+                    "label": "Full date"
+                }
+            ]
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "calendar": {
+            "label": "Calendar",
+            "type": "object",
+            "group": "Calendar",
+            "description": "Options for the calendar shown in the popup.",
+            "settings": {
+                "mode": {
+                    "label": "Calendar view",
+                    "type": "enum",
+                    "default": "month",
+                    "doc": "Calendar view mode. Possible values: year|month",
+                    "group": "Behavior",
+                    "description": "Show one month or the whole year.",
+                    "options": [
+                        {
+                            "value": "month",
+                            "label": "One month"
+                        },
+                        {
+                            "value": "year",
+                            "label": "Whole year"
+                        }
+                    ]
+                },
+                "mode-mon-col": {
+                    "label": "Months per row",
+                    "type": "enum",
+                    "default": 1,
+                    "doc": "Relevant for mode=year. Count of months per row. Must be a divisor of 12 (one of 1, 2, 3, 4, 6, 12); an invalid value falls back to 3",
+                    "group": "Behavior",
+                    "description": "When showing the whole year, how many months go on each row.",
+                    "options": [
+                        {
+                            "value": 1,
+                            "label": "1"
+                        },
+                        {
+                            "value": 2,
+                            "label": "2"
+                        },
+                        {
+                            "value": 3,
+                            "label": "3"
+                        },
+                        {
+                            "value": 4,
+                            "label": "4"
+                        },
+                        {
+                            "value": 6,
+                            "label": "6"
+                        },
+                        {
+                            "value": 12,
+                            "label": "12"
+                        }
+                    ]
+                },
+                "weeks-pos": {
+                    "label": "Week numbers",
+                    "type": "enum",
+                    "doc": "The position where week numbers should be displayed. Disabled when is empty. Possible values: left|right",
+                    "group": "Behavior",
+                    "description": "Show the week number next to each week.",
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Hidden"
+                        },
+                        {
+                            "value": "left",
+                            "label": "On the left"
+                        },
+                        {
+                            "value": "right",
+                            "label": "On the right"
+                        }
+                    ]
+                },
+                "on-scroll": {
+                    "label": "Scroll step",
+                    "type": "integer",
+                    "default": 1,
+                    "doc": "Value to scroll months/years forward/backward. Can be negative. Is configured under on-scroll option",
+                    "group": "Click & scroll",
+                    "description": "How many months (or years) to move for each scroll. A negative number reverses the direction.",
+                    "unit": "months",
+                    "min": -12,
+                    "max": 12
+                },
+                "iso8601": {
+                    "label": "Weeks start on Monday (ISO)",
+                    "type": "boolean",
+                    "default": false,
+                    "doc": "When enabled, the calendar follows the ISO 8601 standard: weeks begin on Monday, and the first week of the year is numbered 1. The default week format is '{:%V}'.",
+                    "group": "Behavior",
+                    "description": "Use the international standard: weeks start on Monday and week numbers follow ISO rules."
+                },
+                "weeks-numbering": {
+                    "label": "Week numbering",
+                    "type": "enum",
+                    "doc": "Override the week number calculation method, independent of iso8601 and locale settings. Possible values: iso (ISO 8601, {:%V}), monday (Monday-based, {:%W}), sunday (Sunday-based, {:%U}). When not set, the method is derived from iso8601 or the locale.",
+                    "group": "Behavior",
+                    "description": "Which rule is used to count the weeks of the year.",
+                    "advanced": true,
+                    "options": [
+                        {
+                            "value": "",
+                            "label": "Automatic"
+                        },
+                        {
+                            "value": "iso",
+                            "label": "ISO 8601"
+                        },
+                        {
+                            "value": "monday",
+                            "label": "Weeks start on Monday"
+                        },
+                        {
+                            "value": "sunday",
+                            "label": "Weeks start on Sunday"
+                        }
+                    ]
+                },
+                "first-day-of-week": {
+                    "label": "First day of the week",
+                    "type": "enum",
+                    "doc": "The first day of the week, where 0 is Sunday and 6 is Saturday. When not set, the first day of the week is determined by the locale settings.",
+                    "group": "Behavior",
+                    "description": "The day each week starts with. Leave it unset to follow your language settings.",
+                    "options": [
+                        {
+                            "value": 1,
+                            "label": "Monday"
+                        },
+                        {
+                            "value": 2,
+                            "label": "Tuesday"
+                        },
+                        {
+                            "value": 3,
+                            "label": "Wednesday"
+                        },
+                        {
+                            "value": 4,
+                            "label": "Thursday"
+                        },
+                        {
+                            "value": 5,
+                            "label": "Friday"
+                        },
+                        {
+                            "value": 6,
+                            "label": "Saturday"
+                        },
+                        {
+                            "value": 0,
+                            "label": "Sunday"
+                        }
+                    ]
+                },
+                "format": {
+                    "label": "Calendar look",
+                    "type": "object",
+                    "group": "Display",
+                    "description": "How each part of the calendar is written. You can use Pango markup like <b>bold</b> or colors.",
+                    "advanced": true,
+                    "settings": {
+                        "months": {
+                            "label": "Month name",
+                            "type": "string",
+                            "doc": "Format is applied to months header(January, February,...etc.)",
+                            "group": "Behavior",
+                            "description": "Format is applied to months header(January, February,...etc.)"
+                        },
+                        "days": {
+                            "label": "Day numbers",
+                            "type": "string",
+                            "doc": "Format is applied to days",
+                            "group": "Behavior",
+                            "description": "Format is applied to days"
+                        },
+                        "weeks": {
+                            "label": "Week numbers",
+                            "type": "string",
+                            "default": "{:%U}",
+                            "doc": "Format is applied to week numbers. The {} placeholder is replaced with the format determined by weeks-numbering (if set), otherwise by iso8601 or the locale: '{:%V}' for ISO 8601, '{:%W}' when week starts with Monday, '{:%U}' otherwise",
+                            "group": "Behavior",
+                            "description": "Format is applied to week numbers. The {} placeholder is replaced with the format determined by weeks-numbering (if set), otherwise by iso8601 or the locale: '{:%V}' for ISO 8601, '{:%W}' when week starts with Monday, '{:%U}' otherwise"
+                        },
+                        "weekdays": {
+                            "label": "Day names",
+                            "type": "string",
+                            "doc": "Format is applied to weeks header(Su,Mo,...etc.)",
+                            "group": "Behavior",
+                            "description": "Format is applied to weeks header(Su,Mo,...etc.)"
+                        },
+                        "today": {
+                            "label": "Today",
+                            "type": "string",
+                            "default": "<b><u>{}</u></b>",
+                            "doc": "Format is applied to Today",
+                            "group": "Behavior",
+                            "description": "How today's date is highlighted."
+                        }
+                    }
+                }
+            }
+        },
+        "format-alt": {
+            "label": "Format after a click",
+            "type": "string",
+            "group": "Display",
+            "description": "Click the clock to switch to this format, for example the full date.",
+            "presets": [
+                {
+                    "value": "{:%a %d %b}",
+                    "label": "Sun 08 Nov"
+                },
+                {
+                    "value": "{:%d/%m/%Y}",
+                    "label": "08/11/2026"
+                },
+                {
+                    "value": "{:%A, %d %B %Y}",
+                    "label": "Sunday, 08 November 2026"
+                }
+            ]
+        },
+        "actions": {
+            "label": "Mouse actions on the calendar",
+            "type": "object",
+            "group": "Calendar",
+            "description": "What clicking or scrolling does on the clock: switch the calendar view (mode), change time zone (tz_up, tz_down) or move between months (shift_up, shift_down).",
+            "advanced": true
+        }
+    }
+}

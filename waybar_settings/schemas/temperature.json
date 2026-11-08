@@ -1,0 +1,338 @@
+{
+    "module": "temperature",
+    "title": "Temperature",
+    "description": "The temperature module displays the current temperature from a thermal zone.",
+    "manual": "waybar-temperature(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{temperatureC}",
+            "description": "Temperature in Celsius."
+        },
+        {
+            "token": "{temperatureF}",
+            "description": "Temperature in Fahrenheit."
+        },
+        {
+            "token": "{temperatureK}",
+            "description": "Temperature in Kelvin."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as selected from format-icons based on the current temperature."
+        }
+    ],
+    "settings": {
+        "thermal-zone": {
+            "label": "Thermal zone",
+            "type": "integer",
+            "doc": "The thermal zone, as in /sys/class/thermal/.",
+            "group": "Behavior",
+            "description": "The thermal zone, as in /sys/class/thermal/."
+        },
+        "hwmon-path": {
+            "label": "Hwmon path",
+            "type": "string",
+            "doc": "The temperature path to use, e.g. /sys/class/hwmon/hwmon2/temp1_input instead of one in /sys/class/thermal/. This can also be an array of strings. In this case, waybar will check each item in the array and use the first valid one. This is suitable if you want to share the same configuration file among different machines with different hardware configurations.",
+            "group": "Behavior",
+            "description": "The temperature path to use, e.g. /sys/class/hwmon/hwmon2/temp1_input instead of one in /sys/class/thermal/. This can also be an array of strings. In this case, waybar will check each item in the array and use the first valid one. This is suitable if you want to share the same configuration file among different machines with different hardware configurations."
+        },
+        "hwmon-path-abs": {
+            "label": "Hwmon path abs",
+            "type": "string",
+            "doc": "The path of the hwmon-directory of the device, e.g. /sys/devices/pci0000:00/0000:00:18.3/hwmon. (Note that the subdirectory hwmon/hwmon#, where # is a number is not part of the path!) Has to be used together with input-filename. This can also be an array of strings, for which, it just works like hwmon-path.",
+            "group": "Behavior",
+            "description": "The path of the hwmon-directory of the device, e.g. /sys/devices/pci0000:00/0000:00:18.3/hwmon. (Note that the subdirectory hwmon/hwmon#, where # is a number is not part of the path!) Has to be used together with input-filename. This can also be an array of strings, for which, it just works like hwmon-path."
+        },
+        "hwmon-name": {
+            "label": "Hwmon name",
+            "type": "string",
+            "doc": "Select a hwmon device by its name (from /sys/class/hwmon//name), e.g. amdgpu. Requires input-filename to be set. Cannot be used together with hwmon-path or hwmon-path-abs*.",
+            "group": "Behavior",
+            "description": "Select a hwmon device by its name (from /sys/class/hwmon//name), e.g. amdgpu. Requires input-filename to be set. Cannot be used together with hwmon-path or hwmon-path-abs*."
+        },
+        "input-filename": {
+            "label": "Input filename",
+            "type": "string",
+            "doc": "The temperature filename of your hwmon-path-abs (also used by hwmon-by-name), e.g. temp1_input",
+            "group": "Behavior",
+            "description": "The temperature filename of your hwmon-path-abs (also used by hwmon-by-name), e.g. temp1_input"
+        },
+        "hwmon-by-name": {
+            "label": "Hwmon by name",
+            "type": "string",
+            "doc": "The substring to search for in /sys/class/hwmon/hwmonX/name (where hwmonX is any folder in /sys/class/hwmon/). Waybar will search for every directory in /sys/class/hwmon/ and uses the directory in which the name matches hwmon-by-name.",
+            "group": "Behavior",
+            "description": "The substring to search for in /sys/class/hwmon/hwmonX/name (where hwmonX is any folder in /sys/class/hwmon/). Waybar will search for every directory in /sys/class/hwmon/ and uses the directory in which the name matches hwmon-by-name."
+        },
+        "warning-threshold": {
+            "label": "Warning threshold",
+            "type": "integer",
+            "doc": "The threshold before it is considered warning (Celsius).",
+            "group": "Behavior",
+            "description": "The threshold before it is considered warning (Celsius)."
+        },
+        "critical-threshold": {
+            "label": "Critical threshold",
+            "type": "integer",
+            "doc": "The threshold before it is considered critical (Celsius).",
+            "group": "Behavior",
+            "description": "The threshold before it is considered critical (Celsius)."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "number",
+            "default": 10.0,
+            "doc": "The interval in which the information gets polled.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "disable-on-sleep": {
+            "label": "Disable on sleep",
+            "type": "boolean",
+            "default": false,
+            "doc": "Pause polling while the bar is unmapped from its output, e.g. when the output is disabled or disconnected, and resume once the bar is mapped again. Turning an output off with DPMS does not necessarily unmap the bar: on Hyprland, for example, the bar stays mapped and polling continues while the display is powered off.",
+            "group": "Behavior",
+            "description": "Pause polling while the bar is unmapped from its output, e.g. when the output is disabled or disconnected, and resume once the bar is mapped again. Turning an output off with DPMS does not necessarily unmap the bar: on Hyprland, for example, the bar stays mapped and polling continues while the display is powered off."
+        },
+        "format-warning": {
+            "label": "What to show when low",
+            "type": "string",
+            "doc": "The format to use when temperature is considered warning",
+            "group": "Display",
+            "description": "The format to use when temperature is considered warning"
+        },
+        "format-critical": {
+            "label": "What to show when critical",
+            "type": "string",
+            "doc": "The format to use when temperature is considered critical",
+            "group": "Display",
+            "description": "The format to use when temperature is considered critical"
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{temperatureC}°C",
+            "doc": "The format (Celsius/Fahrenheit/Kelvin) in which the temperature should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the current temperature (Celsius) and critical-threshold if available, the corresponding icon gets selected. The order is low to high.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{temperatureC}°C",
+            "doc": "The format for the tooltip",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in characters the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when you click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

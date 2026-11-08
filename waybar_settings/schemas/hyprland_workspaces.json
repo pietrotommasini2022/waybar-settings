@@ -1,0 +1,384 @@
+{
+    "module": "hyprland/workspaces",
+    "title": "Workspaces",
+    "description": "Shows your Hyprland workspaces. Click one to go there.",
+    "manual": "waybar-hyprland-workspaces(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{id}",
+            "description": "The workspace number."
+        },
+        {
+            "token": "{name}",
+            "description": "The workspace name or number."
+        },
+        {
+            "token": "{icon}",
+            "description": "The icon from \"Icons\" for this workspace."
+        },
+        {
+            "token": "{windows}",
+            "description": "Icons of the apps open in the workspace (see \"Window icons\")."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show for each workspace",
+            "type": "string",
+            "default": "{name}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "For example {name} for the number, or {icon} for the icons below."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "object",
+            "doc": "Based on the workspace ID and state, the corresponding icon gets selected. See icons.",
+            "group": "Display",
+            "description": "An icon for each workspace (by number or name), or for states like \"active\", \"urgent\", \"empty\" and \"default\"."
+        },
+        "window-rewrite": {
+            "label": "Window icons",
+            "type": "object",
+            "doc": "Regex rules to map window class to an icon or preferred method of representation for a workspace's window. Keys are the rules, while the values are the methods of representation. Values may use the placeholders {class} and {title} to use the window's original class and/or title respectively. Rules may specify class<...>, title<...>, or both in order to fine-tune the matching. You may assign an empty value to a rule to have it ignored from generating any representation in workspaces. This setting is ignored if workspace-taskbar.enable is set to true.",
+            "group": "Windows",
+            "description": "Show an icon for the apps open in each workspace. For example \"class<firefox>\" → a browser icon. Use {windows} in the format to show them."
+        },
+        "window-rewrite-default": {
+            "label": "Icon for other apps",
+            "type": "string",
+            "default": "?",
+            "doc": "The default method of representation for a workspace's window. This will be used for windows whose classes do not match any of the rules in window-rewrite. This setting is ignored if workspace-taskbar.enable is set to true.",
+            "group": "Windows",
+            "description": "The default method of representation for a workspace's window. This will be used for windows whose classes do not match any of the rules in window-rewrite. This setting is ignored if workspace-taskbar.enable is set to true."
+        },
+        "format-window-separator": {
+            "label": "Separator between app icons",
+            "type": "string",
+            "default": " ",
+            "doc": "The separator to be used between windows in a workspace. This setting is ignored if workspace-taskbar.enable is set to true.",
+            "group": "Windows",
+            "description": "The separator to be used between windows in a workspace. This setting is ignored if workspace-taskbar.enable is set to true."
+        },
+        "window-rewrite-group-threshold": {
+            "label": "Group repeated apps from",
+            "type": "integer",
+            "default": 0,
+            "doc": "When a workspace contains at least this many windows with the same rewrite result, they are collapsed into a single one using window-rewrite-group-format. Set to 0 to disable grouping. This setting is ignored if workspace-taskbar.enable is set to true.",
+            "group": "Windows",
+            "description": "When an app has this many windows, show it once with a counter. 0 turns it off.",
+            "advanced": true,
+            "unit": "windows",
+            "min": 0,
+            "max": 50
+        },
+        "window-rewrite-group-format": {
+            "label": "Grouped app format",
+            "type": "string",
+            "default": "{icon}×{count}",
+            "doc": "The format used to represent a group of collapsed windows. Available placeholders are {icon} (the icon being grouped) and {count} (how many windows share it). This setting is ignored if workspace-taskbar.enable is set to true.",
+            "group": "Windows",
+            "advanced": true,
+            "description": "The format used to represent a group of collapsed windows. Available placeholders are {icon} (the icon being grouped) and {count} (how many windows share it). This setting is ignored if workspace-taskbar.enable is set to true."
+        },
+        "workspace-taskbar": {
+            "label": "Taskbar mode",
+            "type": "object",
+            "doc": "Contains settings for the workspace taskbar, an alternative mode for the workspaces module which displays the window icons as images instead of text.",
+            "group": "Windows",
+            "description": "Show real app icons (images) instead of text icons.",
+            "advanced": true,
+            "settings": {
+                "enable": {
+                    "label": "Enable",
+                    "type": "boolean",
+                    "default": false,
+                    "doc": "Enables the workspace taskbar mode.",
+                    "group": "Behavior",
+                    "description": "Enables the workspace taskbar mode."
+                },
+                "update-active-window": {
+                    "label": "Update active window",
+                    "type": "boolean",
+                    "default": false,
+                    "doc": "If true, the active/focused window will have an 'active' class. Could cause higher CPU usage due to more frequent redraws.",
+                    "group": "Behavior",
+                    "description": "If true, the active/focused window will have an 'active' class. Could cause higher CPU usage due to more frequent redraws."
+                },
+                "reverse-direction": {
+                    "label": "Reverse direction",
+                    "type": "boolean",
+                    "default": false,
+                    "doc": "If true, the taskbar windows will be added in reverse order (right to left if orientation is horizontal, bottom to top if vertical).",
+                    "group": "Behavior",
+                    "description": "If true, the taskbar windows will be added in reverse order (right to left if orientation is horizontal, bottom to top if vertical)."
+                },
+                "active-window-position": {
+                    "label": "Active window position",
+                    "type": "enum",
+                    "options": [
+                        {
+                            "value": "none",
+                            "label": "None"
+                        },
+                        {
+                            "value": "first",
+                            "label": "First"
+                        },
+                        {
+                            "value": "last",
+                            "label": "Last"
+                        }
+                    ],
+                    "default": "none",
+                    "doc": "If set to \"first\", the active window will be moved at the beginning of the taskbar. If set to \"last\", it will be moved at the end. It will only work if update-active-window is set to true.",
+                    "group": "Behavior",
+                    "description": "If set to \"first\", the active window will be moved at the beginning of the taskbar. If set to \"last\", it will be moved at the end. It will only work if update-active-window is set to true."
+                },
+                "format": {
+                    "label": "Format",
+                    "type": "string",
+                    "default": "{icon}",
+                    "doc": "Format to use for each window in the workspace taskbar. Available placeholders are {icon} and {title}.",
+                    "group": "Display",
+                    "description": "Format to use for each window in the workspace taskbar. Available placeholders are {icon} and {title}."
+                },
+                "icon-size": {
+                    "label": "Icon size",
+                    "type": "integer",
+                    "default": 16,
+                    "doc": "Size of the icons in the workspace taskbar.",
+                    "group": "Behavior",
+                    "description": "Size of the icons in the workspace taskbar."
+                },
+                "max-icons": {
+                    "label": "Max icons",
+                    "type": "integer",
+                    "default": 0,
+                    "default_note": "0 means unlimited",
+                    "doc": "Maximum number of icons to show per workspace. When set, duplicate icons (windows with the same class) are removed first, then the list is trimmed to this limit. Set to 0 for unlimited icons.",
+                    "group": "Behavior",
+                    "description": "Maximum number of icons to show per workspace. When set, duplicate icons (windows with the same class) are removed first, then the list is trimmed to this limit. Set to 0 for unlimited icons."
+                },
+                "icon-theme": {
+                    "label": "Icon theme",
+                    "type": "string",
+                    "also_accepts": [
+                        "array"
+                    ],
+                    "default": "[]",
+                    "doc": "Icon theme to use for the workspace taskbar. If an array is provided, the first theme that is found for a given icon will be used. If no theme is found (or the array is empty), the default icon theme is used.",
+                    "group": "Behavior",
+                    "description": "Icon theme to use for the workspace taskbar. If an array is provided, the first theme that is found for a given icon will be used. If no theme is found (or the array is empty), the default icon theme is used."
+                },
+                "orientation": {
+                    "label": "Orientation",
+                    "type": "enum",
+                    "options": [
+                        {
+                            "value": "horizontal",
+                            "label": "Horizontal"
+                        },
+                        {
+                            "value": "vertical",
+                            "label": "Vertical"
+                        }
+                    ],
+                    "default": "horizontal",
+                    "doc": "Direction in which the workspace taskbar is displayed.",
+                    "group": "Behavior",
+                    "description": "Direction in which the workspace taskbar is displayed."
+                },
+                "ignore-list": {
+                    "label": "Ignore list",
+                    "type": "array",
+                    "default": [],
+                    "doc": "Regex patterns to match against window class or window title. If a window's class OR title matches any of the patterns, it will not be shown.",
+                    "group": "Behavior",
+                    "description": "Regex patterns to match against window class or window title. If a window's class OR title matches any of the patterns, it will not be shown."
+                },
+                "on-click-window": {
+                    "label": "On click window",
+                    "type": "string",
+                    "default": "",
+                    "doc": "Command to run when a window is clicked. Available placeholders are: - {address} Hyprland address of the clicked window. - {button} Pressed button number, see https://api.gtkd.org/gdk.c.types.GdkEventButton.button.html. See https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#workspace-taskbars-example for a full example.",
+                    "group": "Click & scroll",
+                    "description": "Command to run when a window is clicked. Available placeholders are: - {address} Hyprland address of the clicked window. - {button} Pressed button number, see https://api.gtkd.org/gdk.c.types.GdkEventButton.button.html. See https://github.com/Alexays/Waybar/wiki/Module:-Hyprland#workspace-taskbars-example for a full example."
+                }
+            }
+        },
+        "max-windows": {
+            "label": "Maximum app icons",
+            "type": "integer",
+            "default": 0,
+            "default_note": "0 means unlimited",
+            "doc": "Maximum number of windows to show per workspace. When set, newest windows beyond the limit are not shown. Set to 0 for unlimited windows.",
+            "group": "Windows",
+            "description": "0 means no limit.",
+            "min": 0,
+            "max": 50
+        },
+        "show-special": {
+            "label": "Show special workspaces",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, special workspaces will be shown.",
+            "group": "Behavior",
+            "description": "Also show Hyprland's special (scratchpad) workspaces."
+        },
+        "special-visible-only": {
+            "label": "Only when visible",
+            "type": "boolean",
+            "default": false,
+            "doc": "If this and show-special are to true, special workspaces will be shown only if visible.",
+            "group": "Behavior",
+            "description": "Show special workspaces only while they are open.",
+            "advanced": true
+        },
+        "persistent-only": {
+            "label": "Show only the ones above",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, only persistent workspaces will be shown on bar.",
+            "group": "Behavior",
+            "description": "Show only the \"always show\" workspaces.",
+            "advanced": true
+        },
+        "persistent-workspaces": {
+            "label": "Always show these workspaces",
+            "type": "object",
+            "doc": "Lists workspaces that should always be shown, even when they do not exist. Keys are workspace names and values are arrays of output names on which the workspace should be shown (an empty array means all outputs). See the examples below. Note: for persistent workspaces to actually work you must also declare them in your Hyprland config, e.g. workspace = 1, monitor:eDP-1, persistent:true.",
+            "group": "Behavior",
+            "description": "Workspaces that stay visible even when empty. For example 1 to 5 on every monitor."
+        },
+        "all-outputs": {
+            "label": "Show workspaces of all monitors",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false workspaces group will be shown only in assigned output. Otherwise, all workspace groups are shown.",
+            "group": "Behavior",
+            "description": "Each bar shows every workspace, not only those of its own monitor."
+        },
+        "active-only": {
+            "label": "Show only the current workspace",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, only the active workspace will be shown.",
+            "group": "Behavior",
+            "description": "If set to true, only the active workspace will be shown."
+        },
+        "hide-active": {
+            "label": "Hide the current workspace",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, the active workspace will be hidden. Unless a workspace is persistent or special.",
+            "group": "Behavior",
+            "advanced": true,
+            "description": "If set to true, the active workspace will be hidden. Unless a workspace is persistent or special."
+        },
+        "move-to-monitor": {
+            "label": "Open on this monitor",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, open the workspace on the current monitor when clicking on a workspace button. Otherwise, the workspace will open on the monitor where it was previously assigned. Analog to using focusworkspaceoncurrentmonitor dispatcher instead of workspace in Hyprland.",
+            "group": "Behavior",
+            "description": "Clicking a workspace brings it to the monitor you are on.",
+            "advanced": true
+        },
+        "unique-icons": {
+            "label": "One icon per app",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, only one instance of each window icon will be shown per workspace.",
+            "group": "Windows",
+            "description": "Show each app's icon only once per workspace."
+        },
+        "enable-bar-scroll": {
+            "label": "Scroll anywhere on the bar",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can't scroll to cycle throughout workspaces from the entire bar. If set to true this behaviour is enabled.",
+            "group": "Click & scroll",
+            "description": "Switch workspace by scrolling anywhere on the bar, not only on this module."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module. This replaces the default behaviour of workspace cycling.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module. This replaces the default behaviour of workspace cycling.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "ignore-workspaces": {
+            "label": "Hidden workspaces",
+            "type": "array",
+            "default": [],
+            "doc": "Regexes to match against workspaces names. If there's a match, the workspace will not be shown. This takes precedence over show-special, all-outputs, and active-only.",
+            "group": "Behavior",
+            "description": "Workspaces to never show, by name (patterns allowed).",
+            "advanced": true
+        },
+        "sort-by": {
+            "label": "Sort by",
+            "type": "enum",
+            "default": "default",
+            "doc": "If set to number, workspaces will sort by number. If set to name, workspaces will sort by name. If set to id, workspaces will sort numerically; workspaces that have no number are grouped after them as numbered, then named, then special. If set to special-centered, workspaces will sort by default with special workspaces in the center. If none of those, workspaces will sort with default behavior: grouped as numbered, then named, then special, and within a group by number where there is one and by name otherwise.",
+            "group": "Behavior",
+            "options": [
+                {
+                    "value": "default",
+                    "label": "Default"
+                },
+                {
+                    "value": "number",
+                    "label": "Number"
+                },
+                {
+                    "value": "name",
+                    "label": "Name"
+                },
+                {
+                    "value": "id",
+                    "label": "ID"
+                },
+                {
+                    "value": "special-centered",
+                    "label": "Special in the middle"
+                }
+            ],
+            "description": "If set to number, workspaces will sort by number. If set to name, workspaces will sort by name. If set to id, workspaces will sort numerically; workspaces that have no number are grouped after them as numbered, then named, then special. If set to special-centered, workspaces will sort by default with special workspaces in the center. If none of those, workspaces will sort with default behavior: grouped as numbered, then named, then special, and within a group by number where there is one and by name otherwise."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltips": {
+            "label": "Tooltip per workspace",
+            "type": "object",
+            "doc": "Based on the workspace ID and state, the corresponding tooltip gets selected. Selection works the same as format-icons do. Format replacements are supported. See icons.",
+            "group": "Tooltip",
+            "advanced": true,
+            "description": "Based on the workspace ID and state, the corresponding tooltip gets selected. Selection works the same as format-icons do. Format replacements are supported. See icons."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

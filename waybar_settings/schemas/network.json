@@ -1,0 +1,468 @@
+{
+    "module": "network",
+    "title": "Network",
+    "description": "Shows your Wi-Fi or cable connection: network name, signal and speed.",
+    "manual": "waybar-network(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{ifname}",
+            "description": "The network card name, like wlan0."
+        },
+        {
+            "token": "{ipaddr}",
+            "description": "Your IP address."
+        },
+        {
+            "token": "{gwaddr}",
+            "description": "The default gateway for the interface"
+        },
+        {
+            "token": "{netmask}",
+            "description": "The subnetmask corresponding to the IP(V4)."
+        },
+        {
+            "token": "{netmask6}",
+            "description": "The subnetmask corresponding to the IP(V6)."
+        },
+        {
+            "token": "{cidr}",
+            "description": "The subnetmask corresponding to the IP(V4) in CIDR notation."
+        },
+        {
+            "token": "{cidr6}",
+            "description": "The subnetmask corresponding to the IP(V6) in CIDR notation."
+        },
+        {
+            "token": "{essid}",
+            "description": "The Wi-Fi network name."
+        },
+        {
+            "token": "{bssid}",
+            "description": "MAC address (BSSID) of the wireless access point."
+        },
+        {
+            "token": "{signalStrength}",
+            "description": "Wi-Fi signal strength in percent."
+        },
+        {
+            "token": "{signaldBm}",
+            "description": "Signal strength of the wireless network in dBm."
+        },
+        {
+            "token": "{signalStrengthApp}",
+            "description": "Signal quality in words, like \"Great\"."
+        },
+        {
+            "token": "{frequency}",
+            "description": "Wi-Fi frequency in GHz (2.4 or 5)."
+        },
+        {
+            "token": "{bandwidthUpBits}",
+            "description": "Instant up speed in bits/seconds."
+        },
+        {
+            "token": "{bandwidthDownBits}",
+            "description": "Instant down speed in bits/seconds."
+        },
+        {
+            "token": "{bandwidthTotalBits}",
+            "description": "Instant total speed in bits/seconds."
+        },
+        {
+            "token": "{bandwidthUpOctets}",
+            "description": "Instant up speed in octets/seconds."
+        },
+        {
+            "token": "{bandwidthDownOctets}",
+            "description": "Instant down speed in octets/seconds."
+        },
+        {
+            "token": "{bandwidthTotalOctets}",
+            "description": "Instant total speed in octets/seconds."
+        },
+        {
+            "token": "{bandwidthUpBytes}",
+            "description": "Upload speed."
+        },
+        {
+            "token": "{bandwidthDownBytes}",
+            "description": "Download speed."
+        },
+        {
+            "token": "{bandwidthUpBytesCompact}",
+            "description": "Instant up speed in bytes/seconds, formatted compactly (e.g. 1.2K)."
+        },
+        {
+            "token": "{bandwidthDownBytesCompact}",
+            "description": "Instant down speed in bytes/seconds, formatted compactly (e.g. 1.2K)."
+        },
+        {
+            "token": "{bandwidthTotalBytes}",
+            "description": "Instant total speed in bytes/seconds."
+        },
+        {
+            "token": "{txBitrate}",
+            "description": "Link transmit bitrate (e.g., 866.7 Mb/s)."
+        },
+        {
+            "token": "{rxBitrate}",
+            "description": "Link receive bitrate (e.g., 866.7 Mb/s)."
+        },
+        {
+            "token": "{linkSpeed}",
+            "description": "Ethernet link speed."
+        },
+        {
+            "token": "{icon}",
+            "description": "An icon from \"Icons\" that matches the signal."
+        }
+    ],
+    "settings": {
+        "interface": {
+            "label": "Network card",
+            "type": "string",
+            "doc": "Use the defined interface instead of auto-detection. Accepts wildcard.",
+            "group": "Behavior",
+            "description": "Use a specific network card (like wlan0) instead of choosing one automatically. You can use * as a wildcard, like wl*.",
+            "advanced": true
+        },
+        "rfkill": {
+            "label": "Detect when Wi-Fi is switched off",
+            "type": "boolean",
+            "default": true,
+            "doc": "If enabled, the disabled format will be used when rfkill is blocking wlan interfaces.",
+            "group": "Behavior",
+            "description": "Use the \"turned off\" text when Wi-Fi is disabled, for example in airplane mode."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 60,
+            "doc": "The interval in which the network information gets polled (e.g. signal strength).",
+            "group": "Behavior",
+            "description": "How often the signal strength and speed are updated. Use a small value, like 2, if you show the speed.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 3600
+        },
+        "family": {
+            "label": "Address type",
+            "type": "enum",
+            "default": "ipv4",
+            "doc": "The address family that is used for the format replacement {ipaddr} and to determine if a network connection is present. Set it to ipv4_6 to display both.",
+            "group": "Behavior",
+            "description": "Which kind of IP address {ipaddr} shows.",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "ipv4",
+                    "label": "IPv4"
+                },
+                {
+                    "value": "ipv6",
+                    "label": "IPv6"
+                },
+                {
+                    "value": "ipv4_6",
+                    "label": "Both"
+                }
+            ]
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{ifname}",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "The default text, used when no more specific text below is set."
+        },
+        "format-ethernet": {
+            "label": "What to show on cable",
+            "type": "string",
+            "doc": "This format is used when an ethernet interface is displayed.",
+            "group": "Display",
+            "description": "This format is used when an ethernet interface is displayed."
+        },
+        "format-wifi": {
+            "label": "What to show on Wi-Fi",
+            "type": "string",
+            "doc": "This format is used when a wireless interface is displayed.",
+            "group": "Display",
+            "description": "For example \"{icon} {essid}\" shows an icon and the network name."
+        },
+        "format-linked": {
+            "label": "What to show when connected without an address",
+            "type": "string",
+            "doc": "This format is used when a linked interface with no IP address is displayed.",
+            "group": "Display",
+            "description": "The cable or Wi-Fi is connected, but you have no IP address yet.",
+            "advanced": true
+        },
+        "format-disconnected": {
+            "label": "What to show when disconnected",
+            "type": "string",
+            "doc": "This format is used when the displayed interface is disconnected.",
+            "group": "Display",
+            "description": "This format is used when the displayed interface is disconnected."
+        },
+        "format-disabled": {
+            "label": "What to show when Wi-Fi is off",
+            "type": "string",
+            "doc": "This format is used when rfkill is blocking wlan interfaces.",
+            "group": "Display",
+            "description": "This format is used when rfkill is blocking wlan interfaces."
+        },
+        "format-alt": {
+            "label": "What to show after a click",
+            "type": "string",
+            "doc": "On click, toggle between this format and the regular format. The click button is set with format-alt-click (defaults to the left button).",
+            "group": "Display",
+            "description": "Clicking the module switches to this text. Click again to go back."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "also_accepts": [
+                "object"
+            ],
+            "doc": "Based on the current signal strength, the corresponding icon gets selected. The order is low to high. Or by the state if it is an object.",
+            "group": "Display",
+            "description": "Icons for {icon}, from weak to strong signal."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "doc": "The format, how information should be displayed in the tooltip. This format is used when other formats aren't specified.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip-format-ethernet": {
+            "label": "Tooltip on cable",
+            "type": "string",
+            "doc": "This format is used when an ethernet interface is displayed.",
+            "group": "Tooltip",
+            "description": "This format is used when an ethernet interface is displayed."
+        },
+        "tooltip-format-wifi": {
+            "label": "Tooltip on Wi-Fi",
+            "type": "string",
+            "doc": "This format is used when a wireless interface is displayed.",
+            "group": "Tooltip",
+            "description": "This format is used when a wireless interface is displayed."
+        },
+        "tooltip-format-disconnected": {
+            "label": "Tooltip when disconnected",
+            "type": "string",
+            "doc": "This format is used when the displayed interface is disconnected.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed interface is disconnected."
+        },
+        "tooltip-format-disabled": {
+            "label": "Tooltip when Wi-Fi is off",
+            "type": "string",
+            "doc": "This format is used when rfkill is blocking wlan interfaces.",
+            "group": "Tooltip",
+            "description": "This format is used when rfkill is blocking wlan interfaces."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

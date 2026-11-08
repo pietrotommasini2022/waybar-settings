@@ -1,0 +1,386 @@
+{
+    "module": "cava",
+    "title": "Audio visualizer",
+    "description": "Shows animated bars that move with the music, using cava.",
+    "manual": "waybar-cava(5)",
+    "reviewed": true,
+    "placeholders": [],
+    "settings": {
+        "cava_config": {
+            "label": "cava settings file",
+            "type": "string",
+            "doc": "Path to the cava configuration file. When provided, cava settings are read from it first.",
+            "group": "Advanced",
+            "description": "Use the settings from your own cava config file first.",
+            "advanced": true
+        },
+        "framerate": {
+            "label": "Animation speed",
+            "type": "integer",
+            "default": 30,
+            "doc": "Target frames per second. Replaces the generic interval option.",
+            "group": "Display",
+            "description": "How smooth the animation is. Higher looks smoother but uses more power.",
+            "unit": "frames per second",
+            "min": 1,
+            "max": 144
+        },
+        "autosens": {
+            "label": "Automatic sensitivity",
+            "type": "enum",
+            "default": 1,
+            "doc": "Automatically decrease sensitivity when the bars peak.",
+            "group": "Audio",
+            "description": "Lower the sensitivity automatically when the bars hit the top.",
+            "options": [
+                {
+                    "value": 1,
+                    "label": "On"
+                },
+                {
+                    "value": 0,
+                    "label": "Off"
+                }
+            ]
+        },
+        "sensitivity": {
+            "label": "Sensitivity",
+            "type": "integer",
+            "default": 100,
+            "doc": "Manual sensitivity in %. If autosens is enabled, this is only the initial value. 200 means double height. Accepts only non-negative values.",
+            "group": "Audio",
+            "description": "How tall the bars get. 200 means twice as tall. With automatic sensitivity on, this is only the starting value.",
+            "unit": "%",
+            "min": 0,
+            "max": 1000
+        },
+        "bars": {
+            "label": "Number of bars",
+            "type": "integer",
+            "default": 12,
+            "doc": "The number of bars.",
+            "group": "Display",
+            "min": 1,
+            "max": 100,
+            "description": "The number of bars."
+        },
+        "lower_cutoff_freq": {
+            "label": "Lowest frequency",
+            "type": "integer",
+            "default": 50,
+            "doc": "Lower cutoff frequency for the visualizer bandwidth.",
+            "group": "Audio",
+            "advanced": true,
+            "unit": "Hz",
+            "min": 1,
+            "max": 20000,
+            "description": "Lower cutoff frequency for the visualizer bandwidth."
+        },
+        "higher_cutoff_freq": {
+            "label": "Highest frequency",
+            "type": "integer",
+            "default": 10000,
+            "doc": "Higher cutoff frequency for the visualizer bandwidth.",
+            "group": "Audio",
+            "advanced": true,
+            "unit": "Hz",
+            "min": 1,
+            "max": 22050,
+            "description": "Higher cutoff frequency for the visualizer bandwidth."
+        },
+        "sleep_timer": {
+            "label": "Silence before hiding",
+            "type": "integer",
+            "default": 5,
+            "doc": "Seconds of silence before cava enters sleep mode.",
+            "group": "Display",
+            "unit": "seconds",
+            "min": 0,
+            "max": 600,
+            "description": "Seconds of silence before cava enters sleep mode."
+        },
+        "hide_on_silence": {
+            "label": "Hide when silent",
+            "type": "boolean",
+            "default": false,
+            "doc": "Hide the widget when silence lasts longer than sleep_timer.",
+            "group": "Display",
+            "description": "Hide the bars when no sound plays for a while."
+        },
+        "format_silent": {
+            "label": "Text when silent",
+            "type": "string",
+            "doc": "Text shown when the module is silent and hide_on_silence is false. *Raw frontend only.*",
+            "group": "Display",
+            "description": "Shown when no sound is playing (if hiding is off)."
+        },
+        "format-icons": {
+            "label": "Bar characters",
+            "type": "array",
+            "doc": "Array of characters used to render bar levels in the raw frontend. The number of items determines the dynamic range.",
+            "group": "Display",
+            "description": "The characters used to draw the bars, from the lowest to the highest."
+        },
+        "method": {
+            "label": "Audio system",
+            "type": "enum",
+            "default": "pulse",
+            "doc": "Audio capture backend. Supported values: pipewire, pulse, alsa, fifo, sndio, shmem.",
+            "group": "Audio",
+            "description": "Where the sound is read from. On most recent systems this is PipeWire.",
+            "options": [
+                {
+                    "value": "pipewire",
+                    "label": "PipeWire"
+                },
+                {
+                    "value": "pulse",
+                    "label": "PulseAudio"
+                },
+                {
+                    "value": "alsa",
+                    "label": "ALSA"
+                },
+                {
+                    "value": "fifo",
+                    "label": "FIFO"
+                },
+                {
+                    "value": "sndio",
+                    "label": "sndio"
+                },
+                {
+                    "value": "shmem",
+                    "label": "Shared memory"
+                }
+            ]
+        },
+        "source": {
+            "label": "Audio source",
+            "type": "string",
+            "default": "auto",
+            "doc": "Audio source identifier. See the cava documentation for details.",
+            "group": "Audio",
+            "description": "Which device to listen to. \"auto\" picks the current output.",
+            "advanced": true
+        },
+        "sample_rate": {
+            "label": "Sample rate",
+            "type": "integer",
+            "default": 44100,
+            "doc": "See the cava documentation.",
+            "group": "Audio",
+            "advanced": true,
+            "unit": "Hz",
+            "min": 8000,
+            "max": 192000,
+            "description": "See the cava documentation."
+        },
+        "sample_bits": {
+            "label": "Sample bits",
+            "type": "integer",
+            "default": 16,
+            "doc": "See the cava documentation.",
+            "group": "Audio",
+            "advanced": true,
+            "min": 8,
+            "max": 32,
+            "description": "See the cava documentation."
+        },
+        "stereo": {
+            "label": "Stereo",
+            "type": "boolean",
+            "default": true,
+            "doc": "Enable stereo visualization.",
+            "group": "Display",
+            "description": "Show left and right channels separately."
+        },
+        "reverse": {
+            "label": "Reverse bars",
+            "type": "boolean",
+            "default": false,
+            "doc": "Reverse the bar order (highest frequencies on the left).",
+            "group": "Display",
+            "description": "Put the high notes on the left and the low notes on the right."
+        },
+        "bar_delimiter": {
+            "label": "Separator between bars",
+            "type": "integer",
+            "default": 0,
+            "doc": "Delimiter placed between bars in the raw output. Use a decimal ASCII value (e.g. 59 = \";\"). 0 means no delimiter.",
+            "group": "Advanced",
+            "description": "A character code placed between bars (59 is \";\"). 0 means none.",
+            "advanced": true
+        },
+        "data_format": {
+            "label": "Data format",
+            "type": "enum",
+            "default": "ascii",
+            "doc": "Raw data format. Can be 'binary' or 'ascii'. *Raw frontend only.*",
+            "group": "Advanced",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "ascii",
+                    "label": "Text"
+                },
+                {
+                    "value": "binary",
+                    "label": "Binary"
+                }
+            ],
+            "description": "Raw data format. Can be 'binary' or 'ascii'. *Raw frontend only.*"
+        },
+        "raw_target": {
+            "label": "Output target",
+            "type": "string",
+            "doc": "Raw output target. A fifo will be created if target does not exist. *Raw frontend only.*",
+            "group": "Advanced",
+            "advanced": true,
+            "description": "Raw output target. A fifo will be created if target does not exist. *Raw frontend only.*"
+        },
+        "monstercat": {
+            "label": "Smooth bars",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enable Monstercat smoothing.",
+            "group": "Display",
+            "description": "Make neighbouring bars flow into each other, for a softer look."
+        },
+        "waves": {
+            "label": "Wave effect",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enable the waves effect alongside Monstercat smoothing.",
+            "group": "Display",
+            "description": "Add a wave effect. Works together with \"Smooth bars\".",
+            "advanced": true
+        },
+        "noise_reduction": {
+            "label": "Smoothing",
+            "type": "number",
+            "default": 0.77,
+            "doc": "Smoothing factor between 0.0 and 1.0. Higher values produce slower, smoother animation; lower values are more reactive but noisy.",
+            "group": "Display",
+            "description": "Higher values make the bars move slowly and smoothly, lower values make them faster but jumpier.",
+            "min": 0,
+            "max": 1,
+            "step": 0.01
+        },
+        "input_delay": {
+            "label": "Start delay",
+            "type": "integer",
+            "default": 4,
+            "doc": "Delay in seconds before starting audio capture. Increase this if Waybar starts before the audio server (e.g. PipeWire).",
+            "group": "Audio",
+            "description": "Wait before listening. Raise it if the bars stay still after login.",
+            "unit": "seconds",
+            "min": 0,
+            "max": 60
+        },
+        "bar_width": {
+            "label": "Bar width (GPU mode)",
+            "type": "integer",
+            "doc": "Bar width in pixels. *Used by the GLSL frontend.*",
+            "group": "Advanced",
+            "advanced": true,
+            "unit": "pixels",
+            "description": "Bar width in pixels. *Used by the GLSL frontend.*"
+        },
+        "bar_spacing": {
+            "label": "Bar spacing (GPU mode)",
+            "type": "integer",
+            "doc": "Space between bars in pixels. *Used by the GLSL frontend.*",
+            "group": "Advanced",
+            "advanced": true,
+            "unit": "pixels",
+            "description": "Space between bars in pixels. *Used by the GLSL frontend.*"
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that opens the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There must be a GtkMenu element with id menu.",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "Actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "sdl_width": {
+            "label": "Width (GPU mode)",
+            "type": "integer",
+            "doc": "GLSL frontend width in pixels. *GLSL only.*",
+            "group": "Advanced",
+            "advanced": true,
+            "unit": "pixels",
+            "description": "GLSL frontend width in pixels. *GLSL only.*"
+        },
+        "sdl_height": {
+            "label": "Height (GPU mode)",
+            "type": "integer",
+            "doc": "GLSL frontend height in pixels. *GLSL only.*",
+            "group": "Advanced",
+            "advanced": true,
+            "unit": "pixels",
+            "description": "GLSL frontend height in pixels. *GLSL only.*"
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "Requested width of the GLSL widget in pixels. If not set, falls back to max-length, then sdl_width. *GLSL only.*",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "Fallback width of the GLSL widget if min-length is not set. *GLSL only.*",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        }
+    }
+}

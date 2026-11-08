@@ -1,0 +1,39 @@
+{
+    "module": "mango/layout",
+    "title": "Layout",
+    "description": "The layout module displays the current layout symbol of the monitor (e.g. \"S\", \"M\") in the Mango compositor. It supports dynamic CSS classes and custom formats based on the active layout symbol.",
+    "manual": "waybar-mango-layout(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{symbol}",
+            "description": "The layout symbol reported by Mango (e.g., \"S\", \"M\", \"Dwindle\")."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The default format, how the layout symbol should be displayed. The positional {} (the default) and {symbol} are both replaced by the current layout symbol.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the module to consume all leftover space.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    },
+    "patterns": [
+        {
+            "pattern": "format-<symbol>",
+            "label": "Format <symbol>",
+            "description": "The custom format to use when a specific layout symbol is active (e.g., format-S, format-M). Note that the symbol string is strictly case-sensitive. If no match is found, it falls back to format."
+        }
+    ]
+}

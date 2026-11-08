@@ -1,0 +1,82 @@
+{
+    "module": "niri/window",
+    "title": "Window",
+    "description": "The window module displays the title of the currently focused window in niri.",
+    "manual": "waybar-niri-window(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{title}",
+            "description": "The current title of the focused window."
+        },
+        {
+            "token": "{app_id}",
+            "description": "The current app ID of the focused window."
+        },
+        {
+            "token": "{col}",
+            "description": "The current column of the focused window in the workspace."
+        },
+        {
+            "token": "{max_col}",
+            "description": "The maximum column inside the workspace of the focused window."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{title}",
+            "doc": "The format, how information should be displayed. On {} the current window title is displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "rewrite": {
+            "label": "Rewrite",
+            "type": "object",
+            "doc": "Rules to rewrite window title. See rewrite rules.",
+            "group": "Behavior",
+            "description": "Rules to rewrite window title. See rewrite rules."
+        },
+        "separate-outputs": {
+            "label": "Separate outputs",
+            "type": "boolean",
+            "doc": "Show the active window of the monitor the bar belongs to, instead of the focused window.",
+            "group": "Behavior",
+            "description": "Show the active window of the monitor the bar belongs to, instead of the focused window."
+        },
+        "icon": {
+            "label": "Icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to hide the application icon.",
+            "group": "Behavior",
+            "description": "Option to hide the application icon."
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "Option to change the size of the application icon.",
+            "group": "Behavior",
+            "description": "Option to change the size of the application icon."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "show-empty": {
+            "label": "Show empty",
+            "type": "boolean",
+            "default": false,
+            "doc": "When no window is focused (empty workspace or all windows closed), keep the module visible and render format with empty {title}/{app_id} and {col}/{max_col} set to -1. When false (the default), the module is hidden while no window is focused.",
+            "group": "Behavior",
+            "description": "When no window is focused (empty workspace or all windows closed), keep the module visible and render format with empty {title}/{app_id} and {col}/{max_col} set to -1. When false (the default), the module is hidden while no window is focused."
+        }
+    }
+}

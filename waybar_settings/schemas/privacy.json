@@ -1,0 +1,102 @@
+{
+    "module": "privacy",
+    "title": "Privacy",
+    "description": "The privacy module displays if any application is capturing audio, sharing the screen or playing audio.",
+    "manual": "waybar-privacy(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "icon-spacing": {
+            "label": "Icon spacing",
+            "type": "integer",
+            "default": 4,
+            "doc": "The spacing between each privacy icon.",
+            "group": "Behavior",
+            "description": "The spacing between each privacy icon."
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 20,
+            "doc": "The size of each privacy icon. Set to 0 for auto size.",
+            "group": "Behavior",
+            "description": "The size of each privacy icon. Set to 0 for auto size."
+        },
+        "transition-duration": {
+            "label": "Transition duration",
+            "type": "integer",
+            "default": 250,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Behavior",
+            "description": "Option to disable tooltip on hover."
+        },
+        "modules": {
+            "label": "Modules",
+            "type": "string",
+            "default": "[{\"type\": \"screenshare\"}, {\"type\": \"audio-in\"}, {\"type\": \"location\"}]",
+            "doc": "Which privacy modules to monitor. See MODULES CONFIGURATION for more information.",
+            "group": "Behavior",
+            "description": "Which privacy modules to monitor. See MODULES CONFIGURATION for more information."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "ignore-monitor": {
+            "label": "Ignore monitor",
+            "type": "boolean",
+            "default": true,
+            "doc": "Ignore audio input streams with the stream.monitor property (for example volume meters). Applications set this property on their own streams, so set this to false to show every audio input stream.",
+            "group": "Behavior",
+            "description": "Ignore audio input streams with the stream.monitor property (for example volume meters). Applications set this property on their own streams, so set this to false to show every audio input stream."
+        },
+        "ignore": {
+            "label": "Ignore",
+            "type": "string",
+            "default": "[]",
+            "doc": "Additional streams to be ignored. See IGNORE CONFIGURATION for more information.",
+            "group": "Behavior",
+            "description": "Additional streams to be ignored. See IGNORE CONFIGURATION for more information."
+        },
+        "type": {
+            "label": "Type",
+            "type": "string",
+            "doc": "values: \"screenshare\", \"audio-in\", \"audio-out\", \"location\" Specifies which module to use and configure.",
+            "group": "Behavior",
+            "description": "values: \"screenshare\", \"audio-in\", \"audio-out\", \"location\" Specifies which module to use and configure."
+        },
+        "icon-name": {
+            "label": "Icon name",
+            "type": "string",
+            "doc": "If set, changes the modules icon. Accepts any valid GTK icon name. Note: the icon is only visible when the resource is actively in use; the item is hidden when idle.",
+            "group": "Behavior",
+            "description": "If set, changes the modules icon. Accepts any valid GTK icon name. Note: the icon is only visible when the resource is actively in use; the item is hidden when idle."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-icon-size": {
+            "label": "Tooltip icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "The size of each icon in the tooltip.",
+            "group": "Tooltip",
+            "description": "The size of each icon in the tooltip."
+        },
+        "name": {
+            "label": "Name",
+            "type": "string",
+            "group": "Behavior"
+        }
+    }
+}

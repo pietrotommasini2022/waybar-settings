@@ -1,0 +1,122 @@
+{
+    "module": "gps",
+    "title": "GPS",
+    "description": "gps module for gpsd.",
+    "manual": "waybar-gps(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{mode}",
+            "description": "Fix mode"
+        },
+        {
+            "token": "{status}",
+            "description": "Technology used for GPS fix. Not all GPS receivers report this."
+        },
+        {
+            "token": "{latitude}",
+            "description": "Latitude, decimal degrees. Can be NaN."
+        },
+        {
+            "token": "{latitude_error}",
+            "description": "Latitude uncertainty, meters. Can be NaN."
+        },
+        {
+            "token": "{longitude}",
+            "description": "Longitude, decimal degrees. Can be NaN."
+        },
+        {
+            "token": "{longitude_error}",
+            "description": "Longitude uncertainty, meters. Can be NaN."
+        },
+        {
+            "token": "{altitude_hae}",
+            "description": "Altitude, height above ellipsoid, meters. Can be NaN."
+        },
+        {
+            "token": "{altitude_msl}",
+            "description": "Longitude, MSL, meters. Can be NaN."
+        },
+        {
+            "token": "{altitude_error}",
+            "description": "Altitude uncertainty, meters. Can be NaN."
+        },
+        {
+            "token": "{speed}",
+            "description": "Speed over ground, meters/sec. Can be NaN."
+        },
+        {
+            "token": "{speed_error}",
+            "description": "Speed uncertainty, meters/sec. Can be NaN."
+        },
+        {
+            "token": "{climb}",
+            "description": "Vertical speed, meters/sec. Can be NaN."
+        },
+        {
+            "token": "{climb_error}",
+            "description": "Vertical speed uncertainty, meters/sec. Can be NaN."
+        },
+        {
+            "token": "{satellites_visible}",
+            "description": "Number of satellites visible from the GPS receiver."
+        },
+        {
+            "token": "{satellites_used}",
+            "description": "Number of satellites used for the GPS fix."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{mode}",
+            "doc": "The text format.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "The value of *format",
+            "doc": "The text format of the tooltip.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 5,
+            "doc": "The interval in which the GPS information gets polled (e.g. current speed). Significant updates (e.g. the current fix mode) are updated immediately.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "hide-disconnected": {
+            "label": "Hide disconnected",
+            "type": "boolean",
+            "default": true,
+            "doc": "Defines if the module should be hidden if there is no GPS receiver.",
+            "group": "Behavior",
+            "description": "Defines if the module should be hidden if there is no GPS receiver."
+        },
+        "hide-no-fix": {
+            "label": "Hide no fix",
+            "type": "boolean",
+            "default": false,
+            "doc": "Defines if the module should be hidden if there is no GPS fix.",
+            "group": "Behavior",
+            "description": "Defines if the module should be hidden if there is no GPS fix."
+        }
+    }
+}

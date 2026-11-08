@@ -1,0 +1,372 @@
+{
+    "module": "bar",
+    "title": "Bar",
+    "description": "Settings for the whole bar: where it is, how big it is and how it behaves.",
+    "manual": "waybar(5)",
+    "reviewed": true,
+    "placeholders": [],
+    "settings": {
+        "expand-center": {
+            "label": "Middle section fills space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the modules-center to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true
+        },
+        "expand-left": {
+            "label": "Left section fills space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the modules-left to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true
+        },
+        "expand-right": {
+            "label": "Right section fills space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the modules-right to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true
+        },
+        "layer": {
+            "label": "Layer",
+            "type": "enum",
+            "default": "bottom",
+            "doc": "Decide if the bar is displayed in front (top) of the windows or behind (bottom) them.",
+            "group": "Placement",
+            "description": "Whether the bar is drawn over your windows or under them.",
+            "options": [
+                {
+                    "value": "top",
+                    "label": "Above windows"
+                },
+                {
+                    "value": "bottom",
+                    "label": "Below windows"
+                },
+                {
+                    "value": "overlay",
+                    "label": "Above everything"
+                }
+            ]
+        },
+        "output": {
+            "label": "Monitor",
+            "type": "string",
+            "also_accepts": [
+                "array"
+            ],
+            "doc": "Specifies on which screen this bar will be displayed. Exclamation mark(!) can be used to exclude specific output. Output specification follows sway's and can either be the output port such as \"HDMI-A-1\" or a string consisting of the make, model, and serial such as \"Some Company ABC123 0x00000000\". See sway-output(5) for details. In an array, star '***' can be used at the end to accept all outputs, in case all previous entries are exclusions.",
+            "group": "Placement",
+            "description": "Show the bar only on these monitors (like DP-1). Empty means every monitor.",
+            "advanced": true
+        },
+        "output-dimensions": {
+            "label": "Monitor size",
+            "type": "string",
+            "also_accepts": [
+                "array"
+            ],
+            "doc": "If output is not specified, allows selecting outputs by dimensions. Format \"(width/height) (</>) (value)\", e.g. \"width > 1080\". Multiple conditions can be chained.",
+            "group": "Placement",
+            "description": "Choose monitors by their size instead of their name.",
+            "advanced": true
+        },
+        "position": {
+            "label": "Position",
+            "type": "enum",
+            "default": "top",
+            "doc": "Bar position, can be top, bottom, left, right.",
+            "group": "Placement",
+            "description": "Which edge of the screen the bar sits on.",
+            "options": [
+                {
+                    "value": "top",
+                    "label": "Top"
+                },
+                {
+                    "value": "bottom",
+                    "label": "Bottom"
+                },
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "height": {
+            "label": "Height",
+            "type": "integer",
+            "doc": "Height to be used by the bar if possible. Leave blank for a dynamic value.",
+            "group": "Size",
+            "description": "How tall the bar is. Empty adapts to the content.",
+            "unit": "pixels",
+            "min": 0,
+            "max": 500
+        },
+        "width": {
+            "label": "Width",
+            "type": "integer",
+            "doc": "Width to be used by the bar if possible. Leave blank for a dynamic value.",
+            "group": "Size",
+            "description": "How wide the bar is. Empty uses the whole screen.",
+            "unit": "pixels",
+            "min": 0,
+            "max": 8000
+        },
+        "margin": {
+            "label": "Margins (all sides)",
+            "type": "string",
+            "doc": "Margins value using the CSS format without units.",
+            "group": "Size",
+            "description": "Space around the bar, written like CSS: \"5 10\" means 5 above and below, 10 left and right.",
+            "advanced": true
+        },
+        "margin-top": {
+            "label": "Top margin",
+            "type": "integer",
+            "doc": "Margins value without units.",
+            "group": "Size",
+            "unit": "pixels",
+            "min": 0,
+            "max": 500
+        },
+        "margin-bottom": {
+            "label": "Bottom margin",
+            "type": "integer",
+            "doc": "Margins value without units.",
+            "group": "Size",
+            "unit": "pixels",
+            "min": 0,
+            "max": 500
+        },
+        "margin-left": {
+            "label": "Left margin",
+            "type": "integer",
+            "doc": "Margins value without units.",
+            "group": "Size",
+            "unit": "pixels",
+            "min": 0,
+            "max": 500
+        },
+        "margin-right": {
+            "label": "Right margin",
+            "type": "integer",
+            "doc": "Margins value without units.",
+            "group": "Size",
+            "unit": "pixels",
+            "min": 0,
+            "max": 500
+        },
+        "no-center": {
+            "label": "No middle section",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to disable the center modules fully useful together with expand-*.",
+            "group": "Layout",
+            "advanced": true
+        },
+        "spacing": {
+            "label": "Space between modules",
+            "type": "integer",
+            "doc": "Size of gaps in between the different modules.",
+            "group": "Size",
+            "unit": "pixels",
+            "min": 0,
+            "max": 100
+        },
+        "name": {
+            "label": "Bar name",
+            "type": "string",
+            "doc": "Optional name added as a CSS class, for styling multiple waybars.",
+            "group": "Advanced",
+            "description": "A name you can use in the style to target this bar.",
+            "advanced": true
+        },
+        "mode": {
+            "label": "Display mode",
+            "type": "enum",
+            "doc": "Selects one of the preconfigured display modes. This is an equivalent of the sway-bar(5) mode command and supports the same values: dock, hide, invisible, overlay. Note: hide and invisible modes may be not as useful without Sway IPC.",
+            "group": "Advanced",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "dock",
+                    "label": "Dock"
+                },
+                {
+                    "value": "hide",
+                    "label": "Hide"
+                },
+                {
+                    "value": "invisible",
+                    "label": "Invisible"
+                },
+                {
+                    "value": "overlay",
+                    "label": "Overlay"
+                }
+            ]
+        },
+        "start_hidden": {
+            "label": "Start hidden",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to start the bar hidden.",
+            "group": "Behavior",
+            "advanced": true
+        },
+        "modifier-reset": {
+            "label": "Modifier reset",
+            "type": "enum",
+            "default": "press",
+            "doc": "Defines the timing of modifier key to reset the bar visibility. To reset the visibility of the bar with the press of the modifier key use press. Use release to reset the visibility upon the release of the modifier key and only if no other action happened while the key was pressed. This prevents hiding the bar when the modifier is used to switch a workspace, change binding mode, or start a keybinding.",
+            "group": "Advanced",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "press",
+                    "label": "On press"
+                },
+                {
+                    "value": "release",
+                    "label": "On release"
+                }
+            ]
+        },
+        "exclusive": {
+            "label": "Reserve space",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to request an exclusive zone from the compositor. Disable this to allow drawing application windows underneath or on top of the bar.",
+            "group": "Behavior",
+            "description": "Windows don't go under the bar. Turn it off to let windows use that space."
+        },
+        "fixed-center": {
+            "label": "Keep the center fixed",
+            "type": "boolean",
+            "default": true,
+            "doc": "Prefer fixed center position for the modules-center block. The center block will stay in the middle of the bar whenever possible. It can still be pushed around if other blocks need more space. When false, the center block is centered in the space between the left and right block.",
+            "group": "Layout",
+            "description": "The middle section stays in the middle of the screen, even if the sides are different sizes."
+        },
+        "passthrough": {
+            "label": "Click-through",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to pass any pointer events to the window under the bar. Intended to be used with either top or overlay layers and without exclusive zone.",
+            "group": "Behavior",
+            "description": "Clicks go through the bar to the window behind it.",
+            "advanced": true
+        },
+        "ipc": {
+            "label": "Sway IPC",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to subscribe to the Sway IPC bar configuration and visibility events and control waybar with swaymsg bar commands. Requires bar_id value from sway configuration to be either passed with the -b command line argument or specified with the id option.",
+            "group": "Advanced",
+            "advanced": true
+        },
+        "id": {
+            "label": "Sway bar ID",
+            "type": "string",
+            "doc": "bar_id for the Sway IPC. Use this if you need to override the value passed with the -b bar_id command line argument for the specific bar instance.",
+            "group": "Advanced",
+            "advanced": true
+        },
+        "include": {
+            "label": "Include other files",
+            "type": "string",
+            "also_accepts": [
+                "array"
+            ],
+            "doc": "Paths to additional configuration files. Each file can contain a single object with any of the bar configuration options. In case of duplicate options, the first defined value takes precedence, i.e. including file -> first included file -> etc. Nested includes are permitted, but make sure to avoid circular imports. For a multi-bar config, the include directive affects only current bar configuration object.",
+            "group": "Advanced",
+            "description": "Load extra settings from other config files.",
+            "advanced": true
+        },
+        "reload_style_on_change": {
+            "label": "Reload style automatically",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to enable reloading the css style if a modification is detected on the style sheet file or any imported css files.",
+            "group": "Behavior",
+            "description": "Update the bar as soon as the style file changes."
+        },
+        "on-sigusr1": {
+            "label": "Signal 1 action",
+            "type": "enum",
+            "default": "toggle",
+            "doc": "Action that is performed when receiving SIGUSR1 kill signal. Possible values: show, hide, toggle, reload, noop. Default value: toggle.",
+            "group": "Advanced",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "show",
+                    "label": "Show"
+                },
+                {
+                    "value": "hide",
+                    "label": "Hide"
+                },
+                {
+                    "value": "toggle",
+                    "label": "Toggle"
+                },
+                {
+                    "value": "reload",
+                    "label": "Reload"
+                },
+                {
+                    "value": "noop",
+                    "label": "Nothing"
+                }
+            ]
+        },
+        "on-sigusr2": {
+            "label": "Signal 2 action",
+            "type": "enum",
+            "default": "reload",
+            "doc": "Action that is performed when receiving SIGUSR2 kill signal. Possible values: show, hide, toggle, reload, noop. Default value: reload.",
+            "group": "Advanced",
+            "description": "Waybar Settings uses this signal to reload the bar: keep it on \"Reload\".",
+            "advanced": true,
+            "options": [
+                {
+                    "value": "show",
+                    "label": "Show"
+                },
+                {
+                    "value": "hide",
+                    "label": "Hide"
+                },
+                {
+                    "value": "toggle",
+                    "label": "Toggle"
+                },
+                {
+                    "value": "reload",
+                    "label": "Reload"
+                },
+                {
+                    "value": "noop",
+                    "label": "Nothing"
+                }
+            ]
+        },
+        "blur": {
+            "label": "Blur behind the bar",
+            "type": "boolean",
+            "default": false,
+            "doc": "Requests blur-behind for the bar's own background, via the standard ext-background-effect-v1 Wayland protocol. Has no effect if the compositor doesn't support it.",
+            "group": "Behavior",
+            "description": "Ask the compositor to blur what is behind the bar (needs a compositor that supports it)."
+        }
+    }
+}

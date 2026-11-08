@@ -1,0 +1,166 @@
+{
+    "module": "upower",
+    "title": "Upower",
+    "description": "The upower module displays the main battery capacity with all other upower compatible devices in the tooltip.",
+    "manual": "waybar-upower(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{percentage}",
+            "description": "The battery capacity in percentage"
+        },
+        {
+            "token": "{time}",
+            "description": "An estimated time either until empty or until fully charged depending on the charging state."
+        },
+        {
+            "token": "{temperature}",
+            "description": "The battery temperature in degrees Celsius."
+        },
+        {
+            "token": "{model}",
+            "description": "The model name of the device."
+        }
+    ],
+    "settings": {
+        "native-path": {
+            "label": "Native path",
+            "type": "string",
+            "doc": "The battery to monitor. Refer to the https://upower.freedesktop.org/docs/UpDevice.html#UpDevice--native-path Can be obtained using upower --dump",
+            "group": "Behavior",
+            "description": "The battery to monitor. Refer to the https://upower.freedesktop.org/docs/UpDevice.html#UpDevice--native-path Can be obtained using upower --dump"
+        },
+        "model": {
+            "label": "Model",
+            "type": "string",
+            "doc": "The battery to monitor, based on the model. (this option is ignored if native-path is given). Can be obtained using upower --dump",
+            "group": "Behavior",
+            "description": "The battery to monitor, based on the model. (this option is ignored if native-path is given). Can be obtained using upower --dump"
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 20,
+            "doc": "Defines the size of the icons. Set to 0 for automatic sizing.",
+            "group": "Behavior",
+            "description": "Defines the size of the icons. Set to 0 for automatic sizing."
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{percentage}",
+            "doc": "The text format.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-alt": {
+            "label": "What to show after a click",
+            "type": "string",
+            "default": "{percentage} {time}",
+            "doc": "The text format when toggled.",
+            "group": "Display",
+            "description": "Clicking the module switches to this text. Click again to go back."
+        },
+        "hide-if-empty": {
+            "label": "Hide if empty",
+            "type": "boolean",
+            "default": true,
+            "doc": "Defines visibility of the module if no devices can be found.",
+            "group": "Behavior",
+            "description": "Defines visibility of the module if no devices can be found."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-spacing": {
+            "label": "Tooltip spacing",
+            "type": "integer",
+            "default": 4,
+            "doc": "Defines the spacing between the tooltip device name and device battery status.",
+            "group": "Tooltip",
+            "description": "Defines the spacing between the tooltip device name and device battery status."
+        },
+        "tooltip-padding": {
+            "label": "Tooltip padding",
+            "type": "integer",
+            "default": 4,
+            "doc": "Defines the spacing between the tooltip window edge and the tooltip content.",
+            "group": "Tooltip",
+            "description": "Defines the spacing between the tooltip window edge and the tooltip content."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "doc": "The format used for each device line shown in the tooltip. Accepts the same replacements as format.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "show-icon": {
+            "label": "Show icon",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable battery icon.",
+            "group": "Behavior",
+            "description": "Option to disable battery icon."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        }
+    }
+}

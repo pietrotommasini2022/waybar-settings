@@ -1,0 +1,81 @@
+{
+    "module": "pulseaudio/slider",
+    "title": "Slider",
+    "description": "The pulseaudio slider module displays and controls the current volume of the default sink or source as a bar.",
+    "manual": "waybar-pulseaudio-slider(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "min": {
+            "label": "Min",
+            "type": "integer",
+            "default": 0,
+            "doc": "The minimum volume value the slider should display and set.",
+            "group": "Behavior",
+            "description": "The minimum volume value the slider should display and set."
+        },
+        "max": {
+            "label": "Max",
+            "type": "integer",
+            "default": 100,
+            "doc": "The maximum volume value the slider should display and set.",
+            "group": "Behavior",
+            "description": "The maximum volume value the slider should display and set."
+        },
+        "target": {
+            "label": "Target",
+            "type": "string",
+            "default": "sink",
+            "doc": "Whether the slider will control the default audio source or default audio sink. Valid values are either \"sink\" or \"source\".",
+            "group": "Behavior",
+            "description": "Whether the slider will control the default audio source or default audio sink. Valid values are either \"sink\" or \"source\"."
+        },
+        "orientation": {
+            "label": "Orientation",
+            "type": "string",
+            "default": "horizontal",
+            "doc": "The orientation of the slider. Can be either horizontal or vertical.",
+            "group": "Behavior",
+            "description": "The orientation of the slider. Can be either horizontal or vertical."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "zero-on-mute": {
+            "label": "Zero on mute",
+            "type": "boolean",
+            "default": true,
+            "doc": "true = The slider will be set to min when the source/sink is muted. false = The slider will continue to show the unmuted volume level when the source/sink is muted.",
+            "group": "Behavior",
+            "description": "true = The slider will be set to min when the source/sink is muted. false = The slider will continue to show the unmuted volume level when the source/sink is muted."
+        },
+        "unmute-on-volume-change": {
+            "label": "Unmute on volume change",
+            "type": "boolean",
+            "default": true,
+            "doc": "Specifies whether to unmute a muted souce/sink when its volume is changed by the user moving the slider.",
+            "group": "Behavior",
+            "description": "Specifies whether to unmute a muted souce/sink when its volume is changed by the user moving the slider."
+        },
+        "ignored-sinks": {
+            "label": "Ignored sinks",
+            "type": "array",
+            "doc": "A list of sink descriptions to ignore when tracking the default sink, so switching to those sinks does not update the slider.",
+            "group": "Behavior",
+            "description": "A list of sink descriptions to ignore when tracking the default sink, so switching to those sinks does not update the slider."
+        },
+        "sink-mapping": {
+            "label": "Sink mapping",
+            "type": "object",
+            "doc": "Sinks named by the values of this mapping will be considered to be the current sink instead of the sinks named by the respective keys.",
+            "group": "Behavior",
+            "description": "Sinks named by the values of this mapping will be considered to be the current sink instead of the sinks named by the respective keys."
+        }
+    }
+}

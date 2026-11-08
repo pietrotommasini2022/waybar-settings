@@ -1,0 +1,406 @@
+{
+    "module": "battery",
+    "title": "Battery",
+    "description": "Shows how much battery is left and whether it is charging.",
+    "manual": "waybar-battery(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{capacity}",
+            "description": "Battery level in percent."
+        },
+        {
+            "token": "{power}",
+            "description": "Power use in watts."
+        },
+        {
+            "token": "{icon}",
+            "description": "An icon from \"Icons\" that matches the level."
+        },
+        {
+            "token": "{time}",
+            "description": "Time left until full or empty."
+        },
+        {
+            "token": "{eta}",
+            "description": "The clock time when it will be full or empty."
+        },
+        {
+            "token": "{cycles}",
+            "description": "How many charge cycles the battery has done."
+        },
+        {
+            "token": "{health}",
+            "description": "Battery health in percent."
+        },
+        {
+            "token": "{timeTo}",
+            "description": "Time left, or \"Full\" / \"Plugged\"."
+        },
+        {
+            "token": "{H}",
+            "description": "Hours"
+        },
+        {
+            "token": "{M}",
+            "description": "Minutes"
+        },
+        {
+            "token": "{m}",
+            "description": "Zero-padded minutes"
+        }
+    ],
+    "settings": {
+        "bat": {
+            "label": "Battery",
+            "type": "string",
+            "doc": "The battery to monitor, as in /sys/class/power_supply/ instead of auto detect.",
+            "group": "Behavior",
+            "description": "Which battery to watch, like BAT0. Empty chooses automatically.",
+            "advanced": true
+        },
+        "adapter": {
+            "label": "Charger",
+            "type": "string",
+            "doc": "The adapter to monitor, as in /sys/class/power_supply/ instead of auto detect.",
+            "group": "Behavior",
+            "description": "Which charger to watch, like AC. Empty chooses automatically.",
+            "advanced": true
+        },
+        "full-at": {
+            "label": "Consider full at",
+            "type": "integer",
+            "doc": "Define the max percentage of the battery, for when you've set the battery to stop charging at a lower level to save it. For example, if you've set the battery to stop at 80% that will become the new 100%.",
+            "group": "Behavior",
+            "description": "If you limit charging (for example to 80% to protect the battery), set it here so 80% shows as 100%.",
+            "unit": "%",
+            "min": 1,
+            "max": 100
+        },
+        "design-capacity": {
+            "label": "Use original capacity",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to use the battery design capacity instead of its current maximal capacity.",
+            "group": "Behavior",
+            "description": "Calculate the percentage from the capacity the battery had when new.",
+            "advanced": true
+        },
+        "full-at-plugged": {
+            "label": "Show \"plugged\" instead of \"full\"",
+            "type": "boolean",
+            "default": false,
+            "doc": "When enabled, a battery that is Full while the adapter is online is reported with the Plugged status instead of Full (so you can style/format it separately). Disabled by default to preserve the existing Full behaviour.",
+            "group": "Behavior",
+            "advanced": true,
+            "description": "When enabled, a battery that is Full while the adapter is online is reported with the Plugged status instead of Full (so you can style/format it separately). Disabled by default to preserve the existing Full behaviour."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 60,
+            "doc": "The interval in which the information gets polled.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "smooth-power": {
+            "label": "Steadier time estimate",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enable exponential smoothing of the battery power reading used to estimate the {time} remaining, so the estimate fluctuates less between refreshes.",
+            "group": "Behavior",
+            "description": "Make the remaining time jump around less."
+        },
+        "smooth-power-time-constant": {
+            "label": "Steadiness",
+            "type": "number",
+            "default": 260.0,
+            "doc": "The time constant (in seconds) of the smooth-power exponential filter. Only used when smooth-power is enabled. Values below 1.0 are clamped to 1.0.",
+            "group": "Behavior",
+            "advanced": true,
+            "unit": "seconds",
+            "min": 1,
+            "max": 3600,
+            "description": "The time constant (in seconds) of the smooth-power exponential filter. Only used when smooth-power is enabled. Values below 1.0 are clamped to 1.0."
+        },
+        "states": {
+            "label": "Battery levels",
+            "type": "object",
+            "doc": "A number of battery states which get activated on certain capacity levels. See waybar-states(5).",
+            "group": "Display",
+            "advanced": true,
+            "description": "Name some levels, like \"warning\": 30 and \"critical\": 15. Then you can show a different text or color when the battery is low."
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{capacity}%",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "For example \"{icon} {capacity}%\"."
+        },
+        "format-time": {
+            "label": "Time format",
+            "type": "string",
+            "default": "{H} h {M} min",
+            "doc": "The format, how the time should be displayed.",
+            "group": "Display",
+            "description": "How {time} is written. {H} is hours and {M} is minutes."
+        },
+        "format-eta": {
+            "label": "End time format",
+            "type": "string",
+            "default": "{:%H:%M}",
+            "doc": "The format of the estimated local time at which the battery will be full or empty. See https://fmt.dev/latest/syntax/#chrono-format-specifications for the available specifiers.",
+            "group": "Display",
+            "description": "How {eta} (the clock time when the battery will be full or empty) is written.",
+            "advanced": true
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "also_accepts": [
+                "object"
+            ],
+            "doc": "Based on the current capacity, the corresponding icon gets selected. The order is low to high. Or by the state if it is an object.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "weighted-average": {
+            "label": "Combine batteries by size",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to combine multiple batteries with different capacities.",
+            "group": "Behavior",
+            "advanced": true,
+            "description": "Option to combine multiple batteries with different capacities."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{timeTo}",
+            "doc": "The tooltip format. See CUSTOM FORMATS for status/state-specific variants.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "bat-compatibility": {
+            "label": "Compatibility mode",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to enable battery compatibility if not detected.",
+            "group": "Behavior",
+            "description": "Turn on if your battery isn't detected.",
+            "advanced": true
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu.",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "events": {
+            "label": "Run commands on battery events",
+            "type": "object",
+            "doc": "Specifies commands to be executed on specific battery states. See EVENTS section below.",
+            "group": "Behavior",
+            "description": "Commands to run, for example when the battery becomes low.",
+            "advanced": true
+        }
+    }
+}

@@ -1,0 +1,117 @@
+{
+    "module": "umbriel/window",
+    "title": "Window",
+    "description": "The window module displays the title of the currently focused window in Umbriel.",
+    "manual": "waybar-umbriel-window(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{title}",
+            "description": "The current title of the focused window."
+        },
+        {
+            "token": "{app_id}",
+            "description": "The current app ID of the focused window."
+        },
+        {
+            "token": "{id}",
+            "description": "The stable ID of the focused window."
+        },
+        {
+            "token": "{workspace}",
+            "description": "The name of the workspace containing the focused window."
+        },
+        {
+            "token": "{workspace_id}",
+            "description": "The stable ID of the workspace containing the focused window."
+        },
+        {
+            "token": "{layout}",
+            "description": "The layout of the workspace containing the focused window."
+        },
+        {
+            "token": "{output}",
+            "description": "The output containing the focused window."
+        },
+        {
+            "token": "{column}",
+            "description": "The window's column in the scrolling layout, or -1 when it is floating or the layout has no columns."
+        },
+        {
+            "token": "{row}",
+            "description": "The window's row in the scrolling layout, or -1 when it is floating or the layout has no columns."
+        },
+        {
+            "token": "{max_col}",
+            "description": "The highest column index among the windows on the same workspace."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{title}",
+            "doc": "The format, how information should be displayed. See FORMAT REPLACEMENTS.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "rewrite": {
+            "label": "Rewrite",
+            "type": "object",
+            "doc": "Rules to rewrite the window title. See REWRITE RULES.",
+            "group": "Behavior",
+            "description": "Rules to rewrite the window title. See REWRITE RULES."
+        },
+        "separate-outputs": {
+            "label": "Separate outputs",
+            "type": "boolean",
+            "default": false,
+            "doc": "Show the last focused window of the bar's output instead of the globally focused window.",
+            "group": "Behavior",
+            "description": "Show the last focused window of the bar's output instead of the globally focused window."
+        },
+        "icon": {
+            "label": "Icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "Show the application icon.",
+            "group": "Behavior",
+            "description": "Show the application icon."
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "Size of the application icon.",
+            "group": "Behavior",
+            "description": "Size of the application icon."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in characters the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "show-empty": {
+            "label": "Show empty",
+            "type": "boolean",
+            "default": false,
+            "doc": "When no window is focused (empty workspace or all windows closed), keep the module visible and render format with empty replacements and {column}, {row} and {max_col} set to -1. When false, the module is hidden while no window is focused.",
+            "group": "Behavior",
+            "description": "When no window is focused (empty workspace or all windows closed), keep the module visible and render format with empty replacements and {column}, {row} and {max_col} set to -1. When false, the module is hidden while no window is focused."
+        }
+    }
+}

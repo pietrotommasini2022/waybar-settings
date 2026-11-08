@@ -1,0 +1,69 @@
+{
+    "module": "mango/window",
+    "title": "Window",
+    "description": "The window module displays the title and app ID of the currently focused window in the Mango compositor.",
+    "manual": "waybar-mango-window(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{title}",
+            "description": "The current window title."
+        },
+        {
+            "token": "{app_id}",
+            "description": "The app ID of the focused window."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{title}",
+            "doc": "The format string. See FORMAT REPLACEMENTS.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "rewrite": {
+            "label": "Rewrite",
+            "type": "object",
+            "doc": "Rules to rewrite the window title. Each key is a regular expression and its value is the replacement string. Captures can be used with $1, $2, etc.",
+            "group": "Behavior",
+            "description": "Rules to rewrite the window title. Each key is a regular expression and its value is the replacement string. Captures can be used with $1, $2, etc."
+        },
+        "icon": {
+            "label": "Icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "Whether to show the application icon.",
+            "group": "Behavior",
+            "description": "Whether to show the application icon."
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "Size of the application icon in pixels.",
+            "group": "Behavior",
+            "description": "Size of the application icon in pixels."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the module to consume all leftover space.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        }
+    }
+}

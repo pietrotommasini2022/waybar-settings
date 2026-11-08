@@ -1,0 +1,339 @@
+{
+    "module": "mpris",
+    "title": "Mpris",
+    "description": "The mpris module displays currently playing media via libplayerctl.",
+    "manual": "waybar-mpris(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{player}",
+            "description": "The name of the current media player"
+        },
+        {
+            "token": "{status}",
+            "description": "The current status (playing, paused, stopped)"
+        },
+        {
+            "token": "{artist}",
+            "description": "The artist of the current track"
+        },
+        {
+            "token": "{album}",
+            "description": "The album title of the current track"
+        },
+        {
+            "token": "{title}",
+            "description": "The title of the current track"
+        },
+        {
+            "token": "{length}",
+            "description": "Length of the track, formatted as HH:MM:SS"
+        },
+        {
+            "token": "{position}",
+            "description": "Current playback position of the track, formatted as HH:MM:SS"
+        },
+        {
+            "token": "{dynamic}",
+            "description": "Use _{artist}_, _{album}_, _{title}_ and _{length}_, automatically omit empty values"
+        },
+        {
+            "token": "{player_icon}",
+            "description": "Chooses an icon from _player-icons_ based on _{player}_"
+        },
+        {
+            "token": "{status_icon}",
+            "description": "Chooses an icon from _status-icons_ based on _{status}_"
+        }
+    ],
+    "settings": {
+        "player": {
+            "label": "Player",
+            "type": "string",
+            "default": "playerctld",
+            "doc": "Name of the MPRIS player to attach to. Using the default value always follows the currently active player.",
+            "group": "Behavior",
+            "description": "Name of the MPRIS player to attach to. Using the default value always follows the currently active player."
+        },
+        "ignored-players": {
+            "label": "Ignored players",
+            "type": "string",
+            "doc": "Ignore updates of the listed players, when using playerctld.",
+            "group": "Behavior",
+            "description": "Ignore updates of the listed players, when using playerctld."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 0,
+            "doc": "Refresh MPRIS information on a timer.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{player} ({status}): {dynamic}",
+            "doc": "The text format.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{player} ({status}): {dynamic}",
+            "doc": "The tooltip text format.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "artist-len": {
+            "label": "Artist len",
+            "type": "integer",
+            "doc": "Maximum length of the Artist tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the artist in {dynamic} tag.",
+            "group": "Behavior",
+            "description": "Maximum length of the Artist tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the artist in {dynamic} tag."
+        },
+        "album-len": {
+            "label": "Album len",
+            "type": "integer",
+            "doc": "Maximum length of the Album tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the album in {dynamic} tag.",
+            "group": "Behavior",
+            "description": "Maximum length of the Album tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the album in {dynamic} tag."
+        },
+        "title-len": {
+            "label": "Title len",
+            "type": "integer",
+            "doc": "Maximum length of the Title tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the title in {dynamic} tag.",
+            "group": "Behavior",
+            "description": "Maximum length of the Title tag (Wide/Fullwidth Unicode characters count as two). Set to zero to hide the title in {dynamic} tag."
+        },
+        "dynamic-len": {
+            "label": "Dynamic len",
+            "type": "integer",
+            "doc": "Maximum length of the Dynamic tag (Wide/Fullwidth Unicode characters count as two). The dynamic tag will not truncate any tags beyond their set length limits, instead, it will attempt to fit as much of the available tags as possible. It is recommended you set title-len to something less than or equal to this value, so the title will always be displayed.",
+            "group": "Behavior",
+            "description": "Maximum length of the Dynamic tag (Wide/Fullwidth Unicode characters count as two). The dynamic tag will not truncate any tags beyond their set length limits, instead, it will attempt to fit as much of the available tags as possible. It is recommended you set title-len to something less than or equal to this value, so the title will always be displayed."
+        },
+        "dynamic-order": {
+            "label": "Dynamic order",
+            "type": "string",
+            "default": "[\"title\", \"artist\", \"album\", \"position\", \"length\"]",
+            "doc": "Order of the tags shown by Dynamic tag. The position and length tags will always be combined in the format [{position}/{length}]. The order of these tags in relation to other tags will be determined based on the declaration of the first among the two tags. Absence in this list means force exclusion.",
+            "group": "Behavior",
+            "description": "Order of the tags shown by Dynamic tag. The position and length tags will always be combined in the format [{position}/{length}]. The order of these tags in relation to other tags will be determined based on the declaration of the first among the two tags. Absence in this list means force exclusion."
+        },
+        "dynamic-importance-order": {
+            "label": "Dynamic importance order",
+            "type": "string",
+            "default": "[\"title\", \"artist\", \"album\", \"position\", \"length\"]",
+            "doc": "Priority of the tags when truncating the Dynamic tag. The final ones will be the first to be truncated. Absence in this list means force inclusion.",
+            "group": "Behavior",
+            "description": "Priority of the tags when truncating the Dynamic tag. The final ones will be the first to be truncated. Absence in this list means force inclusion."
+        },
+        "dynamic-separator": {
+            "label": "Dynamic separator",
+            "type": "string",
+            "default": " - ",
+            "doc": "These characters will be used to separate two different tags, except when one of these tags is position and length.",
+            "group": "Behavior",
+            "description": "These characters will be used to separate two different tags, except when one of these tags is position and length."
+        },
+        "truncate-hours": {
+            "label": "Truncate hours",
+            "type": "boolean",
+            "default": true,
+            "doc": "Whether to hide hours when media duration is less than an hour long.",
+            "group": "Behavior",
+            "description": "Whether to hide hours when media duration is less than an hour long."
+        },
+        "enable-tooltip-len-limits": {
+            "label": "Enable tooltip len limits",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to enable the length limits for the tooltip as well. By default, the tooltip ignores all length limits.",
+            "group": "Behavior",
+            "description": "Option to enable the length limits for the tooltip as well. By default, the tooltip ignores all length limits."
+        },
+        "ellipsis": {
+            "label": "Ellipsis",
+            "type": "string",
+            "default": "…",
+            "doc": "This character will be used when any of the tags exceed their maximum length. If you don't want to use an ellipsis, set this to empty string.",
+            "group": "Behavior",
+            "description": "This character will be used when any of the tags exceed their maximum length. If you don't want to use an ellipsis, set this to empty string."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "default": "play-pause",
+            "doc": "Overwrite default action toggles.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "default": "previous track",
+            "doc": "Overwrite default action toggles.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "default": "next track",
+            "doc": "Overwrite default action toggles.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-click-backward": {
+            "label": "Back button runs",
+            "type": "string",
+            "default": "previous track",
+            "doc": "Overwrite the default action for the backward mouse button (button 8).",
+            "group": "Click & scroll",
+            "description": "A command to run with the mouse's \"back\" side button.",
+            "advanced": true
+        },
+        "on-click-forward": {
+            "label": "Forward button runs",
+            "type": "string",
+            "default": "next track",
+            "doc": "Overwrite the default action for the forward mouse button (button 9).",
+            "group": "Click & scroll",
+            "description": "A command to run with the mouse's \"forward\" side button.",
+            "advanced": true
+        },
+        "prefer-album-artist": {
+            "label": "Prefer album artist",
+            "type": "boolean",
+            "default": false,
+            "doc": "When true, use the album artist instead of the track artist for the _{artist}_ and _{dynamic}_ tags, falling back to the track artist when no album artist is available.",
+            "group": "Behavior",
+            "description": "When true, use the album artist instead of the track artist for the _{artist}_ and _{dynamic}_ tags, falling back to the track artist when no album artist is available."
+        },
+        "hide-on-paused": {
+            "label": "Hide on paused",
+            "type": "boolean",
+            "default": false,
+            "doc": "When true, hide the module entirely while the player is paused instead of rendering _format-paused_.",
+            "group": "Behavior",
+            "description": "When true, hide the module entirely while the player is paused instead of rendering _format-paused_."
+        },
+        "player-icons": {
+            "label": "Player icons",
+            "type": "string",
+            "doc": "Allows setting _{player_icon}_ based on player-name property.",
+            "group": "Behavior",
+            "description": "Allows setting _{player_icon}_ based on player-name property."
+        },
+        "status-icons": {
+            "label": "Status icons",
+            "type": "string",
+            "doc": "Allows setting _{status_icon}_ based on player status (playing, paused, stopped).",
+            "group": "Behavior",
+            "description": "Allows setting _{status_icon}_ based on player status (playing, paused, stopped)."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

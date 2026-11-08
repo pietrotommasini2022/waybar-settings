@@ -1,0 +1,26 @@
+{
+    "module": "cffi",
+    "title": "Cffi",
+    "description": "The cffi module gives full control of a GTK widget to a third-party dynamic library, to create more complex modules using different programming languages.",
+    "manual": "waybar-cffi(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "module_path": {
+            "label": "Module path",
+            "type": "string",
+            "doc": "The path to the dynamic library to load to control the widget.",
+            "group": "Behavior",
+            "description": "The path to the dynamic library to load to control the widget."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

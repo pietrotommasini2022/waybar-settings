@@ -1,0 +1,86 @@
+{
+    "module": "mango/keymode",
+    "title": "Keymode",
+    "description": "The keymode module displays the current keyboard mode (e.g. \"resize\", \"default\") in the Mango compositor. It is hidden when no mode is active.",
+    "manual": "waybar-mango-keymode(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{mode}",
+            "description": "The name of the current keymode."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The format, how the mode should be displayed. {mode} is replaced by the current mode name.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that pops up a menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file.",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "Actions for the menu buttons.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables the module to consume all leftover space.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    },
+    "patterns": [
+        {
+            "pattern": "format-<mode>",
+            "label": "Format <mode>",
+            "description": "Provide a custom format for a specific keymode. <mode> is the mode name as reported by Mango (e.g. \"resize\"). The value can contain {mode} as a placeholder. If this option is set, it overrides the main format for that mode."
+        }
+    ]
+}

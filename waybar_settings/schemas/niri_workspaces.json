@@ -1,0 +1,216 @@
+{
+    "module": "niri/workspaces",
+    "title": "Workspaces",
+    "description": "The workspaces module displays the currently used workspaces in niri.",
+    "manual": "waybar-niri-workspaces(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{value}",
+            "description": "Name of the workspace, or index for unnamed workspaces, as defined by niri."
+        },
+        {
+            "token": "{name}",
+            "description": "Name of the workspace for named workspaces."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{index}",
+            "description": "Index of the workspace on its output."
+        },
+        {
+            "token": "{output}",
+            "description": "Output where the workspace is located."
+        },
+        {
+            "token": "{total}",
+            "description": "The total number of workspaces."
+        },
+        {
+            "token": "{windows}",
+            "description": "Concatenated representation of windows in the workspace, using window-rewrite rules and format-window-separator."
+        }
+    ],
+    "settings": {
+        "all-outputs": {
+            "label": "All outputs",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, workspaces will only be shown on the output they are on. If set to true all workspaces will be shown on every output.",
+            "group": "Behavior",
+            "description": "If set to false, workspaces will only be shown on the output they are on. If set to true all workspaces will be shown on every output."
+        },
+        "sort-by-name": {
+            "label": "Sort by name",
+            "type": "boolean",
+            "default": false,
+            "doc": "Sort workspaces by name (numeric sort when all names are numbers). Unnamed workspaces fall back to their index on the output.",
+            "group": "Behavior",
+            "description": "Sort workspaces by name (numeric sort when all names are numbers). Unnamed workspaces fall back to their index on the output."
+        },
+        "sort-by-coordinates": {
+            "label": "Sort by coordinates",
+            "type": "boolean",
+            "default": false,
+            "doc": "Sort workspaces by output and index. If both sort-by-name and sort-by-coordinates are true, sorting by name is applied.",
+            "group": "Behavior",
+            "description": "Sort workspaces by output and index. If both sort-by-name and sort-by-coordinates are true, sorting by name is applied."
+        },
+        "sort-by-id": {
+            "label": "Sort by ID",
+            "type": "boolean",
+            "default": false,
+            "doc": "Sort workspaces by id, taking precedence over other sort options.",
+            "group": "Behavior",
+            "description": "Sort workspaces by id, taking precedence over other sort options."
+        },
+        "sort-by-number": {
+            "label": "Sort by number",
+            "type": "boolean",
+            "default": false,
+            "doc": "Deprecated alias for sort-by-id; prefer sort-by-id instead.",
+            "group": "Behavior",
+            "description": "Deprecated alias for sort-by-id; prefer sort-by-id instead."
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{value}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the workspace name, index and state, the corresponding icon gets selected. See icons.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "disable-click": {
+            "label": "Disable click",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can click to change workspace. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can click to change workspace. If set to true this behaviour is disabled."
+        },
+        "enable-bar-scroll": {
+            "label": "Enable bar scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can't scroll to cycle throughout workspaces from the entire bar. If set to true this behaviour is enabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can't scroll to cycle throughout workspaces from the entire bar. If set to true this behaviour is enabled."
+        },
+        "disable-markup": {
+            "label": "Disable markup",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, button label will escape pango markup.",
+            "group": "Behavior",
+            "description": "If set to true, button label will escape pango markup."
+        },
+        "current-only": {
+            "label": "Current only",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, only the active or focused workspace will be shown.",
+            "group": "Behavior",
+            "description": "If set to true, only the active or focused workspace will be shown."
+        },
+        "display-condition": {
+            "label": "Display condition",
+            "type": "string",
+            "default": "show-all",
+            "doc": "oneof: \"show-all\", \"keep-named\", \"only-populated\" Specifies the conditions for showing workspace widgets. show-all: displays widgets for all workspaces. keep-named: always displays named workspaces, irrespective of whether they contain windows or not. only-populated: only displays widgets for workspaces that have windows.",
+            "group": "Behavior",
+            "description": "oneof: \"show-all\", \"keep-named\", \"only-populated\" Specifies the conditions for showing workspace widgets. show-all: displays widgets for all workspaces. keep-named: always displays named workspaces, irrespective of whether they contain windows or not. only-populated: only displays widgets for workspaces that have windows."
+        },
+        "hide-empty": {
+            "label": "Hide empty",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, empty workspaces will not be shown.",
+            "group": "Behavior",
+            "description": "If set to true, empty workspaces will not be shown."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "workspace-taskbar": {
+            "label": "Workspace taskbar",
+            "type": "object",
+            "doc": "Contains settings for the workspace taskbar, which displays app icons within each workspace.",
+            "group": "Behavior",
+            "description": "Contains settings for the workspace taskbar, which displays app icons within each workspace.",
+            "settings": {
+                "enable": {
+                    "label": "Enable",
+                    "type": "boolean",
+                    "default": false,
+                    "doc": "Enables the workspace taskbar mode.",
+                    "group": "Behavior",
+                    "description": "Enables the workspace taskbar mode."
+                },
+                "icon-size": {
+                    "label": "Icon size",
+                    "type": "integer",
+                    "default": 16,
+                    "doc": "Size of the icons in the workspace taskbar.",
+                    "group": "Behavior",
+                    "description": "Size of the icons in the workspace taskbar."
+                }
+            }
+        },
+        "ignore-workspaces": {
+            "label": "Ignore workspaces",
+            "type": "array",
+            "default": [],
+            "doc": "Regexes to match against workspaces names and index's. If there's a match, the workspace will not be shown.",
+            "group": "Behavior",
+            "description": "Regexes to match against workspaces names and index's. If there's a match, the workspace will not be shown."
+        },
+        "format-window-separator": {
+            "label": "What to show when window separator",
+            "type": "string",
+            "default": " ",
+            "doc": "Separator used between window representations generated by window-rewrite.",
+            "group": "Display",
+            "description": "Separator used between window representations generated by window-rewrite."
+        },
+        "window-rewrite": {
+            "label": "Window rewrite",
+            "type": "object",
+            "default_note": "{}",
+            "doc": "Rules to map window app_id and/or title to a specific string representation (e.g., an icon). Keys are regular expressions matching app_id<regex> and/or title<regex>. Values are the replacement strings, which can contain {app_id} and {title} placeholders.",
+            "group": "Behavior",
+            "description": "Rules to map window app_id and/or title to a specific string representation (e.g., an icon). Keys are regular expressions matching app_id<regex> and/or title<regex>. Values are the replacement strings, which can contain {app_id} and {title} placeholders."
+        },
+        "window-rewrite-default": {
+            "label": "Window rewrite default",
+            "type": "string",
+            "default": "?",
+            "doc": "The default representation for windows that don't match any rule in window-rewrite.",
+            "group": "Behavior",
+            "description": "The default representation for windows that don't match any rule in window-rewrite."
+        }
+    }
+}

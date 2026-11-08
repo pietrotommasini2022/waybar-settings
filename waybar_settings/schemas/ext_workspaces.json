@@ -1,0 +1,130 @@
+{
+    "module": "ext/workspaces",
+    "title": "Workspaces",
+    "description": "The workspaces module displays the currently used workspaces in wayland compositor.",
+    "manual": "waybar-ext-workspaces(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{name}",
+            "description": "Name of workspace assigned by compositor."
+        },
+        {
+            "token": "{id}",
+            "description": "ID of workspace assigned by compositor."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{name}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the workspace name and state, the corresponding icon gets selected. See icons.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "sort-by-name": {
+            "label": "Sort by name",
+            "type": "boolean",
+            "default": true,
+            "doc": "Should workspaces be sorted by name. Workspace names will be sorted numerically when all names are numbers.",
+            "group": "Behavior",
+            "description": "Should workspaces be sorted by name. Workspace names will be sorted numerically when all names are numbers."
+        },
+        "sort-by-coordinates": {
+            "label": "Sort by coordinates",
+            "type": "boolean",
+            "default": false,
+            "doc": "Should workspaces be sorted by coordinates. Note that if both sort-by-name and sort-by-coordinates are true sort-by name will be first. If both are false - sort by id will be performed.",
+            "group": "Behavior",
+            "description": "Should workspaces be sorted by coordinates. Note that if both sort-by-name and sort-by-coordinates are true sort-by name will be first. If both are false - sort by id will be performed."
+        },
+        "sort-by-id": {
+            "label": "Sort by ID",
+            "type": "boolean",
+            "default": false,
+            "doc": "Should workspaces be sorted by ID. Workspace ID will be sorted numerically when all ID are numbers. Takes precedence over any other sort-by option.",
+            "group": "Behavior",
+            "description": "Should workspaces be sorted by ID. Workspace ID will be sorted numerically when all ID are numbers. Takes precedence over any other sort-by option."
+        },
+        "sort-by-number": {
+            "label": "Sort by number",
+            "type": "boolean",
+            "doc": "Deprecated alias of sort-by-id. Setting it emits a warning; prefer sort-by-id.",
+            "group": "Behavior",
+            "description": "Deprecated alias of sort-by-id. Setting it emits a warning; prefer sort-by-id."
+        },
+        "all-outputs": {
+            "label": "All outputs",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false workspaces group will be shown only in assigned output. Otherwise, all workspace groups are shown.",
+            "group": "Behavior",
+            "description": "If set to false workspaces group will be shown only in assigned output. Otherwise, all workspace groups are shown."
+        },
+        "active-only": {
+            "label": "Active only",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true only active or urgent workspaces will be shown.",
+            "group": "Behavior",
+            "description": "If set to true only active or urgent workspaces will be shown."
+        },
+        "disable-scroll": {
+            "label": "Disable scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, scrolling is disabled for this module.",
+            "group": "Behavior",
+            "description": "If set to true, scrolling is disabled for this module."
+        },
+        "enable-bar-scroll": {
+            "label": "Enable bar scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, scrolling anywhere on the bar switches to the previous or next workspace. By default, scrolling only works when the pointer is over the workspaces module",
+            "group": "Behavior",
+            "description": "If set to true, scrolling anywhere on the bar switches to the previous or next workspace. By default, scrolling only works when the pointer is over the workspaces module"
+        },
+        "ignore-hidden": {
+            "label": "Ignore hidden",
+            "type": "boolean",
+            "default": true,
+            "doc": "If set to false hidden workspaces will be shown.",
+            "group": "Behavior",
+            "description": "If set to false hidden workspaces will be shown."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "The action to perform on left-click. See CLICK ACTIONS for the possible values.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "The action to perform on middle-click. See CLICK ACTIONS for the possible values.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "The action to perform on right-click. See CLICK ACTIONS for the possible values.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        }
+    }
+}

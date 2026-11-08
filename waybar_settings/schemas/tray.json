@@ -1,0 +1,104 @@
+{
+    "module": "tray",
+    "title": "System tray",
+    "description": "Shows the small icons of background apps, like Discord, Steam or Bluetooth.",
+    "manual": "waybar-tray(5)",
+    "reviewed": true,
+    "placeholders": [],
+    "settings": {
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "doc": "Defines the size of the tray icons.",
+            "group": "Display",
+            "description": "How big the tray icons are.",
+            "unit": "pixels",
+            "min": 8,
+            "max": 64
+        },
+        "show-passive-items": {
+            "label": "Show idle apps",
+            "type": "boolean",
+            "default": false,
+            "doc": "Defines visibility of the tray icons with Passive status.",
+            "group": "Display",
+            "description": "Also show icons of apps that say they don't need attention right now."
+        },
+        "tooltip": {
+            "label": "Show tooltips",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltips on the tray icons.",
+            "group": "Tooltip",
+            "description": "Show the app's popup when the mouse is over its icon."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "spacing": {
+            "label": "Space between icons",
+            "type": "integer",
+            "doc": "Defines the spacing between the tray icons.",
+            "group": "Display",
+            "unit": "pixels",
+            "min": 0,
+            "max": 50,
+            "description": "Defines the spacing between the tray icons."
+        },
+        "reverse-direction": {
+            "label": "Add new icons first",
+            "type": "boolean",
+            "doc": "Defines if new app icons should be added in a reverse order",
+            "group": "Display",
+            "description": "New icons appear at the start instead of the end."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "icons": {
+            "label": "Custom icons",
+            "type": "object",
+            "doc": "Per-application icon customization. Keys are application IDs (e.g., \"spotify\", \"blueman\"). A key containing ** or ? is a shell-style wildcard pattern matched against the whole ID, which suits apps whose ID changes on every launch (e.g., \"dropbox-client-\"). An exact key takes priority over a pattern. Values can be: - string: Custom icon name or path to icon file - false: Hide this application's tray icon completely",
+            "group": "Display",
+            "description": "Replace the icon of specific apps. Use the app's ID as the name.",
+            "advanced": true
+        },
+        "orders": {
+            "label": "Icon order",
+            "type": "object",
+            "doc": "Orders for items to be placed in tray. When not set, orders are controlled by DBus. Key: name of item. Value: integer, higher value means to place this item to the right.",
+            "group": "Display",
+            "description": "Choose where specific apps appear. Lower numbers come first.",
+            "advanced": true
+        },
+        "ignore-list": {
+            "label": "Hidden apps",
+            "type": "array",
+            "doc": "List of strings used to hide matching tray items. An item is hidden when any string in the list is found (as a substring) in the item's bus name, category, icon name, id or title.",
+            "group": "Display",
+            "description": "Apps whose icon should never be shown."
+        }
+    }
+}

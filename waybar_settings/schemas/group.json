@@ -1,0 +1,110 @@
+{
+    "module": "group",
+    "title": "Group",
+    "description": "Puts several modules together in one block. With a drawer, only the first one is visible and the others slide out when you hover or click it.",
+    "manual": "waybar(5)",
+    "reviewed": true,
+    "placeholders": [],
+    "settings": {
+        "modules": {
+            "label": "Modules in the group",
+            "type": "array",
+            "description": "The modules inside this group. With a drawer, the first one is always visible.",
+            "group": "Display"
+        },
+        "orientation": {
+            "label": "Direction",
+            "type": "enum",
+            "description": "How the modules are stacked. \"Across the bar\" stacks them vertically on a horizontal bar.",
+            "default": "orthogonal",
+            "group": "Display",
+            "options": [
+                {
+                    "value": "orthogonal",
+                    "label": "Across the bar"
+                },
+                {
+                    "value": "inherit",
+                    "label": "Same as the bar"
+                },
+                {
+                    "value": "horizontal",
+                    "label": "Horizontal"
+                },
+                {
+                    "value": "vertical",
+                    "label": "Vertical"
+                }
+            ]
+        },
+        "drawer": {
+            "label": "Drawer",
+            "type": "object",
+            "description": "Hide all modules except the first one, and show them on hover or click.",
+            "group": "Drawer",
+            "settings": {
+                "transition-duration": {
+                    "label": "Animation length",
+                    "type": "integer",
+                    "default": 500,
+                    "unit": "milliseconds",
+                    "min": 0,
+                    "max": 5000
+                },
+                "transition-left-to-right": {
+                    "label": "Slide from left to right",
+                    "type": "boolean",
+                    "default": true
+                },
+                "click-to-reveal": {
+                    "label": "Open with a click",
+                    "type": "boolean",
+                    "description": "Open the drawer with a left click instead of hovering.",
+                    "default": false
+                },
+                "reveal-delay": {
+                    "label": "Delay before opening",
+                    "type": "integer",
+                    "default": 0,
+                    "unit": "milliseconds",
+                    "min": 0,
+                    "max": 5000
+                },
+                "start-expanded": {
+                    "label": "Start open",
+                    "type": "boolean",
+                    "default": false
+                },
+                "reveal-by-default": {
+                    "label": "Open at startup (click mode)",
+                    "type": "boolean",
+                    "default": false,
+                    "advanced": true
+                },
+                "hide-leader-when-expanded": {
+                    "label": "Hide the first module when open",
+                    "type": "boolean",
+                    "default": false
+                },
+                "children-class": {
+                    "label": "Style class of hidden modules",
+                    "type": "string",
+                    "default": "drawer-child",
+                    "advanced": true
+                },
+                "always-visible-class": {
+                    "label": "Style class of always-visible modules",
+                    "type": "string",
+                    "default": "",
+                    "advanced": true
+                },
+                "empty-if-drawer-empty": {
+                    "label": "Mark as empty when drawer is empty",
+                    "type": "boolean",
+                    "default": false,
+                    "advanced": true
+                }
+            }
+        }
+    }
+}

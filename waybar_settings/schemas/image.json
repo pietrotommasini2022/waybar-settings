@@ -1,0 +1,136 @@
+{
+    "module": "image",
+    "title": "Image",
+    "description": "The image module displays container of images(or image) from a provided paths",
+    "manual": "waybar-image(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "path": {
+            "label": "Path",
+            "type": "string",
+            "doc": "The path to the image.",
+            "group": "Behavior",
+            "description": "The path to the image."
+        },
+        "exec": {
+            "label": "Exec",
+            "type": "string",
+            "doc": "The path to the script, which should return image path file. It will only execute if the path is not set",
+            "group": "Behavior",
+            "description": "The path to the script, which should return image path file. It will only execute if the path is not set"
+        },
+        "size": {
+            "label": "Size",
+            "type": "integer",
+            "doc": "The width/height to render the image.",
+            "group": "Behavior",
+            "description": "The width/height to render the image."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "number",
+            "doc": "The interval (in seconds) to re-render the image. If set to a positive value, the minimum is 0.001 (1ms). Values smaller than 1ms will be set to 1ms. Zero or negative values are treated as \"once\". This is useful if the contents of path changes. If no interval is defined, the image will only be rendered once.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "signal": {
+            "label": "Signal",
+            "type": "integer",
+            "doc": "The signal number used to update the module. This can be used instead of interval if the file changes irregularly. The number is valid between 1 and N, where SIGRTMIN+N = SIGRTMAX.",
+            "group": "Behavior",
+            "description": "The signal number used to update the module. This can be used instead of interval if the file changes irregularly. The number is valid between 1 and N, where SIGRTMIN+N = SIGRTMAX."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to enable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "multiple": {
+            "label": "Multiple",
+            "type": "boolean",
+            "default": false,
+            "doc": "this parameter is used to decide if old image implementation should be used(therefore render only one image) or to pick a new implementation to rended multiple images provided from this config. default value of this parameter is false.",
+            "group": "Behavior",
+            "description": "this parameter is used to decide if old image implementation should be used(therefore render only one image) or to pick a new implementation to rended multiple images provided from this config. default value of this parameter is false."
+        },
+        "entries": {
+            "label": "Entries",
+            "type": "array",
+            "default_note": "empty array",
+            "doc": "Json array of objects consisting of several fields this is a main part of configuration where per image properties are defined",
+            "group": "Behavior",
+            "description": "Json array of objects consisting of several fields this is a main part of configuration where per image properties are defined"
+        },
+        "marker": {
+            "label": "Marker",
+            "type": "string",
+            "default": "empty string",
+            "doc": "user defined per image keyword(marker) to identify them, e.g in styles.css e.g if you want to draw 3 pictures and one of them dimmed, you can give marker: \"dimmed\" value and in styles.css write something like this #image .dimmed { opacity: 0.3 }",
+            "group": "Behavior",
+            "description": "user defined per image keyword(marker) to identify them, e.g in styles.css e.g if you want to draw 3 pictures and one of them dimmed, you can give marker: \"dimmed\" value and in styles.css write something like this #image .dimmed { opacity: 0.3 }"
+        }
+    }
+}

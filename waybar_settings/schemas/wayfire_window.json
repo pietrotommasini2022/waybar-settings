@@ -1,0 +1,59 @@
+{
+    "module": "wayfire/window",
+    "title": "Window",
+    "description": "The window module displays the title of the currently focused window in wayfire.",
+    "manual": "waybar-wayfire-window(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{title}",
+            "description": "The current title of the focused window."
+        },
+        {
+            "token": "{app_id}",
+            "description": "The current app ID of the focused window."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{title}",
+            "doc": "The format, how information should be displayed. On {} the current window title is displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "rewrite": {
+            "label": "Rewrite",
+            "type": "object",
+            "doc": "Rules to rewrite window title. See rewrite rules.",
+            "group": "Behavior",
+            "description": "Rules to rewrite window title. See rewrite rules."
+        },
+        "icon": {
+            "label": "Icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to hide the application icon.",
+            "group": "Behavior",
+            "description": "Option to hide the application icon."
+        },
+        "icon-size": {
+            "label": "Icon size",
+            "type": "integer",
+            "default": 24,
+            "doc": "Option to change the size of the application icon.",
+            "group": "Behavior",
+            "description": "Option to change the size of the application icon."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

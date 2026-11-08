@@ -1,0 +1,366 @@
+{
+    "module": "pulseaudio",
+    "title": "Volume",
+    "description": "Shows the speaker volume and lets you change it by scrolling. Works with PulseAudio and PipeWire.",
+    "manual": "waybar-pulseaudio(5)",
+    "reviewed": true,
+    "placeholders": [
+        {
+            "token": "{desc}",
+            "description": "The name of the output device, like your headphones."
+        },
+        {
+            "token": "{volume}",
+            "description": "Volume in percent."
+        },
+        {
+            "token": "{source_volume}",
+            "description": "Microphone volume in percent."
+        },
+        {
+            "token": "{source_desc}",
+            "description": "The name of the microphone."
+        },
+        {
+            "token": "{icon}",
+            "description": "An icon from \"Icons\" that matches the volume."
+        },
+        {
+            "token": "{format_source}",
+            "description": "The microphone text (see \"Microphone text\")."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{volume}%",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "How the volume looks in the bar, for example \"{icon} {volume}%\"."
+        },
+        "format-bluetooth": {
+            "label": "What to show with Bluetooth audio",
+            "type": "string",
+            "doc": "This format is used when using bluetooth speakers.",
+            "group": "Display",
+            "description": "Shown when the sound goes to Bluetooth headphones or speakers."
+        },
+        "format-muted": {
+            "label": "What to show when muted",
+            "type": "string",
+            "doc": "This format is used when the sound is muted.",
+            "group": "Display",
+            "description": "Shown instead of the normal text while the sound is muted."
+        },
+        "format-source": {
+            "label": "Microphone text",
+            "type": "string",
+            "default": "{volume}%",
+            "doc": "This format used for the source.",
+            "group": "Display",
+            "description": "How the microphone is described. Put {format_source} in the main text to show it."
+        },
+        "format-source-muted": {
+            "label": "Microphone text when muted",
+            "type": "string",
+            "doc": "This format is used when the source is muted.",
+            "group": "Display",
+            "description": "Used for {format_source} while the microphone is muted."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the current port name and volume, the corresponding icon gets selected. The order is low to high. See Icons.",
+            "group": "Display",
+            "description": "Icons for {icon}, from low to high volume. You can also set icons for device types like headphone or speaker."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "states": {
+            "label": "Levels",
+            "type": "object",
+            "doc": "A number of volume states which get activated on certain volume levels. See waybar-states(5).",
+            "group": "Display",
+            "advanced": true,
+            "description": "Give names to value ranges (for example \"warning\" at 30 and \"critical\" at 15). You can then use a different format or color for each level."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "scroll-step": {
+            "label": "Volume change per scroll",
+            "type": "number",
+            "default": 1.0,
+            "doc": "The speed at which to change the volume when scrolling.",
+            "group": "Behavior",
+            "description": "How much the volume changes each time you scroll over the module.",
+            "unit": "%",
+            "min": 0.1,
+            "max": 50,
+            "step": 0.5
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module. This replaces the default behaviour of volume control.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module. This replaces the default behaviour of volume control.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "reverse-scrolling": {
+            "label": "Reverse touchpad scrolling",
+            "type": "boolean",
+            "doc": "Option to reverse the scroll direction for touchpads.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "Swap up and down when scrolling with a touchpad."
+        },
+        "reverse-mouse-scrolling": {
+            "label": "Reverse mouse scrolling",
+            "type": "boolean",
+            "doc": "Option to reverse the scroll direction for mice.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "Swap up and down when scrolling with a mouse wheel."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "doc": "The format of the tooltip shown on hover. When unset, the tooltip shows the current sink's description.",
+            "group": "Tooltip",
+            "description": "What the popup shows. Empty shows the device name."
+        },
+        "max-volume": {
+            "label": "Maximum volume",
+            "type": "integer",
+            "default": 100,
+            "doc": "The maximum volume that can be set, in percentage.",
+            "group": "Behavior",
+            "description": "Scrolling won't go above this volume. Above 100 makes the sound louder than normal, which can distort it.",
+            "unit": "%",
+            "min": 1,
+            "max": 300
+        },
+        "ignored-sinks": {
+            "label": "Devices to ignore",
+            "type": "array",
+            "doc": "Sinks in this list will not be shown as active sink by Waybar. Entries should be the sink's description field. Use pactl list sinks to find the correct description.",
+            "group": "Behavior",
+            "description": "Audio outputs that should never be shown, by their description.",
+            "advanced": true
+        },
+        "sink-mapping": {
+            "label": "Device replacements",
+            "type": "object",
+            "doc": "Sinks named by the values of this mapping will be considered to be the current sink instead of the sinks named by the respective keys.",
+            "group": "Behavior",
+            "description": "Treat some output devices as if they were others.",
+            "advanced": true
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "target": {
+            "label": "Scrolling controls",
+            "type": "enum",
+            "default": "sink",
+            "doc": "The audio target to control when scrolling. Can be either sink (output/speakers) or source (input/microphone).",
+            "group": "Click & scroll",
+            "description": "Choose whether scrolling changes the speaker or the microphone volume.",
+            "options": [
+                {
+                    "value": "sink",
+                    "label": "Speakers / headphones"
+                },
+                {
+                    "value": "source",
+                    "label": "Microphone"
+                }
+            ]
+        }
+    }
+}

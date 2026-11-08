@@ -1,0 +1,215 @@
+{
+    "module": "sway/workspaces",
+    "title": "Workspaces",
+    "description": "The workspaces module displays the currently used workspaces in Sway.",
+    "manual": "waybar-sway-workspaces(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{value}",
+            "description": "Name of the workspace, as defined by sway."
+        },
+        {
+            "token": "{name}",
+            "description": "Number stripped from workspace value."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{index}",
+            "description": "Index of the workspace."
+        },
+        {
+            "token": "{output}",
+            "description": "Output where the workspace is located."
+        },
+        {
+            "token": "{windows}",
+            "description": "Result from window-rewrite"
+        }
+    ],
+    "settings": {
+        "all-outputs": {
+            "label": "All outputs",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, workspaces will only be shown on the output they are on. If set to true all workspaces will be shown on every output.",
+            "group": "Behavior",
+            "description": "If set to false, workspaces will only be shown on the output they are on. If set to true all workspaces will be shown on every output."
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{value}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-for-negative-index": {
+            "label": "What to show when for negative index",
+            "type": "string",
+            "default": "format",
+            "doc": "An alternative format, which will be used for workspaces with no explict or negative index (\"num\" in sway terms). Requires format to be set.",
+            "group": "Display",
+            "description": "An alternative format, which will be used for workspaces with no explict or negative index (\"num\" in sway terms). Requires format to be set."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the workspace name and state, the corresponding icon gets selected. See icons.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "disable-scroll": {
+            "label": "Disable scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can scroll to cycle through workspaces. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can scroll to cycle through workspaces. If set to true this behaviour is disabled."
+        },
+        "reverse-scroll": {
+            "label": "Reverse scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, scrolling up will switch to the previous workspace and scrolling down will switch to the next workspace. If set to true, the behavior will be reversed.",
+            "group": "Behavior",
+            "description": "If set to false, scrolling up will switch to the previous workspace and scrolling down will switch to the next workspace. If set to true, the behavior will be reversed."
+        },
+        "disable-click": {
+            "label": "Disable click",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can click to change workspace. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can click to change workspace. If set to true this behaviour is disabled."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "disable-scroll-wraparound": {
+            "label": "Disable scroll wraparound",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, scrolling on the workspace indicator will wrap around to the first workspace when reading the end, and vice versa. If set to true this behavior is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, scrolling on the workspace indicator will wrap around to the first workspace when reading the end, and vice versa. If set to true this behavior is disabled."
+        },
+        "enable-bar-scroll": {
+            "label": "Enable bar scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can't scroll to cycle throughout workspaces from the entire bar. If set to true this behaviour is enabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can't scroll to cycle throughout workspaces from the entire bar. If set to true this behaviour is enabled."
+        },
+        "disable-markup": {
+            "label": "Disable markup",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, button label will escape pango markup.",
+            "group": "Behavior",
+            "description": "If set to true, button label will escape pango markup."
+        },
+        "current-only": {
+            "label": "Current only",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true. Only focused workspaces will be shown.",
+            "group": "Behavior",
+            "description": "If set to true. Only focused workspaces will be shown."
+        },
+        "ignore-workspaces": {
+            "label": "Ignore workspaces",
+            "type": "array",
+            "doc": "List of regular expressions. Workspaces whose name matches any of the given patterns are not shown.",
+            "group": "Behavior",
+            "description": "List of regular expressions. Workspaces whose name matches any of the given patterns are not shown."
+        },
+        "persistent-workspaces": {
+            "label": "Persistent workspaces",
+            "type": "string",
+            "doc": "Lists workspaces that should always be shown, even when non-existent",
+            "group": "Behavior",
+            "description": "Lists workspaces that should always be shown, even when non-existent"
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "disable-auto-back-and-forth": {
+            "label": "Disable auto back and forth",
+            "type": "boolean",
+            "doc": "Whether to disable workspace_auto_back_and_forth when clicking on workspaces. If this is set to true, clicking on a workspace you are already on won't do anything, even if workspace_auto_back_and_forth is enabled in the Sway configuration.",
+            "group": "Behavior",
+            "description": "Whether to disable workspace_auto_back_and_forth when clicking on workspaces. If this is set to true, clicking on a workspace you are already on won't do anything, even if workspace_auto_back_and_forth is enabled in the Sway configuration."
+        },
+        "no-switch-output": {
+            "label": "No switch output",
+            "type": "boolean",
+            "doc": "Whether to disable switching output when clicking on workspaces. If this is set to true, then clicking on a workspace on a different output will bring it to the current output instead of switching to that output.",
+            "group": "Behavior",
+            "description": "Whether to disable switching output when clicking on workspaces. If this is set to true, then clicking on a workspace on a different output will bring it to the current output instead of switching to that output."
+        },
+        "alphabetical_sort": {
+            "label": "Alphabetical sort",
+            "type": "boolean",
+            "doc": "Whether to sort workspaces alphabetically. Please note this can make \"swaymsg workspace prev/next\" move to workspaces inconsistent with the ordering shown in Waybar.",
+            "group": "Behavior",
+            "description": "Whether to sort workspaces alphabetically. Please note this can make \"swaymsg workspace prev/next\" move to workspaces inconsistent with the ordering shown in Waybar."
+        },
+        "custom-sort": {
+            "label": "Custom sort",
+            "type": "array",
+            "default": [],
+            "doc": "Defines an explicit ordering for workspace names. Entries earlier in the array appear first. Both full names and the trimmed portion after \":\" are matched. Any workspace not listed here falls back to the default ordering (or alphabetical ordering when alphabetical_sort is true).",
+            "group": "Behavior",
+            "description": "Defines an explicit ordering for workspace names. Entries earlier in the array appear first. Both full names and the trimmed portion after \":\" are matched. Any workspace not listed here falls back to the default ordering (or alphabetical ordering when alphabetical_sort is true)."
+        },
+        "window-rewrite": {
+            "label": "Window rewrite",
+            "type": "object",
+            "doc": "Regex rules to map window class to an icon or preferred method of representation for a workspace's window. Keys are the rules, while the values are the methods of representation. Rules may specify class<...>, title<...>, or both in order to fine-tune the matching. You may assign an empty value to a rule to have it ignored from generating any representation in workspaces. For Wayland windows class is matched against the app_id, and for X11 windows against the class property.",
+            "group": "Behavior",
+            "description": "Regex rules to map window class to an icon or preferred method of representation for a workspace's window. Keys are the rules, while the values are the methods of representation. Rules may specify class<...>, title<...>, or both in order to fine-tune the matching. You may assign an empty value to a rule to have it ignored from generating any representation in workspaces. For Wayland windows class is matched against the app_id, and for X11 windows against the class property."
+        },
+        "format-window-separator": {
+            "label": "What to show when window separator",
+            "type": "string",
+            "default": " ",
+            "doc": "The separator to be used between windows in a workspace.",
+            "group": "Display",
+            "description": "The separator to be used between windows in a workspace."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "output-classes": {
+            "label": "Output classes",
+            "type": "array",
+            "doc": "Specify additional CSS classes to be added to workspace indicators based on the output on which the associated workspace is located. Keys are output names and values are class names like ${output}: {output-class}. Assignment in config is used to keep the stylesheet independent of the available outputs.",
+            "group": "Behavior",
+            "description": "Specify additional CSS classes to be added to workspace indicators based on the output on which the associated workspace is located. Keys are output names and values are class names like ${output}: {output-class}. Assignment in config is used to keep the stylesheet independent of the available outputs."
+        }
+    }
+}

@@ -1,0 +1,361 @@
+{
+    "module": "wireplumber",
+    "title": "Wireplumber",
+    "description": "The wireplumber module displays the current volume reported by WirePlumber.",
+    "manual": "waybar-wireplumber(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{volume}",
+            "description": "Volume in percentage, cubic scale as integer."
+        },
+        {
+            "token": "{volume_linear}",
+            "description": "Volume in linear scale as float."
+        },
+        {
+            "token": "{volume_cubic}",
+            "description": "Volume in cubic scale as float."
+        },
+        {
+            "token": "{volume_db}",
+            "description": "Volume in decibel scale as float."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{node_name}",
+            "description": "The node's nickname as reported by WirePlumber (node.nick property)"
+        },
+        {
+            "token": "{source_volume}",
+            "description": "Source (microphone) volume in percentage, cubic scale as integer."
+        },
+        {
+            "token": "{source_volume_linear}",
+            "description": "Source (microphone) volume in linear scale as float."
+        },
+        {
+            "token": "{source_volume_cubic}",
+            "description": "Source (microphone) volume in cubic scale as float."
+        },
+        {
+            "token": "{source_volume_db}",
+            "description": "Source (microphone) volume in decibel scale as float."
+        },
+        {
+            "token": "{source_desc}",
+            "description": "The source node's nickname/description as reported by WirePlumber."
+        },
+        {
+            "token": "{format_source}",
+            "description": "The pre-rendered source (microphone) volume sub-string, formatted with format-source/format-source-muted."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{volume}%",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-muted": {
+            "label": "What to show when muted",
+            "type": "string",
+            "doc": "This format is used when the sound is muted.",
+            "group": "Display",
+            "description": "This format is used when the sound is muted."
+        },
+        "format-bluetooth": {
+            "label": "What to show using Bluetooth",
+            "type": "string",
+            "doc": "This format is used when the active sink is a Bluetooth device (its node name contains bluez or a2dp-sink).",
+            "group": "Display",
+            "description": "This format is used when the active sink is a Bluetooth device (its node name contains bluez or a2dp-sink)."
+        },
+        "format-bluetooth-muted": {
+            "label": "What to show using Bluetooth and muted",
+            "type": "string",
+            "doc": "This format is used when the active sink is a Bluetooth device and the sound is muted.",
+            "group": "Display",
+            "description": "This format is used when the active sink is a Bluetooth device and the sound is muted."
+        },
+        "format-source": {
+            "label": "What to show for the microphone",
+            "type": "string",
+            "default": "{volume}%",
+            "doc": "The format used to render the source (microphone) volume sub-string that is exposed through the {format_source} replacement.",
+            "group": "Display",
+            "description": "The format used to render the source (microphone) volume sub-string that is exposed through the {format_source} replacement."
+        },
+        "format-source-muted": {
+            "label": "What to show when the microphone is muted",
+            "type": "string",
+            "doc": "The format used for the {format_source} sub-string when the source (microphone) is muted.",
+            "group": "Display",
+            "description": "The format used for the {format_source} sub-string when the source (microphone) is muted."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "doc": "Based on the current volume, the corresponding icon gets selected. The order is low to high.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "node-type": {
+            "label": "Node type",
+            "type": "string",
+            "default": "Audio/Sink",
+            "doc": "The WirePlumber node type to attach to. Use Audio/Source to manage microphones etc.",
+            "group": "Behavior",
+            "description": "The WirePlumber node type to attach to. Use Audio/Source to manage microphones etc."
+        },
+        "only-physical": {
+            "label": "Only physical",
+            "type": "boolean",
+            "default": false,
+            "doc": "When enabled, resolve through virtual/filter-chain sinks to the underlying physical sink and report its volume instead.",
+            "group": "Behavior",
+            "description": "When enabled, resolve through virtual/filter-chain sinks to the underlying physical sink and report its volume instead."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{node_name}",
+            "doc": "The format of information displayed in the tooltip.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "states": {
+            "label": "Levels",
+            "type": "object",
+            "doc": "A number of volume states which get activated on certain volume levels. See waybar-states(5).",
+            "group": "Display",
+            "advanced": true,
+            "description": "Give names to value ranges (for example \"warning\" at 30 and \"critical\" at 15). You can then use a different format or color for each level."
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "scroll-step": {
+            "label": "Scroll step",
+            "type": "number",
+            "default": 1.0,
+            "doc": "The speed at which to change the volume when scrolling.",
+            "group": "Behavior",
+            "description": "The speed at which to change the volume when scrolling."
+        },
+        "scroll-scale": {
+            "label": "Scroll scale",
+            "type": "string",
+            "default": "cubic_percent",
+            "doc": "The scale to use for the scrolling volume change. Options are 'linear', 'db', 'cubic', and 'cubic_percent'.",
+            "group": "Behavior",
+            "description": "The scale to use for the scrolling volume change. Options are 'linear', 'db', 'cubic', and 'cubic_percent'."
+        },
+        "reverse-scrolling": {
+            "label": "Reverse touchpad scrolling",
+            "type": "boolean",
+            "doc": "Option to reverse the scroll direction for touchpads.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "Swap up and down when scrolling with a touchpad."
+        },
+        "reverse-mouse-scrolling": {
+            "label": "Reverse mouse scrolling",
+            "type": "boolean",
+            "doc": "Option to reverse the scroll direction for mice.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "Swap up and down when scrolling with a mouse wheel."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module. This replaces the default behaviour of volume control.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module. This replaces the default behaviour of volume control.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "max-volume": {
+            "label": "Max volume",
+            "type": "number",
+            "default": 100.0,
+            "doc": "The maximum volume that can be set, in percentage.",
+            "group": "Behavior",
+            "description": "The maximum volume that can be set, in percentage."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        }
+    }
+}

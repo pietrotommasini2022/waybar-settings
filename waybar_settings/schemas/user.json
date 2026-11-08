@@ -1,0 +1,152 @@
+{
+    "module": "user",
+    "title": "User",
+    "description": "The user module displays the currently logged in user, the system uptime and, optionally, the user's avatar image.",
+    "manual": "waybar-user(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{user}",
+            "description": "The login name of the currently logged in user, in uppercase"
+        },
+        {
+            "token": "{work_d}",
+            "description": "Whole days the system has been up"
+        },
+        {
+            "token": "{work_H}",
+            "description": "Hours part of the system uptime (00-23)"
+        },
+        {
+            "token": "{work_M}",
+            "description": "Minutes part of the system uptime (00-59)"
+        },
+        {
+            "token": "{work_S}",
+            "description": "Seconds part of the system uptime (00-59)"
+        },
+        {
+            "token": "{up_H}",
+            "description": "Hour the system was booted (00-23)"
+        },
+        {
+            "token": "{up_M}",
+            "description": "Minute the system was booted (00-59)"
+        },
+        {
+            "token": "{up_d}",
+            "description": "Day of the month the system was booted (01-31)"
+        },
+        {
+            "token": "{up_m}",
+            "description": "Month the system was booted (01-12)"
+        },
+        {
+            "token": "{up_Y}",
+            "description": "Year the system was booted"
+        }
+    ],
+    "settings": {
+        "interval": {
+            "label": "Refresh every",
+            "type": "integer",
+            "default": 60,
+            "doc": "The interval in which the information gets polled",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{user} {work_H}:{work_M}",
+            "doc": "The format, how the information should be displayed. See FORMAT REPLACEMENTS below",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "icon": {
+            "label": "Icon",
+            "type": "boolean",
+            "default": false,
+            "doc": "When enabled, displays the user's avatar image next to the label",
+            "group": "Behavior",
+            "description": "When enabled, displays the user's avatar image next to the label"
+        },
+        "avatar": {
+            "label": "Avatar",
+            "type": "string",
+            "default": "$HOME/.face",
+            "doc": "Path to the avatar image to display. Only used when icon is enabled. When unset, the default path $HOME/.face is used",
+            "group": "Behavior",
+            "description": "Path to the avatar image to display. Only used when icon is enabled. When unset, the default path $HOME/.face is used"
+        },
+        "height": {
+            "label": "Height",
+            "type": "integer",
+            "default": 20,
+            "doc": "The height of the avatar image in pixels",
+            "group": "Behavior",
+            "description": "The height of the avatar image in pixels"
+        },
+        "width": {
+            "label": "Width",
+            "type": "integer",
+            "default": 20,
+            "doc": "The width of the avatar image in pixels",
+            "group": "Behavior",
+            "description": "The width of the avatar image in pixels"
+        },
+        "open-on-click": {
+            "label": "Open on click",
+            "type": "boolean",
+            "default": false,
+            "doc": "When enabled, left-clicking the module opens the user's home directory (or open-path) with the default file manager",
+            "group": "Behavior",
+            "description": "When enabled, left-clicking the module opens the user's home directory (or open-path) with the default file manager"
+        },
+        "open-path": {
+            "label": "Open path",
+            "type": "string",
+            "doc": "Overrides the path that is opened when open-on-click is enabled. When empty, the user's home directory is used",
+            "group": "Behavior",
+            "description": "Overrides the path that is opened when open-on-click is enabled. When empty, the user's home directory is used"
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments)",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to enable tooltip on hover",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        }
+    }
+}

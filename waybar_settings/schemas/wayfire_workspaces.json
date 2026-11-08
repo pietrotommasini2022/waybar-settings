@@ -1,0 +1,95 @@
+{
+    "module": "wayfire/workspaces",
+    "title": "Workspaces",
+    "description": "The workspaces module displays the currently used workspaces in wayfire.",
+    "manual": "waybar-wayfire-workspaces(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{index}",
+            "description": "Index of the workspace on its output."
+        },
+        {
+            "token": "{output}",
+            "description": "Output where the workspace is located."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{index}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "object",
+            "doc": "Based on the workspace name, index and state, the corresponding icon gets selected. See icons.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "disable-click": {
+            "label": "Disable click",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can click to change workspace. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can click to change workspace. If set to true this behaviour is disabled."
+        },
+        "disable-scroll": {
+            "label": "Disable scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can scroll to cycle through workspaces. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can scroll to cycle through workspaces. If set to true this behaviour is disabled."
+        },
+        "enable-bar-scroll": {
+            "label": "Enable bar scroll",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can't scroll to cycle through workspaces from the entire bar. If set to true this behaviour is enabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can't scroll to cycle through workspaces from the entire bar. If set to true this behaviour is enabled."
+        },
+        "disable-markup": {
+            "label": "Disable markup",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, button label will escape pango markup.",
+            "group": "Behavior",
+            "description": "If set to true, button label will escape pango markup."
+        },
+        "current-only": {
+            "label": "Current only",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to true, only the active or focused workspace will be shown.",
+            "group": "Behavior",
+            "description": "If set to true, only the active or focused workspace will be shown."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

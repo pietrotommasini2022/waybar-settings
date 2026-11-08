@@ -1,0 +1,125 @@
+{
+    "module": "sway/scratchpad",
+    "title": "Scratchpad",
+    "description": "The scratchpad module displays the scratchpad status in Sway",
+    "manual": "waybar-sway-scratchpad(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{count}",
+            "description": "Number of windows in the scratchpad."
+        },
+        {
+            "token": "{app}",
+            "description": "Name of the application in the scratchpad."
+        },
+        {
+            "token": "{title}",
+            "description": "Title of the application in the scratchpad."
+        }
+    ],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{icon} {count}",
+            "doc": "The format, how information should be displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "show-empty": {
+            "label": "Show empty",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to show module when scratchpad is empty.",
+            "group": "Behavior",
+            "description": "Option to show module when scratchpad is empty."
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "also_accepts": [
+                "object"
+            ],
+            "doc": "Based on the current scratchpad window counts, the corresponding icon gets selected.",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "default": "{app}: {title}",
+            "doc": "The format, how information in the tooltip should be displayed.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

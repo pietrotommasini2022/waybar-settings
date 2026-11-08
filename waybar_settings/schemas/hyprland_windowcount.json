@@ -1,0 +1,47 @@
+{
+    "module": "hyprland/windowcount",
+    "title": "Windowcount",
+    "description": "The windowcount module displays the number of windows in the current Hyprland workspace.",
+    "manual": "waybar-hyprland-windowcount(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": "{}",
+            "doc": "The format for how information should be displayed. On {} the current workspace window count is displayed.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-empty": {
+            "label": "What to show when empty",
+            "type": "string",
+            "doc": "Override the format when the workspace contains no windows window",
+            "group": "Display",
+            "description": "Override the format when the workspace contains no windows window"
+        },
+        "format-windowed": {
+            "label": "What to show when windowed",
+            "type": "string",
+            "doc": "Override the format when the workspace contains no fullscreen windows",
+            "group": "Display",
+            "description": "Override the format when the workspace contains no fullscreen windows"
+        },
+        "format-fullscreen": {
+            "label": "What to show when fullscreen",
+            "type": "string",
+            "doc": "Override the format when the workspace contains a fullscreen window",
+            "group": "Display",
+            "description": "Override the format when the workspace contains a fullscreen window"
+        },
+        "separate-outputs": {
+            "label": "Separate outputs",
+            "type": "boolean",
+            "default": true,
+            "doc": "Show the active workspace window count of the monitor the bar belongs to, instead of the focused workspace.",
+            "group": "Behavior",
+            "description": "Show the active workspace window count of the monitor the bar belongs to, instead of the focused workspace."
+        }
+    }
+}

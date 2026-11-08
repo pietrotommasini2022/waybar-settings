@@ -1,0 +1,64 @@
+{
+    "module": "river/tags",
+    "title": "Tags",
+    "description": "The tags module displays the current state of tags in river.",
+    "manual": "waybar-river-tags(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "num-tags": {
+            "label": "Num tags",
+            "type": "string",
+            "default": "9",
+            "doc": "The number of tags that should be displayed. Max 32.",
+            "group": "Behavior",
+            "description": "The number of tags that should be displayed. Max 32."
+        },
+        "tag-labels": {
+            "label": "Tag labels",
+            "type": "array",
+            "doc": "The label to display for each tag.",
+            "group": "Behavior",
+            "description": "The label to display for each tag."
+        },
+        "disable-click": {
+            "label": "Disable click",
+            "type": "boolean",
+            "default": false,
+            "doc": "If set to false, you can left-click to set focused tag. Right-click to toggle tag focus. If set to true this behaviour is disabled.",
+            "group": "Behavior",
+            "description": "If set to false, you can left-click to set focused tag. Right-click to toggle tag focus. If set to true this behaviour is disabled."
+        },
+        "set-tags": {
+            "label": "Set tags",
+            "type": "array",
+            "doc": "An array of tag bitmasks, one per tag button. Left-clicking a tag sets the focused tags to the corresponding bitmask instead of the single tag. Requires disable-click to be false.",
+            "group": "Behavior",
+            "description": "An array of tag bitmasks, one per tag button. Left-clicking a tag sets the focused tags to the corresponding bitmask instead of the single tag. Requires disable-click to be false."
+        },
+        "toggle-tags": {
+            "label": "Toggle tags",
+            "type": "array",
+            "doc": "An array of tag bitmasks, one per tag button. Right-clicking a tag toggles the corresponding bitmask in the focused tags instead of the single tag. Requires disable-click to be false.",
+            "group": "Behavior",
+            "description": "An array of tag bitmasks, one per tag button. Right-clicking a tag toggles the corresponding bitmask in the focused tags instead of the single tag. Requires disable-click to be false."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "hide-vacant": {
+            "label": "Hide vacant",
+            "type": "boolean",
+            "default": false,
+            "doc": "Only show relevant tags: tags that are either focused or have a window on them.",
+            "group": "Behavior",
+            "description": "Only show relevant tags: tags that are either focused or have a window on them."
+        }
+    }
+}

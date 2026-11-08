@@ -1,0 +1,61 @@
+{
+    "module": "backlight/slider",
+    "title": "Slider",
+    "description": "The backlight slider module displays and controls the current brightness of the default or preferred device.",
+    "manual": "waybar-backlight-slider(5)",
+    "reviewed": false,
+    "placeholders": [],
+    "settings": {
+        "min": {
+            "label": "Min",
+            "type": "integer",
+            "default": 0,
+            "doc": "The minimum volume value the slider should display and set.",
+            "group": "Behavior",
+            "description": "The minimum volume value the slider should display and set."
+        },
+        "max": {
+            "label": "Max",
+            "type": "integer",
+            "default": 100,
+            "doc": "The maximum volume value the slider should display and set.",
+            "group": "Behavior",
+            "description": "The maximum volume value the slider should display and set."
+        },
+        "orientation": {
+            "label": "Orientation",
+            "type": "string",
+            "default": "horizontal",
+            "doc": "The orientation of the slider. Can be either horizontal or vertical.",
+            "group": "Behavior",
+            "description": "The orientation of the slider. Can be either horizontal or vertical."
+        },
+        "device": {
+            "label": "Device",
+            "type": "string",
+            "doc": "The name of the preferred device to control. If left empty, a device will be chosen automatically. Both screen backlights (the udev backlight subsystem) and keyboard backlights (LEDs in the udev leds subsystem, e.g. white:kbd_backlight) are supported; name such an LED here to control it. When left empty, a screen backlight is always preferred for automatic selection.",
+            "group": "Behavior",
+            "description": "The name of the preferred device to control. If left empty, a device will be chosen automatically. Both screen backlights (the udev backlight subsystem) and keyboard backlights (LEDs in the udev leds subsystem, e.g. white:kbd_backlight) are supported; name such an LED here to control it. When left empty, a screen backlight is always preferred for automatic selection."
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "string",
+            "default": "1000",
+            "doc": "The interval in milliseconds at which the brightness is polled and the slider is updated.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}

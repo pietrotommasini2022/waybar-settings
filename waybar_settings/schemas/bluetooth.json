@@ -1,0 +1,386 @@
+{
+    "module": "bluetooth",
+    "title": "Bluetooth",
+    "description": "The bluetooth module displays information about a bluetooth controller and its connections.",
+    "manual": "waybar-bluetooth(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{status}",
+            "description": "Status of the bluetooth device."
+        },
+        {
+            "token": "{icon}",
+            "description": "Icon, as defined in format-icons."
+        },
+        {
+            "token": "{num_connections}",
+            "description": "Number of connections the displayed controller has."
+        },
+        {
+            "token": "{controller_address}",
+            "description": "Address of the displayed controller."
+        },
+        {
+            "token": "{controller_address_type}",
+            "description": "Address type of the displayed controller."
+        },
+        {
+            "token": "{controller_alias}",
+            "description": "Alias of the displayed controller."
+        },
+        {
+            "token": "{device_address}",
+            "description": "Address of the displayed device."
+        },
+        {
+            "token": "{device_address_type}",
+            "description": "Address type of the displayed device."
+        },
+        {
+            "token": "{device_alias}",
+            "description": "Alias of the displayed device."
+        },
+        {
+            "token": "{device_enumerate}",
+            "description": "Show a list of all connected devices, each on a separate line. Define the format of each device with the tooltip-format-enumerate-connected and/or tooltip-format-enumerate-connected-battery config options. Can only be used in the tooltip-related format options."
+        }
+    ],
+    "settings": {
+        "controller": {
+            "label": "Controller",
+            "type": "string",
+            "doc": "Use the controller with the defined alias. Otherwise, a random controller is used. Recommended to define when there is more than 1 controller available to the system.",
+            "group": "Behavior",
+            "description": "Use the controller with the defined alias. Otherwise, a random controller is used. Recommended to define when there is more than 1 controller available to the system."
+        },
+        "controller-alias": {
+            "label": "Controller alias",
+            "type": "string",
+            "doc": "Synonym for controller. If both are set, controller-alias takes precedence.",
+            "group": "Behavior",
+            "description": "Synonym for controller. If both are set, controller-alias takes precedence."
+        },
+        "format-device-preference": {
+            "label": "What to show when device preference",
+            "type": "array",
+            "doc": "A ranking of bluetooth devices, addressed by their alias. The order is from first displayed to last displayed. If this config option is not defined or none of the devices in the list are connected, it will fall back to showing the last connected device.",
+            "group": "Display",
+            "description": "A ranking of bluetooth devices, addressed by their alias. The order is from first displayed to last displayed. If this config option is not defined or none of the devices in the list are connected, it will fall back to showing the last connected device."
+        },
+        "format": {
+            "label": "What to show",
+            "type": "string",
+            "default": " {status}",
+            "doc": "The format, how information should be displayed. This format is used when other formats aren't specified.",
+            "group": "Display",
+            "description": "The text shown in the bar. Words in curly braces, like {icon}, are replaced with live values: see the list of placeholders."
+        },
+        "format-disabled": {
+            "label": "What to show when turned off",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is disabled.",
+            "group": "Display",
+            "description": "This format is used when the displayed controller is disabled."
+        },
+        "format-off": {
+            "label": "What to show when off",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is turned off.",
+            "group": "Display",
+            "description": "This format is used when the displayed controller is turned off."
+        },
+        "format-on": {
+            "label": "What to show when on",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is turned on with no devices connected.",
+            "group": "Display",
+            "description": "This format is used when the displayed controller is turned on with no devices connected."
+        },
+        "format-connected": {
+            "label": "What to show when connected",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is connected to at least 1 device.",
+            "group": "Display",
+            "description": "This format is used when the displayed controller is connected to at least 1 device."
+        },
+        "format-no-controller": {
+            "label": "What to show when no controller",
+            "type": "string",
+            "doc": "This format is used when no bluetooth controller can be found",
+            "group": "Display",
+            "description": "This format is used when no bluetooth controller can be found"
+        },
+        "format-icons": {
+            "label": "Icons",
+            "type": "array",
+            "also_accepts": [
+                "object"
+            ],
+            "doc": "Based on the current battery percentage (see section EXPERIMENTAL BATTERY PERCENTAGE FEATURE), the corresponding icon gets selected. The order is low to high. Will only show the current battery percentage icon in the *-connected-battery config options. Or by the state if it is an object. It will fall back to the enabled state if its derivatives are not defined (on, off, connected).",
+            "group": "Display",
+            "description": "The icons used for {icon}. When it is a list, the first icon is used for the lowest level and the last one for the highest."
+        },
+        "rotate": {
+            "label": "Rotation",
+            "type": "enum",
+            "doc": "Positive value to rotate the text label (in 90 degree increments).",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Rotate the text. Mostly useful on vertical bars.",
+            "unit": "degrees",
+            "options": [
+                {
+                    "value": 0,
+                    "label": "None"
+                },
+                {
+                    "value": 90,
+                    "label": "90°"
+                },
+                {
+                    "value": 180,
+                    "label": "180°"
+                },
+                {
+                    "value": 270,
+                    "label": "270°"
+                }
+            ]
+        },
+        "max-length": {
+            "label": "Maximum length",
+            "type": "integer",
+            "doc": "The maximum length in character the module should display.",
+            "group": "Layout",
+            "description": "Cut the text when it is longer than this. Empty means no limit.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "min-length": {
+            "label": "Minimum length",
+            "type": "integer",
+            "doc": "The minimum length in characters the module should accept.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Keep the module at least this wide, so the bar doesn't jump around when the text changes.",
+            "unit": "characters",
+            "min": 0,
+            "max": 500
+        },
+        "align": {
+            "label": "Text position",
+            "type": "number",
+            "doc": "The alignment of the label within the module, where 0 is left-aligned and 1 is right-aligned. If the module is rotated, it will follow the flow of the text.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Where the text sits inside the module: 0 is left, 0.5 is center, 1 is right.",
+            "min": 0,
+            "max": 1,
+            "step": 0.1
+        },
+        "justify": {
+            "label": "Line alignment",
+            "type": "enum",
+            "doc": "The alignment of the text within the module's label, allowing options 'left', 'right', or 'center' to define the positioning.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "How lines are aligned when the text has more than one line.",
+            "options": [
+                {
+                    "value": "left",
+                    "label": "Left"
+                },
+                {
+                    "value": "center",
+                    "label": "Center"
+                },
+                {
+                    "value": "right",
+                    "label": "Right"
+                }
+            ]
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "doc": "The format, how information should be displayed in the tooltip. This format is used when other formats aren't specified.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "tooltip-format-disabled": {
+            "label": "Tooltip when turned off",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is disabled.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed controller is disabled."
+        },
+        "tooltip-format-off": {
+            "label": "Tooltip when off",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is turned off.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed controller is turned off."
+        },
+        "tooltip-format-on": {
+            "label": "Tooltip when on",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is turned on with no devices connected.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed controller is turned on with no devices connected."
+        },
+        "tooltip-format-connected": {
+            "label": "Tooltip when connected",
+            "type": "string",
+            "doc": "This format is used when the displayed controller is connected to at least 1 device.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed controller is connected to at least 1 device."
+        },
+        "tooltip-format-no-controller": {
+            "label": "Tooltip when no controller",
+            "type": "string",
+            "doc": "This format is used when no bluetooth controller can be found",
+            "group": "Tooltip",
+            "description": "This format is used when no bluetooth controller can be found"
+        },
+        "tooltip-format-enumerate-connected": {
+            "label": "Tooltip when enumerate connected",
+            "type": "string",
+            "doc": "This format is used to define how each connected device should be displayed within the device_enumerate format replacement in the tooltip menu.",
+            "group": "Tooltip",
+            "description": "This format is used to define how each connected device should be displayed within the device_enumerate format replacement in the tooltip menu."
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        },
+        "format-connected-battery": {
+            "label": "What to show when connected battery",
+            "type": "string",
+            "doc": "This format is used when the displayed device provides its battery percentage.",
+            "group": "Display",
+            "description": "This format is used when the displayed device provides its battery percentage."
+        },
+        "tooltip-format-connected-battery": {
+            "label": "Tooltip when connected battery",
+            "type": "string",
+            "doc": "This format is used when the displayed device provides its battery percentage.",
+            "group": "Tooltip",
+            "description": "This format is used when the displayed device provides its battery percentage."
+        },
+        "tooltip-format-enumerate-connected-battery": {
+            "label": "Tooltip when enumerate connected battery",
+            "type": "string",
+            "doc": "This format is used to define how each connected device with a battery should be displayed within the device_enumerate format replacement option. When this config option is not defined, it will fall back on the tooltip-format-enumerate-connected config option.",
+            "group": "Tooltip",
+            "description": "This format is used to define how each connected device with a battery should be displayed within the device_enumerate format replacement option. When this config option is not defined, it will fall back on the tooltip-format-enumerate-connected config option."
+        }
+    }
+}

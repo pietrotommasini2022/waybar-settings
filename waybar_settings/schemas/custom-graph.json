@@ -1,0 +1,230 @@
+{
+    "module": "custom-graph",
+    "title": "Custom graph",
+    "description": "The custom-graph module displays a graph with the percentage output of a script.",
+    "manual": "waybar-custom-graph(5)",
+    "reviewed": false,
+    "placeholders": [
+        {
+            "token": "{text}",
+            "description": "Output of the script."
+        },
+        {
+            "token": "{alt}",
+            "description": "The alt value from a json return type."
+        }
+    ],
+    "settings": {
+        "exec": {
+            "label": "Exec",
+            "type": "string",
+            "doc": "The path to the script, which should be executed. At most 256 KiB of its output (of each line, if the script runs continuously) is used; the rest is discarded.",
+            "group": "Behavior",
+            "description": "The path to the script, which should be executed. At most 256 KiB of its output (of each line, if the script runs continuously) is used; the rest is discarded."
+        },
+        "exec-if": {
+            "label": "Exec if",
+            "type": "string",
+            "doc": "The path to a script, which determines if the script in exec should be executed. exec will be executed if the exit code of exec-if equals 0.",
+            "group": "Behavior",
+            "description": "The path to a script, which determines if the script in exec should be executed. exec will be executed if the exit code of exec-if equals 0."
+        },
+        "exec-on-event": {
+            "label": "Exec on event",
+            "type": "boolean",
+            "default": true,
+            "doc": "If an event command is set (e.g. on-click or on-scroll-up) then re-execute the script after executing the event command.",
+            "group": "Behavior",
+            "description": "If an event command is set (e.g. on-click or on-scroll-up) then re-execute the script after executing the event command."
+        },
+        "return-type": {
+            "label": "Return type",
+            "type": "string",
+            "doc": "See return-type",
+            "group": "Behavior",
+            "description": "See return-type"
+        },
+        "interval": {
+            "label": "Refresh every",
+            "type": "number",
+            "doc": "The interval (in seconds) in which the information gets polled. Minimum value is 0.001 (1ms). Values smaller than 1ms will be set to 1ms. Use once if you want to execute the module only on startup. You can update it manually with a signal. If no interval or signal is defined, it is assumed that the out script loops itself. If a signal is defined then the script will run once on startup and will only update with a signal.",
+            "group": "Behavior",
+            "description": "How often the module updates its information.",
+            "unit": "seconds",
+            "min": 1,
+            "max": 86400
+        },
+        "restart-interval": {
+            "label": "Restart interval",
+            "type": "integer",
+            "doc": "The restart interval (in whole seconds). Can't be used with the interval option, so only with continuous scripts. Once the script exits, it'll be re-executed after the restart-interval.",
+            "group": "Behavior",
+            "description": "The restart interval (in whole seconds). Can't be used with the interval option, so only with continuous scripts. Once the script exits, it'll be re-executed after the restart-interval."
+        },
+        "signal": {
+            "label": "Signal",
+            "type": "integer",
+            "doc": "The signal number used to update the module. The number is valid between 1 and N, where SIGRTMIN+N = SIGRTMAX. If no interval is defined then a signal will be the only way to update the module.",
+            "group": "Behavior",
+            "description": "The signal number used to update the module. The number is valid between 1 and N, where SIGRTMIN+N = SIGRTMAX. If no interval is defined then a signal will be the only way to update the module."
+        },
+        "graph_type": {
+            "label": "Graph type",
+            "type": "string",
+            "default": "line",
+            "doc": "The style of graph to render. One of line, bar or gauge.",
+            "group": "Behavior",
+            "description": "The style of graph to render. One of line, bar or gauge."
+        },
+        "width": {
+            "label": "Width",
+            "type": "integer",
+            "default": 100,
+            "doc": "The width of the graph in pixels.",
+            "group": "Behavior",
+            "description": "The width of the graph in pixels."
+        },
+        "datapoints": {
+            "label": "Datapoints",
+            "type": "integer",
+            "default": 20,
+            "doc": "The number of most recent values to retain and plot on the graph.",
+            "group": "Behavior",
+            "description": "The number of most recent values to retain and plot on the graph."
+        },
+        "on-click": {
+            "label": "Left click runs",
+            "type": "string",
+            "doc": "Command to execute when clicked on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module. Empty keeps the normal behavior."
+        },
+        "on-click-middle": {
+            "label": "Middle click runs",
+            "type": "string",
+            "doc": "Command to execute when middle-clicked on the module using mousewheel.",
+            "group": "Click & scroll",
+            "description": "A command to run when you click the module with the mouse wheel."
+        },
+        "on-click-right": {
+            "label": "Right click runs",
+            "type": "string",
+            "doc": "Command to execute when you right-click on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you right-click the module."
+        },
+        "on-update": {
+            "label": "On every refresh run",
+            "type": "string",
+            "doc": "Command to execute when the module is updated.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "A command to run each time the module updates."
+        },
+        "on-scroll-up": {
+            "label": "Scroll up runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling up on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll up over the module. It replaces what scrolling normally does."
+        },
+        "on-scroll-down": {
+            "label": "Scroll down runs",
+            "type": "string",
+            "doc": "Command to execute when scrolling down on the module.",
+            "group": "Click & scroll",
+            "description": "A command to run when you scroll down over the module. It replaces what scrolling normally does."
+        },
+        "smooth-scrolling-threshold": {
+            "label": "Scroll sensitivity",
+            "type": "number",
+            "doc": "Threshold to be used when scrolling.",
+            "group": "Click & scroll",
+            "advanced": true,
+            "description": "How far you must scroll on a touchpad before something happens. Higher means less sensitive.",
+            "min": 0,
+            "max": 100,
+            "step": 0.1
+        },
+        "tooltip": {
+            "label": "Show tooltip",
+            "type": "boolean",
+            "default": true,
+            "doc": "Option to disable tooltip on hover.",
+            "group": "Tooltip",
+            "description": "Show a small popup with more details when the mouse is over the module."
+        },
+        "tooltip-format": {
+            "label": "Tooltip text",
+            "type": "string",
+            "doc": "The tooltip format. If specified, overrides any tooltip output from the script in exec. See FORMAT REPLACEMENTS.",
+            "group": "Tooltip",
+            "description": "What the popup shows. It uses the same placeholders as the bar text."
+        },
+        "escape": {
+            "label": "Show special characters literally",
+            "type": "boolean",
+            "default": false,
+            "doc": "Option to enable escaping of script output.",
+            "group": "Display",
+            "description": "Show characters like < and & as they are, instead of treating them as formatting.",
+            "advanced": true
+        },
+        "menu": {
+            "label": "Open popup menu with",
+            "type": "enum",
+            "doc": "Action that popups the menu.",
+            "group": "Menu",
+            "description": "Which click opens a popup menu for this module.",
+            "options": [
+                {
+                    "value": "on-click",
+                    "label": "Left click"
+                },
+                {
+                    "value": "on-click-right",
+                    "label": "Right click"
+                },
+                {
+                    "value": "on-click-middle",
+                    "label": "Middle click"
+                },
+                {
+                    "value": "on-double-click",
+                    "label": "Double click"
+                },
+                {
+                    "value": "on-click-release",
+                    "label": "Left button release"
+                },
+                {
+                    "value": "on-click-right-release",
+                    "label": "Right button release"
+                }
+            ]
+        },
+        "menu-file": {
+            "label": "Menu layout file",
+            "type": "string",
+            "doc": "Location of the menu descriptor file. There need to be an element of type GtkMenu with id menu",
+            "group": "Menu",
+            "description": "The file that describes the menu entries (a GTK .xml file with a menu called \"menu\")."
+        },
+        "menu-actions": {
+            "label": "Menu commands",
+            "type": "object",
+            "doc": "The actions corresponding to the buttons of the menu.",
+            "group": "Menu",
+            "description": "For each menu entry, the command to run when you pick it."
+        },
+        "expand": {
+            "label": "Fill empty space",
+            "type": "boolean",
+            "default": false,
+            "doc": "Enables this module to consume all left over space dynamically.",
+            "group": "Layout",
+            "advanced": true,
+            "description": "Stretch the module to use all the free space left in its section."
+        }
+    }
+}
